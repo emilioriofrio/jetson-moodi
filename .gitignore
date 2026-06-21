@@ -13,6 +13,7 @@
 !/apps/
 !/qr_code_recognition/
 !/yahboom_ws/
+!/bmo_unified/
 
 # Ignore specific large files/folders inside whitelisted directories
 

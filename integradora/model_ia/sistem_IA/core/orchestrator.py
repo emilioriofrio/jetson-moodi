@@ -166,14 +166,18 @@ def run_orchestrator(cfg_path: str, qA: Queue, qB: Queue, qC: Queue, stop_event:
 
             msg = FrameMsg.build(frame_idx, frame)
 
-            # C y B tofos los frames 
-            try: qC.put(msg)
-            except Exception: pass
-            try: qB.put(msg)
-            except Exception: pass
+            enabled = cfg.get("enabled_modules", ["A", "B", "C"])
 
-            # A solo cada tick 
-            if frame_idx % tick == 0:
+            # C y B todos los frames (si están habilitados)
+            if "C" in enabled:
+                try: qC.put(msg)
+                except Exception: pass
+            if "B" in enabled:
+                try: qB.put(msg)
+                except Exception: pass
+
+            # A solo cada tick (si está habilitado)
+            if "A" in enabled and (frame_idx % tick == 0):
                 try: qA.put(msg)
                 except Exception: pass
 

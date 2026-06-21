@@ -98,14 +98,25 @@ def main():
 
     stop_event = ctx.Event()
 
+    import yaml
+    with open(CFG, "r", encoding="utf-8") as f:
+        cfg_data = yaml.safe_load(f)
+    enabled_modules = cfg_data.get("enabled_modules", ["A", "B", "C"])
+    print("[MAIN] Módulos habilitados:", enabled_modules, flush=True)
+
     procs = [
         ctx.Process(name="Orchestrator", target=entry_orchestrator,
                     args=(CFG, qA_in, qB_in, qC_in, stop_event, qUI_frm)),
+    ]
 
-        ctx.Process(name="WorkerA", target=entry_worker_a, args=(CFG, qA_in, qPred, stop_event)),
-        ctx.Process(name="WorkerB", target=entry_worker_b, args=(CFG, qB_in, qPred, stop_event)),
-        ctx.Process(name="WorkerC", target=entry_worker_c, args=(CFG, qC_in, qPred, stop_event)),
+    if "A" in enabled_modules:
+        procs.append(ctx.Process(name="WorkerA", target=entry_worker_a, args=(CFG, qA_in, qPred, stop_event)))
+    if "B" in enabled_modules:
+        procs.append(ctx.Process(name="WorkerB", target=entry_worker_b, args=(CFG, qB_in, qPred, stop_event)))
+    if "C" in enabled_modules:
+        procs.append(ctx.Process(name="WorkerC", target=entry_worker_c, args=(CFG, qC_in, qPred, stop_event)))
 
+    procs.extend([
         ctx.Process(name="PredFanout", target=entry_pred_fanout,
                     args=(qPred, qFusIn, qUI_preds, stop_event)),
 
@@ -117,7 +128,7 @@ def main():
 
         ctx.Process(name="UIViewer", target=entry_ui_viewer,
                     args=(CFG, qUI_frm, qUI_preds, qUI_stats, stop_event)),
-    ]
+    ])
 
     for p in procs:
         p.daemon = False
