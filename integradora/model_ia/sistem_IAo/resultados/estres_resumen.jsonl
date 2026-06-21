@@ -1,0 +1,1141 @@
+{"ts_start": 1755292292.7259817, "ts_end": 1755292292.7259817, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755292292.7259817, "ts_end": 1755292298.675056, "n_ticks": 7, "n_valid": 6, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755292292.7259817, "ts_end": 1755292304.1951172, "n_ticks": 12, "n_valid": 11, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755292292.7259817, "ts_end": 1755292309.942864, "n_ticks": 17, "n_valid": 16, "method": "average", "avg_level": 0.1875, "label": "BAJO"}
+{"ts_start": 1755292296.3916144, "ts_end": 1755292315.6166947, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755292302.0333898, "ts_end": 1755292321.2522469, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.8333333333333333, "label": "ALTO"}
+{"ts_start": 1755292307.584959, "ts_end": 1755292326.909986, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 2.6666666666666665, "label": "ALTO"}
+{"ts_start": 1755302072.0854714, "ts_end": 1755302072.0854714, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302077.1490674, "ts_end": 1755302077.1490674, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302081.9170291, "ts_end": 1755302081.9170291, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302366.9864745, "ts_end": 1755302366.9864745, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302372.0471747, "ts_end": 1755302372.0471747, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302377.0968478, "ts_end": 1755302377.0968478, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755302377.7907364, "ts_end": 1755302381.0807247, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.25, "label": "BAJO"}
+{"ts_start": 1755302377.7907364, "ts_end": 1755302386.613044, "n_ticks": 9, "n_valid": 9, "method": "average", "avg_level": 0.1111111111111111, "label": "BAJO"}
+{"ts_start": 1755302377.7907364, "ts_end": 1755302391.0300515, "n_ticks": 13, "n_valid": 13, "method": "average", "avg_level": 0.07692307692307693, "label": "BAJO"}
+{"ts_start": 1755302377.7907364, "ts_end": 1755302396.7877352, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 0.8333333333333334, "label": "MEDIO"}
+{"ts_start": 1755302382.2388794, "ts_end": 1755302401.4637403, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.2222222222222223, "label": "MEDIO"}
+{"ts_start": 1755302386.613044, "ts_end": 1755302406.1461842, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.6666666666666667, "label": "MEDIO"}
+{"ts_start": 1755302392.287619, "ts_end": 1755302411.7093441, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 2.2777777777777777, "label": "ALTO"}
+{"ts_start": 1755302396.7877352, "ts_end": 1755302416.2805042, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 2.0555555555555554, "label": "ALTO"}
+{"ts_start": 1755304013.9864514, "ts_end": 1755304013.9864514, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304018.9938653, "ts_end": 1755304018.9938653, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.0349889, "ts_end": 1755304024.0349889, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304024.354448, "ts_end": 1755304024.354448, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304148.918975, "ts_end": 1755304148.918975, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304153.9224393, "ts_end": 1755304153.9224393, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304157.9228036, "ts_end": 1755304158.2794857, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304157.9228036, "ts_end": 1755304163.3364985, "n_ticks": 7, "n_valid": 6, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304157.9228036, "ts_end": 1755304168.500206, "n_ticks": 12, "n_valid": 11, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304157.9228036, "ts_end": 1755304173.7426, "n_ticks": 17, "n_valid": 16, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304158.2794857, "ts_end": 1755304178.0848548, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 0.6, "label": "BAJO"}
+{"ts_start": 1755304164.370486, "ts_end": 1755304183.4896996, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 1.4210526315789473, "label": "MEDIO"}
+{"ts_start": 1755304169.6008651, "ts_end": 1755304188.8428338, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 2.210526315789474, "label": "ALTO"}
+{"ts_start": 1755304174.7706983, "ts_end": 1755304193.925644, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755304180.2575095, "ts_end": 1755304199.2400162, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755304183.4896996, "ts_end": 1755304203.405197, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755304189.8565395, "ts_end": 1755304208.9493988, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 2.6842105263157894, "label": "ALTO"}
+{"ts_start": 1755304195.0554173, "ts_end": 1755304214.318634, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 1.894736842105263, "label": "ALTO"}
+{"ts_start": 1755304199.2400162, "ts_end": 1755304218.4793363, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 1.263157894736842, "label": "MEDIO"}
+{"ts_start": 1755304204.5912411, "ts_end": 1755304223.6648214, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 0.47368421052631576, "label": "BAJO"}
+{"ts_start": 1755304208.9493988, "ts_end": 1755304228.6579, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304214.318634, "ts_end": 1755304233.6355896, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304219.4869704, "ts_end": 1755304238.924194, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 0.6, "label": "BAJO"}
+{"ts_start": 1755304224.6487973, "ts_end": 1755304244.1825585, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 1.35, "label": "MEDIO"}
+{"ts_start": 1755304229.69414, "ts_end": 1755304249.5951653, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 2.1, "label": "ALTO"}
+{"ts_start": 1755304234.6467147, "ts_end": 1755304253.7344465, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 2.8421052631578947, "label": "ALTO"}
+{"ts_start": 1755304239.9396517, "ts_end": 1755304259.1704843, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 2.8421052631578947, "label": "ALTO"}
+{"ts_start": 1755304245.2914765, "ts_end": 1755304264.4886317, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 2.0526315789473686, "label": "ALTO"}
+{"ts_start": 1755304250.614903, "ts_end": 1755304269.6553931, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 1.263157894736842, "label": "MEDIO"}
+{"ts_start": 1755304254.851741, "ts_end": 1755304273.955917, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 0.631578947368421, "label": "BAJO"}
+{"ts_start": 1755304259.1704843, "ts_end": 1755304279.0910592, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 0.05, "label": "BAJO"}
+{"ts_start": 1755304264.4886317, "ts_end": 1755304284.3478286, "n_ticks": 20, "n_valid": 20, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304270.752308, "ts_end": 1755304289.7525816, "n_ticks": 19, "n_valid": 19, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755304890.7169242, "ts_end": 1755304890.7169242, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304895.733451, "ts_end": 1755304895.733451, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304900.7398493, "ts_end": 1755304900.7398493, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755304900.9968626, "ts_end": 1755304904.9198573, "n_ticks": 5, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755304900.9968626, "ts_end": 1755304910.494507, "n_ticks": 10, "n_valid": 9, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755304900.9968626, "ts_end": 1755304914.9816566, "n_ticks": 14, "n_valid": 13, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755304900.9968626, "ts_end": 1755304920.8235092, "n_ticks": 19, "n_valid": 18, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755304905.9998684, "ts_end": 1755304925.846368, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755304910.494507, "ts_end": 1755304930.4852214, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755311670.1976714, "ts_end": 1755311670.1976714, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755311675.2448401, "ts_end": 1755311675.2448401, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755311680.276159, "ts_end": 1755311680.276159, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755311681.5433543, "ts_end": 1755311684.9672763, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.25, "label": "BAJO"}
+{"ts_start": 1755311681.5433543, "ts_end": 1755311689.5104349, "n_ticks": 8, "n_valid": 8, "method": "average", "avg_level": 0.625, "label": "BAJO"}
+{"ts_start": 1755312226.8197181, "ts_end": 1755312226.8197181, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312231.8561423, "ts_end": 1755312231.8561423, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312236.8797216, "ts_end": 1755312236.8797216, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312237.032691, "ts_end": 1755312241.3464792, "n_ticks": 6, "n_valid": 5, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755312237.032691, "ts_end": 1755312246.683666, "n_ticks": 11, "n_valid": 10, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755312237.032691, "ts_end": 1755312250.9362454, "n_ticks": 15, "n_valid": 14, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755312289.4871066, "ts_end": 1755312289.4871066, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312294.5184267, "ts_end": 1755312294.5184267, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312299.585258, "ts_end": 1755312299.585258, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312300.5636284, "ts_end": 1755312304.0170424, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755312300.5636284, "ts_end": 1755312308.7562442, "n_ticks": 8, "n_valid": 8, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755312300.5636284, "ts_end": 1755312313.5799465, "n_ticks": 12, "n_valid": 12, "method": "average", "avg_level": 0.16666666666666666, "label": "BAJO"}
+{"ts_start": 1755312300.5636284, "ts_end": 1755312318.512053, "n_ticks": 16, "n_valid": 16, "method": "average", "avg_level": 0.125, "label": "BAJO"}
+{"ts_start": 1755312305.201749, "ts_end": 1755312324.669859, "n_ticks": 17, "n_valid": 17, "method": "average", "avg_level": 0.17647058823529413, "label": "BAJO"}
+{"ts_start": 1755312448.7431786, "ts_end": 1755312448.7431786, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312453.7867277, "ts_end": 1755312453.7867277, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312458.788915, "ts_end": 1755312458.788915, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312461.1910255, "ts_end": 1755312462.6620004, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 0.5, "label": "BAJO"}
+{"ts_start": 1755312461.1910255, "ts_end": 1755312468.394323, "n_ticks": 7, "n_valid": 7, "method": "average", "avg_level": 0.5714285714285714, "label": "BAJO"}
+{"ts_start": 1755312461.1910255, "ts_end": 1755312473.1764627, "n_ticks": 11, "n_valid": 11, "method": "average", "avg_level": 0.7272727272727273, "label": "BAJO"}
+{"ts_start": 1755312461.1910255, "ts_end": 1755312477.7989814, "n_ticks": 15, "n_valid": 15, "method": "average", "avg_level": 0.7333333333333333, "label": "BAJO"}
+{"ts_start": 1755312523.3816886, "ts_end": 1755312523.3816886, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312528.422019, "ts_end": 1755312528.422019, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755312533.0427682, "ts_end": 1755312533.4467697, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755312533.0427682, "ts_end": 1755312537.8629212, "n_ticks": 6, "n_valid": 5, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755348324.1129868, "ts_end": 1755348324.1129868, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755348329.1256793, "ts_end": 1755348329.1256793, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755348334.127386, "ts_end": 1755348334.127386, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755348339.136855, "ts_end": 1755348339.136855, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755348339.6209006, "ts_end": 1755348343.197937, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.75, "label": "ALTO"}
+{"ts_start": 1755348339.6209006, "ts_end": 1755348349.201248, "n_ticks": 9, "n_valid": 9, "method": "average", "avg_level": 1.3333333333333333, "label": "MEDIO"}
+{"ts_start": 1755348339.6209006, "ts_end": 1755348353.676737, "n_ticks": 13, "n_valid": 13, "method": "average", "avg_level": 0.9230769230769231, "label": "MEDIO"}
+{"ts_start": 1755348339.6209006, "ts_end": 1755348358.82699, "n_ticks": 17, "n_valid": 17, "method": "average", "avg_level": 0.9411764705882353, "label": "MEDIO"}
+{"ts_start": 1755348344.4663749, "ts_end": 1755348363.7381206, "n_ticks": 17, "n_valid": 17, "method": "average", "avg_level": 0.7647058823529411, "label": "MEDIO"}
+{"ts_start": 1755350070.3062527, "ts_end": 1755350070.3062527, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350075.3492267, "ts_end": 1755350075.3492267, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350080.3634412, "ts_end": 1755350080.3634412, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350083.5617259, "ts_end": 1755350084.853474, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755350083.5617259, "ts_end": 1755350089.4390867, "n_ticks": 6, "n_valid": 6, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755350083.5617259, "ts_end": 1755350095.0849185, "n_ticks": 11, "n_valid": 11, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1755350083.5617259, "ts_end": 1755350099.496201, "n_ticks": 15, "n_valid": 15, "method": "average", "avg_level": 0.13333333333333333, "label": "BAJO"}
+{"ts_start": 1755350085.9975538, "ts_end": 1755350105.1332471, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 0.1111111111111111, "label": "BAJO"}
+{"ts_start": 1755350090.5387368, "ts_end": 1755350109.4951317, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 0.1111111111111111, "label": "BAJO"}
+{"ts_start": 1755350096.1900294, "ts_end": 1755350115.1127644, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 0.2222222222222222, "label": "BAJO"}
+{"ts_start": 1755350100.5897775, "ts_end": 1755350119.5701232, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 0.5555555555555556, "label": "BAJO"}
+{"ts_start": 1755350106.2194476, "ts_end": 1755350125.2482734, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.1111111111111112, "label": "MEDIO"}
+{"ts_start": 1755350110.5902328, "ts_end": 1755350129.7370608, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.5555555555555556, "label": "MEDIO"}
+{"ts_start": 1755350116.2005532, "ts_end": 1755350135.4155645, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755350120.6771085, "ts_end": 1755350139.9656312, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755350165.0320365, "ts_end": 1755350165.0320365, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350170.051832, "ts_end": 1755350170.051832, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350175.121087, "ts_end": 1755350175.121087, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350175.634457, "ts_end": 1755350179.4576743, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.5, "label": "BAJO"}
+{"ts_start": 1755350175.634457, "ts_end": 1755350185.1811147, "n_ticks": 8, "n_valid": 8, "method": "average", "avg_level": 0.5, "label": "BAJO"}
+{"ts_start": 1755350175.634457, "ts_end": 1755350188.9889536, "n_ticks": 11, "n_valid": 11, "method": "average", "avg_level": 0.6363636363636364, "label": "BAJO"}
+{"ts_start": 1755350364.9859958, "ts_end": 1755350364.9859958, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350370.0073712, "ts_end": 1755350370.0073712, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350374.3756638, "ts_end": 1755350374.3756638, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350374.3756638, "ts_end": 1755350374.3756638, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350374.3756638, "ts_end": 1755350374.3756638, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350374.3756638, "ts_end": 1755350374.3756638, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350374.3756638, "ts_end": 1755350374.3756638, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350432.6390991, "ts_end": 1755350432.6390991, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350437.674901, "ts_end": 1755350437.674901, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350442.6754987, "ts_end": 1755350442.6754987, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755350443.4969947, "ts_end": 1755350447.0272903, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.25, "label": "MEDIO"}
+{"ts_start": 1755350443.4969947, "ts_end": 1755350451.7261944, "n_ticks": 8, "n_valid": 8, "method": "average", "avg_level": 1.125, "label": "MEDIO"}
+{"ts_start": 1755350443.4969947, "ts_end": 1755350457.343916, "n_ticks": 13, "n_valid": 13, "method": "average", "avg_level": 0.7692307692307693, "label": "MEDIO"}
+{"ts_start": 1755350443.4969947, "ts_end": 1755350461.811007, "n_ticks": 17, "n_valid": 17, "method": "average", "avg_level": 0.8235294117647058, "label": "MEDIO"}
+{"ts_start": 1755350448.2163427, "ts_end": 1755350467.6773775, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 0.8333333333333334, "label": "MEDIO"}
+{"ts_start": 1755350452.8324196, "ts_end": 1755350472.4724019, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.0555555555555556, "label": "MEDIO"}
+{"ts_start": 1755350457.343916, "ts_end": 1755350477.2219758, "n_ticks": 18, "n_valid": 18, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755350462.9209082, "ts_end": 1755350482.2565877, "n_ticks": 17, "n_valid": 17, "method": "average", "avg_level": 1.7647058823529411, "label": "ALTO"}
+{"ts_start": 1755350467.6773775, "ts_end": 1755350487.3254473, "n_ticks": 17, "n_valid": 17, "method": "average", "avg_level": 2.0588235294117645, "label": "ALTO"}
+{"ts_start": 1755638684.4355302, "ts_end": 1755638684.4355302, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755638689.4474676, "ts_end": 1755638689.4474676, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755638694.4696374, "ts_end": 1755638694.4696374, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755638699.4823897, "ts_end": 1755638699.4823897, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755638704.486449, "ts_end": 1755638704.486449, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755638709.4908204, "ts_end": 1755638709.4908204, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755638714.4941971, "ts_end": 1755638714.4941971, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755644372.2625575, "ts_end": 1755644372.2625575, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755644377.2874682, "ts_end": 1755644377.2874682, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755644382.304471, "ts_end": 1755644382.304471, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755644387.3605447, "ts_end": 1755644387.3605447, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755644392.3670902, "ts_end": 1755644392.3670902, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755646211.902303, "ts_end": 1755646211.902303, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755646216.9269636, "ts_end": 1755646216.9269636, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755646221.9456787, "ts_end": 1755646221.9456787, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755646226.9802883, "ts_end": 1755646226.9802883, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755646231.9856079, "ts_end": 1755646231.9856079, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755648623.0474267, "ts_end": 1755648623.0474267, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755648628.07021, "ts_end": 1755648628.07021, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755648633.0858033, "ts_end": 1755648633.0858033, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755648638.1066608, "ts_end": 1755648638.1066608, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755648643.1189163, "ts_end": 1755648643.1189163, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755648648.1421576, "ts_end": 1755648648.1421576, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649217.7913263, "ts_end": 1755649217.7913263, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649222.8322105, "ts_end": 1755649222.8322105, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649227.8561196, "ts_end": 1755649227.8561196, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649232.8776457, "ts_end": 1755649232.8776457, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649237.8927805, "ts_end": 1755649237.8927805, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649435.1350017, "ts_end": 1755649435.1350017, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649440.1906826, "ts_end": 1755649440.1906826, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649445.2105947, "ts_end": 1755649445.2105947, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649450.2303982, "ts_end": 1755649450.2303982, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649455.2481723, "ts_end": 1755649455.2481723, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755649460.2588427, "ts_end": 1755649460.2588427, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755651075.8345904, "ts_end": 1755651075.8345904, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755651080.8655508, "ts_end": 1755651080.8655508, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755651085.8981447, "ts_end": 1755651085.8981447, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755651090.9198313, "ts_end": 1755651090.9198313, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755651095.943215, "ts_end": 1755651095.943215, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755653159.4779809, "ts_end": 1755653159.4779809, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755653164.4916835, "ts_end": 1755653164.4916835, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755653169.5062282, "ts_end": 1755653169.5062282, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755653174.5241957, "ts_end": 1755653174.5241957, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755653179.5441194, "ts_end": 1755653179.5441194, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755653184.5551577, "ts_end": 1755653184.5551577, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755654485.583615, "ts_end": 1755654485.583615, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755654490.5962918, "ts_end": 1755654490.5962918, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755654495.6251898, "ts_end": 1755654495.6251898, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755654500.6490097, "ts_end": 1755654500.6490097, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655349.9543247, "ts_end": 1755655349.9543247, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655355.0125196, "ts_end": 1755655355.0125196, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655360.0383248, "ts_end": 1755655360.0383248, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655365.054833, "ts_end": 1755655365.054833, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655370.0768974, "ts_end": 1755655370.0768974, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655375.0901186, "ts_end": 1755655375.0901186, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655441.1020606, "ts_end": 1755655441.1020606, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655446.1162026, "ts_end": 1755655446.1162026, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655451.1304631, "ts_end": 1755655451.1304631, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655456.145576, "ts_end": 1755655456.145576, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755655461.164479, "ts_end": 1755655461.164479, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755656605.4320416, "ts_end": 1755656605.4320416, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755656610.4488583, "ts_end": 1755656610.4488583, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755656615.4663455, "ts_end": 1755656615.4663455, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755656620.4997842, "ts_end": 1755656620.4997842, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755656625.522897, "ts_end": 1755656625.522897, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755656630.5305598, "ts_end": 1755656630.5305598, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657775.2446384, "ts_end": 1755657775.2446384, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657780.258583, "ts_end": 1755657780.258583, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657785.273571, "ts_end": 1755657785.273571, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657790.2990966, "ts_end": 1755657790.2990966, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657795.315522, "ts_end": 1755657795.315522, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657800.3251374, "ts_end": 1755657800.3251374, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657805.3356311, "ts_end": 1755657805.3356311, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657810.3453279, "ts_end": 1755657810.3453279, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755657815.3544588, "ts_end": 1755657815.3544588, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659785.686118, "ts_end": 1755659785.686118, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659790.6893907, "ts_end": 1755659790.6893907, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659795.7329264, "ts_end": 1755659795.7329264, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659800.7499323, "ts_end": 1755659800.7499323, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659805.7780557, "ts_end": 1755659805.7780557, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659810.8239725, "ts_end": 1755659810.8239725, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659815.8438041, "ts_end": 1755659815.8438041, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659820.859996, "ts_end": 1755659820.859996, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659825.8734426, "ts_end": 1755659825.8734426, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659830.893904, "ts_end": 1755659830.893904, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659835.9154136, "ts_end": 1755659835.9154136, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659840.9317164, "ts_end": 1755659840.9317164, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659845.9583466, "ts_end": 1755659845.9583466, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659850.9748836, "ts_end": 1755659850.9748836, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659855.9974754, "ts_end": 1755659855.9974754, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659861.0134218, "ts_end": 1755659861.0134218, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659866.032721, "ts_end": 1755659866.032721, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659871.0480604, "ts_end": 1755659871.0480604, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659876.0663888, "ts_end": 1755659876.0663888, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659881.0826247, "ts_end": 1755659881.0826247, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659886.1057062, "ts_end": 1755659886.1057062, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659891.1212277, "ts_end": 1755659891.1212277, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659896.136629, "ts_end": 1755659896.136629, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659901.1542163, "ts_end": 1755659901.1542163, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659906.168702, "ts_end": 1755659906.168702, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659911.1860785, "ts_end": 1755659911.1860785, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659916.2084718, "ts_end": 1755659916.2084718, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755659921.225797, "ts_end": 1755659921.225797, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755730418.8274324, "ts_end": 1755730418.8274324, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755730423.8438041, "ts_end": 1755730423.8438041, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755730428.8626993, "ts_end": 1755730428.8626993, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755730433.9021857, "ts_end": 1755730433.9021857, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730438.6495855, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730443.2453148, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730443.2453148, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755730438.6495855, "ts_end": 1755730449.230825, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755732518.3559744, "ts_end": 1755732518.3559744, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732523.3991647, "ts_end": 1755732523.3991647, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732528.4130867, "ts_end": 1755732528.4130867, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732533.4351463, "ts_end": 1755732533.4351463, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732538.4513192, "ts_end": 1755732538.4513192, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732543.4595587, "ts_end": 1755732543.4595587, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732548.46536, "ts_end": 1755732548.46536, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732553.4759111, "ts_end": 1755732553.4759111, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755732558.4865158, "ts_end": 1755732558.4865158, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734326.6005685, "ts_end": 1755734326.6005685, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734331.6166437, "ts_end": 1755734331.6166437, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734336.638144, "ts_end": 1755734336.638144, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734341.6659708, "ts_end": 1755734341.6659708, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734346.7251313, "ts_end": 1755734346.7251313, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734349.2729418, "ts_end": 1755734349.2729418, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734421.189174, "ts_end": 1755734421.189174, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734426.2080867, "ts_end": 1755734426.2080867, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734431.250005, "ts_end": 1755734431.250005, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734436.2693834, "ts_end": 1755734436.2693834, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734441.2974458, "ts_end": 1755734441.2974458, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734446.3358154, "ts_end": 1755734446.3358154, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734451.3719053, "ts_end": 1755734451.3719053, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734456.4322753, "ts_end": 1755734456.4322753, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755734458.750435, "ts_end": 1755734458.750435, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734458.750435, "ts_end": 1755734464.4875102, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734458.750435, "ts_end": 1755734469.9814067, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734458.750435, "ts_end": 1755734475.1452434, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734464.4875102, "ts_end": 1755734480.6831543, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734469.9814067, "ts_end": 1755734486.1349623, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734475.1452434, "ts_end": 1755734491.2844372, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734475.1452434, "ts_end": 1755734491.2844372, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734480.6831543, "ts_end": 1755734496.9587014, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734486.1349623, "ts_end": 1755734502.8561716, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755734491.2844372, "ts_end": 1755734508.2315996, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755742411.436582, "ts_end": 1755742411.436582, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742416.463021, "ts_end": 1755742416.463021, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742421.4842691, "ts_end": 1755742421.4842691, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742426.5256786, "ts_end": 1755742426.5256786, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742431.5647426, "ts_end": 1755742431.5647426, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742436.6252449, "ts_end": 1755742436.6252449, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742441.6741421, "ts_end": 1755742441.6741421, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742446.7248123, "ts_end": 1755742446.7248123, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742451.7490892, "ts_end": 1755742451.7490892, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742456.7784257, "ts_end": 1755742456.7784257, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742461.7928157, "ts_end": 1755742461.7928157, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755742466.8261611, "ts_end": 1755742466.8261611, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791031.641207, "ts_end": 1755791031.641207, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791036.6667604, "ts_end": 1755791036.6667604, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791041.6904757, "ts_end": 1755791041.6904757, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791046.7120268, "ts_end": 1755791046.7120268, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791051.7269826, "ts_end": 1755791051.7269826, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791056.7481086, "ts_end": 1755791056.7481086, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791061.7943432, "ts_end": 1755791061.7943432, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791066.8173144, "ts_end": 1755791066.8173144, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791071.8342605, "ts_end": 1755791071.8342605, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791076.861321, "ts_end": 1755791076.861321, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791081.8812242, "ts_end": 1755791081.8812242, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791086.8969922, "ts_end": 1755791086.8969922, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791091.9185648, "ts_end": 1755791091.9185648, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755791096.9353976, "ts_end": 1755791096.9353976, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755792192.1959863, "ts_end": 1755792192.1959863, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755792197.2309535, "ts_end": 1755792197.2309535, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755792202.261443, "ts_end": 1755792202.261443, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755792207.2864976, "ts_end": 1755792207.2864976, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755792212.2963636, "ts_end": 1755792212.2963636, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755792214.1185422, "ts_end": 1755792217.2012677, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792214.1185422, "ts_end": 1755792217.2012677, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792214.1185422, "ts_end": 1755792222.6600885, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792214.1185422, "ts_end": 1755792228.238944, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792214.1185422, "ts_end": 1755792233.6024177, "n_ticks": 5, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792222.6600885, "ts_end": 1755792238.7323198, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792228.238944, "ts_end": 1755792245.1895921, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792233.6024177, "ts_end": 1755792250.3239632, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792238.7323198, "ts_end": 1755792255.510884, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792245.1895921, "ts_end": 1755792261.2118652, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792250.3239632, "ts_end": 1755792266.5203876, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792250.3239632, "ts_end": 1755792266.5203876, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792250.3239632, "ts_end": 1755792266.5203876, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792266.5203876, "ts_end": 1755792282.6594422, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792266.5203876, "ts_end": 1755792282.6594422, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792282.6594422, "ts_end": 1755792287.8202598, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792282.6594422, "ts_end": 1755792293.3819175, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792282.6594422, "ts_end": 1755792298.65853, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792287.8202598, "ts_end": 1755792303.823933, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755792293.3819175, "ts_end": 1755792309.4909923, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755796667.3503704, "ts_end": 1755796667.3503704, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796672.3668482, "ts_end": 1755796672.3668482, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796677.38031, "ts_end": 1755796677.38031, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796682.3888376, "ts_end": 1755796682.3888376, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796687.3956113, "ts_end": 1755796687.3956113, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796692.399741, "ts_end": 1755796692.399741, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796697.4032602, "ts_end": 1755796697.4032602, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796702.4072814, "ts_end": 1755796702.4072814, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796707.4136927, "ts_end": 1755796707.4136927, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796724.8184016, "ts_end": 1755796724.8184016, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796729.8343844, "ts_end": 1755796729.8343844, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796734.8514006, "ts_end": 1755796734.8514006, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796739.8680966, "ts_end": 1755796739.8680966, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796744.8752735, "ts_end": 1755796744.8752735, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796749.8800461, "ts_end": 1755796749.8800461, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796754.8868463, "ts_end": 1755796754.8868463, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796759.8933525, "ts_end": 1755796759.8933525, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796864.184157, "ts_end": 1755796864.184157, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796869.1994405, "ts_end": 1755796869.1994405, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796955.1152763, "ts_end": 1755796955.1152763, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796960.1534107, "ts_end": 1755796960.1534107, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796965.184401, "ts_end": 1755796965.184401, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796970.217803, "ts_end": 1755796970.217803, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796975.2461436, "ts_end": 1755796975.2461436, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796980.2571912, "ts_end": 1755796980.2571912, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796985.3049364, "ts_end": 1755796985.3049364, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796990.3477097, "ts_end": 1755796990.3477097, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755796990.3715346, "ts_end": 1755796990.3715346, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755796990.3715346, "ts_end": 1755796996.009416, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755796990.3715346, "ts_end": 1755797001.3309314, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755796990.3715346, "ts_end": 1755797001.3309314, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755796990.3715346, "ts_end": 1755797001.3309314, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797001.3309314, "ts_end": 1755797018.7589028, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797023.9000278, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797029.4252584, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797018.7589028, "ts_end": 1755797034.659968, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755797428.8081372, "ts_end": 1755797428.8081372, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797433.8495622, "ts_end": 1755797433.8495622, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797438.9045885, "ts_end": 1755797438.9045885, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797443.9308007, "ts_end": 1755797443.9308007, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797448.9934597, "ts_end": 1755797448.9934597, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797454.0422602, "ts_end": 1755797454.0422602, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797459.1025097, "ts_end": 1755797459.1025097, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797461.8216035, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797461.8216035, "ts_end": 1755797467.4067504, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 3.0, "label": "ALTO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797510.8201816, "ts_end": 1755797510.8201816, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755797591.330586, "ts_end": 1755797591.330586, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755807474.2948823, "ts_end": 1755807474.2948823, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807479.3260052, "ts_end": 1755807479.3260052, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807484.3536065, "ts_end": 1755807484.3536065, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807489.3796048, "ts_end": 1755807489.3796048, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807494.4044576, "ts_end": 1755807494.4044576, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807499.4244406, "ts_end": 1755807499.4244406, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807504.437221, "ts_end": 1755807504.437221, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807509.4522047, "ts_end": 1755807509.4522047, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807514.4705255, "ts_end": 1755807514.4705255, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807519.5098062, "ts_end": 1755807519.5098062, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807524.527562, "ts_end": 1755807524.527562, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807529.5377219, "ts_end": 1755807529.5377219, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807569.598118, "ts_end": 1755807569.598118, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807574.6104386, "ts_end": 1755807574.6104386, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807579.62127, "ts_end": 1755807579.62127, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807584.6273534, "ts_end": 1755807584.6273534, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807589.6350267, "ts_end": 1755807589.6350267, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807594.6409118, "ts_end": 1755807594.6409118, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807599.6462073, "ts_end": 1755807599.6462073, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807604.652474, "ts_end": 1755807604.652474, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807609.6608999, "ts_end": 1755807609.6608999, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807634.4964283, "ts_end": 1755807634.4964283, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807639.5084472, "ts_end": 1755807639.5084472, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807644.527723, "ts_end": 1755807644.527723, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807727.802579, "ts_end": 1755807727.802579, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807732.8288002, "ts_end": 1755807732.8288002, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807737.8535688, "ts_end": 1755807737.8535688, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807742.887587, "ts_end": 1755807742.887587, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807747.9342852, "ts_end": 1755807747.9342852, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807752.9737966, "ts_end": 1755807752.9737966, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807757.9985812, "ts_end": 1755807757.9985812, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807763.0210657, "ts_end": 1755807763.0210657, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755807766.371164, "ts_end": 1755807766.371164, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 2.0, "label": "ALTO"}
+{"ts_start": 1755807766.371164, "ts_end": 1755807772.2067783, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755807766.371164, "ts_end": 1755807777.487137, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.3333333333333333, "label": "MEDIO"}
+{"ts_start": 1755807766.371164, "ts_end": 1755807782.7042956, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.25, "label": "MEDIO"}
+{"ts_start": 1755807766.371164, "ts_end": 1755807782.7042956, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.25, "label": "MEDIO"}
+{"ts_start": 1755807772.2067783, "ts_end": 1755807788.319443, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755807777.487137, "ts_end": 1755807793.7228646, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755807782.7042956, "ts_end": 1755807798.9405491, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.25, "label": "MEDIO"}
+{"ts_start": 1755807788.319443, "ts_end": 1755807804.564353, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755807793.7228646, "ts_end": 1755807809.8964765, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.75, "label": "ALTO"}
+{"ts_start": 1755807798.9405491, "ts_end": 1755807815.0718746, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.75, "label": "ALTO"}
+{"ts_start": 1755807804.564353, "ts_end": 1755807820.7280998, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755807804.564353, "ts_end": 1755807820.7280998, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755807804.564353, "ts_end": 1755807820.7280998, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1755808346.3513849, "ts_end": 1755808346.3513849, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808351.3655818, "ts_end": 1755808351.3655818, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808356.378828, "ts_end": 1755808356.378828, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808361.3918407, "ts_end": 1755808361.3918407, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808366.398241, "ts_end": 1755808366.398241, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808371.4025228, "ts_end": 1755808371.4025228, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808376.4083385, "ts_end": 1755808376.4083385, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808381.4150226, "ts_end": 1755808381.4150226, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808386.4232328, "ts_end": 1755808386.4232328, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808391.4285572, "ts_end": 1755808391.4285572, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808396.4359457, "ts_end": 1755808396.4359457, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808401.4475179, "ts_end": 1755808401.4475179, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808406.45702, "ts_end": 1755808406.45702, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808411.4702458, "ts_end": 1755808411.4702458, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808416.4743652, "ts_end": 1755808416.4743652, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808421.4761293, "ts_end": 1755808421.4761293, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808437.753577, "ts_end": 1755808437.753577, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808494.7766907, "ts_end": 1755808494.7766907, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808499.7942426, "ts_end": 1755808499.7942426, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808504.8378904, "ts_end": 1755808504.8378904, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808509.8656964, "ts_end": 1755808509.8656964, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808514.908785, "ts_end": 1755808514.908785, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808519.9292352, "ts_end": 1755808519.9292352, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808524.9643645, "ts_end": 1755808524.9643645, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808529.980053, "ts_end": 1755808529.980053, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808535.0104182, "ts_end": 1755808535.0104182, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808540.0425727, "ts_end": 1755808540.0425727, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808545.0772042, "ts_end": 1755808545.0772042, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755808548.6089253, "ts_end": 1755808548.6089253, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755808548.6089253, "ts_end": 1755808553.8688877, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755808548.6089253, "ts_end": 1755808559.6556072, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755808548.6089253, "ts_end": 1755808564.965067, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755808548.6089253, "ts_end": 1755808564.965067, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755809561.170946, "ts_end": 1755809561.170946, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809566.1917868, "ts_end": 1755809566.1917868, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809571.2131853, "ts_end": 1755809571.2131853, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809576.2424338, "ts_end": 1755809576.2424338, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809581.284368, "ts_end": 1755809581.284368, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809586.2978845, "ts_end": 1755809586.2978845, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809591.3347933, "ts_end": 1755809591.3347933, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809596.3543825, "ts_end": 1755809596.3543825, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809601.377325, "ts_end": 1755809601.377325, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809606.4007447, "ts_end": 1755809606.4007447, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809611.4473515, "ts_end": 1755809611.4473515, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809640.5822866, "ts_end": 1755809640.5822866, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809645.6052654, "ts_end": 1755809645.6052654, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809650.6171691, "ts_end": 1755809650.6171691, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809655.643517, "ts_end": 1755809655.643517, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809660.6907616, "ts_end": 1755809660.6907616, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809665.7241852, "ts_end": 1755809665.7241852, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809670.7643218, "ts_end": 1755809670.7643218, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809675.8037043, "ts_end": 1755809675.8037043, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809680.830734, "ts_end": 1755809680.830734, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809685.8365014, "ts_end": 1755809685.8365014, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755809690.8882713, "ts_end": 1755809690.8882713, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810748.3404546, "ts_end": 1755810748.3404546, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810753.3839877, "ts_end": 1755810753.3839877, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810758.440496, "ts_end": 1755810758.440496, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810763.477567, "ts_end": 1755810763.477567, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810768.5138834, "ts_end": 1755810768.5138834, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810773.5426412, "ts_end": 1755810773.5426412, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810778.5570254, "ts_end": 1755810778.5570254, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810783.5843446, "ts_end": 1755810783.5843446, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810788.5992503, "ts_end": 1755810788.5992503, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810793.619974, "ts_end": 1755810793.619974, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810798.6409662, "ts_end": 1755810798.6409662, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810803.6611683, "ts_end": 1755810803.6611683, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810844.6996608, "ts_end": 1755810844.6996608, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810849.7320588, "ts_end": 1755810849.7320588, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810854.7594874, "ts_end": 1755810854.7594874, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810859.781323, "ts_end": 1755810859.781323, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810864.7891304, "ts_end": 1755810864.7891304, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810869.8271024, "ts_end": 1755810869.8271024, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810874.879074, "ts_end": 1755810874.879074, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810879.9139636, "ts_end": 1755810879.9139636, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810884.9191387, "ts_end": 1755810884.9191387, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810889.9403236, "ts_end": 1755810889.9403236, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810894.9632988, "ts_end": 1755810894.9632988, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810899.979408, "ts_end": 1755810899.979408, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810905.0232067, "ts_end": 1755810905.0232067, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810910.0542388, "ts_end": 1755810910.0542388, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810915.078785, "ts_end": 1755810915.078785, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810920.097849, "ts_end": 1755810920.097849, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810925.1210115, "ts_end": 1755810925.1210115, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810930.1424496, "ts_end": 1755810930.1424496, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755810935.1702812, "ts_end": 1755810935.1702812, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813018.691071, "ts_end": 1755813018.691071, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813023.7148182, "ts_end": 1755813023.7148182, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813028.7289531, "ts_end": 1755813028.7289531, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813033.7576282, "ts_end": 1755813033.7576282, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813036.5646312, "ts_end": 1755813036.5646312, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813036.5646312, "ts_end": 1755813043.3468564, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813036.5646312, "ts_end": 1755813048.4944186, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813036.5646312, "ts_end": 1755813053.789529, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813036.5646312, "ts_end": 1755813053.789529, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813043.3468564, "ts_end": 1755813058.9958827, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813048.4944186, "ts_end": 1755813064.4518507, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813053.789529, "ts_end": 1755813070.2208533, "n_ticks": 4, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813467.4405344, "ts_end": 1755813467.4405344, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813472.4781232, "ts_end": 1755813472.4781232, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813477.5038943, "ts_end": 1755813477.5038943, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813482.5395522, "ts_end": 1755813482.5395522, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813487.5813258, "ts_end": 1755813487.5813258, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813492.6265428, "ts_end": 1755813492.6265428, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813497.6855547, "ts_end": 1755813497.6855547, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813502.716802, "ts_end": 1755813502.716802, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813507.7393541, "ts_end": 1755813507.7393541, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813512.7666523, "ts_end": 1755813512.7666523, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813517.7947516, "ts_end": 1755813517.7947516, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813522.8167615, "ts_end": 1755813522.8167615, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813527.8432384, "ts_end": 1755813527.8432384, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813532.8678763, "ts_end": 1755813532.8678763, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813537.893571, "ts_end": 1755813537.893571, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813542.916485, "ts_end": 1755813542.916485, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813583.1112025, "ts_end": 1755813583.1112025, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813588.1306956, "ts_end": 1755813588.1306956, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813593.1572938, "ts_end": 1755813593.1572938, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813598.1845815, "ts_end": 1755813598.1845815, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813603.2160866, "ts_end": 1755813603.2160866, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813603.3779125, "ts_end": 1755813603.3779125, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755813603.3779125, "ts_end": 1755813610.6971693, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755813603.3779125, "ts_end": 1755813615.9961762, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814477.20776, "ts_end": 1755814477.20776, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814482.2080517, "ts_end": 1755814482.2080517, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814487.2425754, "ts_end": 1755814487.2425754, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814492.2773862, "ts_end": 1755814492.2773862, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814494.2998888, "ts_end": 1755814494.2998888, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814494.2998888, "ts_end": 1755814500.7107623, "n_ticks": 2, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814494.2998888, "ts_end": 1755814505.9180846, "n_ticks": 3, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814561.877777, "ts_end": 1755814561.877777, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814566.9035347, "ts_end": 1755814566.9035347, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814571.90772, "ts_end": 1755814571.90772, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814576.928826, "ts_end": 1755814576.928826, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814581.958564, "ts_end": 1755814581.958564, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814585.2280262, "ts_end": 1755814585.2280262, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814585.2280262, "ts_end": 1755814591.6062384, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814585.2280262, "ts_end": 1755814596.9469974, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814585.2280262, "ts_end": 1755814596.9469974, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814585.2280262, "ts_end": 1755814602.5028408, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814591.6062384, "ts_end": 1755814607.9459825, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814596.9469974, "ts_end": 1755814613.1429446, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814602.5028408, "ts_end": 1755814618.6910863, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814607.9459825, "ts_end": 1755814623.8159115, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814739.7252674, "ts_end": 1755814739.7252674, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814744.7602768, "ts_end": 1755814744.7602768, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814749.760643, "ts_end": 1755814749.760643, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814754.7880156, "ts_end": 1755814754.7880156, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814759.8118966, "ts_end": 1755814759.8118966, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814764.842911, "ts_end": 1755814764.842911, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814769.85667, "ts_end": 1755814769.85667, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814774.8637445, "ts_end": 1755814774.8637445, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814779.8903782, "ts_end": 1755814779.8903782, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814784.944949, "ts_end": 1755814784.944949, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755814788.4240673, "ts_end": 1755814788.4240673, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814788.4240673, "ts_end": 1755814794.6670089, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814788.4240673, "ts_end": 1755814794.6670089, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814788.4240673, "ts_end": 1755814800.6144805, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814788.4240673, "ts_end": 1755814806.8161216, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814800.6144805, "ts_end": 1755814815.0766742, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814800.6144805, "ts_end": 1755814815.0766742, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814806.8161216, "ts_end": 1755814821.3594534, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755814815.0766742, "ts_end": 1755814827.0187626, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755817394.9505656, "ts_end": 1755817394.9505656, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817399.972036, "ts_end": 1755817399.972036, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817404.9926302, "ts_end": 1755817404.9926302, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817410.0215194, "ts_end": 1755817410.0215194, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817415.0397174, "ts_end": 1755817415.0397174, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817420.0499973, "ts_end": 1755817420.0499973, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817425.057975, "ts_end": 1755817425.057975, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817430.064234, "ts_end": 1755817430.064234, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817435.0724864, "ts_end": 1755817435.0724864, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817440.0801888, "ts_end": 1755817440.0801888, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817445.0886445, "ts_end": 1755817445.0886445, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817450.1004293, "ts_end": 1755817450.1004293, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755817455.1116667, "ts_end": 1755817455.1116667, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819658.9220212, "ts_end": 1755819658.9220212, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819663.947225, "ts_end": 1755819663.947225, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819668.9659383, "ts_end": 1755819668.9659383, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819673.9861383, "ts_end": 1755819673.9861383, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819679.0184224, "ts_end": 1755819679.0184224, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819684.0436447, "ts_end": 1755819684.0436447, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819689.0926008, "ts_end": 1755819689.0926008, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819694.1318524, "ts_end": 1755819694.1318524, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819699.148354, "ts_end": 1755819699.148354, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755819704.174507, "ts_end": 1755819704.174507, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893903.768046, "ts_end": 1755893903.768046, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893908.784943, "ts_end": 1755893908.784943, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893913.8000429, "ts_end": 1755893913.8000429, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893918.8452275, "ts_end": 1755893918.8452275, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893923.8894525, "ts_end": 1755893923.8894525, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893928.9133654, "ts_end": 1755893928.9133654, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893933.9475853, "ts_end": 1755893933.9475853, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893938.9640887, "ts_end": 1755893938.9640887, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893943.978, "ts_end": 1755893943.978, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893949.0007017, "ts_end": 1755893949.0007017, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893954.0164592, "ts_end": 1755893954.0164592, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893959.0333245, "ts_end": 1755893959.0333245, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893964.0492814, "ts_end": 1755893964.0492814, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893969.06477, "ts_end": 1755893969.06477, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893974.0809712, "ts_end": 1755893974.0809712, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893979.0999525, "ts_end": 1755893979.0999525, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893984.1158855, "ts_end": 1755893984.1158855, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893989.1290243, "ts_end": 1755893989.1290243, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893994.1455002, "ts_end": 1755893994.1455002, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755893999.1600528, "ts_end": 1755893999.1600528, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894004.1728194, "ts_end": 1755894004.1728194, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894009.1908069, "ts_end": 1755894009.1908069, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894014.2064588, "ts_end": 1755894014.2064588, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894019.225709, "ts_end": 1755894019.225709, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894024.2435875, "ts_end": 1755894024.2435875, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894029.2588398, "ts_end": 1755894029.2588398, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894034.2756562, "ts_end": 1755894034.2756562, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894039.3068926, "ts_end": 1755894039.3068926, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894044.328821, "ts_end": 1755894044.328821, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894049.3463364, "ts_end": 1755894049.3463364, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894054.3603888, "ts_end": 1755894054.3603888, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894059.377319, "ts_end": 1755894059.377319, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894064.3954682, "ts_end": 1755894064.3954682, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894069.4122062, "ts_end": 1755894069.4122062, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894074.4265044, "ts_end": 1755894074.4265044, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894079.4430766, "ts_end": 1755894079.4430766, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894084.4590273, "ts_end": 1755894084.4590273, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894089.4737117, "ts_end": 1755894089.4737117, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894094.4955654, "ts_end": 1755894094.4955654, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894099.5100014, "ts_end": 1755894099.5100014, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894104.5263393, "ts_end": 1755894104.5263393, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894109.5446603, "ts_end": 1755894109.5446603, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894114.5607433, "ts_end": 1755894114.5607433, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894119.5741644, "ts_end": 1755894119.5741644, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894124.590791, "ts_end": 1755894124.590791, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894129.6078715, "ts_end": 1755894129.6078715, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894134.6233108, "ts_end": 1755894134.6233108, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894482.6591117, "ts_end": 1755894482.6591117, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894487.676672, "ts_end": 1755894487.676672, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894492.716088, "ts_end": 1755894492.716088, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894497.750401, "ts_end": 1755894497.750401, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894501.9712148, "ts_end": 1755894501.9712148, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894501.9712148, "ts_end": 1755894501.9712148, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755894501.9712148, "ts_end": 1755894508.198, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755894501.9712148, "ts_end": 1755894513.553658, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755894501.9712148, "ts_end": 1755894519.0938118, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755894508.198, "ts_end": 1755894524.1708374, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755896178.409122, "ts_end": 1755896178.409122, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896183.4432967, "ts_end": 1755896183.4432967, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896188.4796116, "ts_end": 1755896188.4796116, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896193.5019996, "ts_end": 1755896193.5019996, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896198.544797, "ts_end": 1755896198.544797, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896203.589216, "ts_end": 1755896203.589216, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896208.6081336, "ts_end": 1755896208.6081336, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896213.6310928, "ts_end": 1755896213.6310928, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896218.6548157, "ts_end": 1755896218.6548157, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896219.5421772, "ts_end": 1755896219.5421772, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755896219.5421772, "ts_end": 1755896224.695876, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1755896524.1535845, "ts_end": 1755896524.1535845, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896529.1715677, "ts_end": 1755896529.1715677, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896534.2139435, "ts_end": 1755896534.2139435, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896539.2429967, "ts_end": 1755896539.2429967, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896544.2898712, "ts_end": 1755896544.2898712, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896549.336464, "ts_end": 1755896549.336464, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896554.3641946, "ts_end": 1755896554.3641946, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896559.401825, "ts_end": 1755896559.401825, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896856.611299, "ts_end": 1755896856.611299, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896861.6254752, "ts_end": 1755896861.6254752, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896866.6376724, "ts_end": 1755896866.6376724, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896871.6563616, "ts_end": 1755896871.6563616, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896876.6907218, "ts_end": 1755896876.6907218, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896881.7228084, "ts_end": 1755896881.7228084, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896886.7676477, "ts_end": 1755896886.7676477, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896891.8102286, "ts_end": 1755896891.8102286, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896896.8640258, "ts_end": 1755896896.8640258, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755896901.8908985, "ts_end": 1755896901.8908985, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897265.314714, "ts_end": 1755897265.314714, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897270.3519871, "ts_end": 1755897270.3519871, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897275.3745074, "ts_end": 1755897275.3745074, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897280.3981197, "ts_end": 1755897280.3981197, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897285.4540017, "ts_end": 1755897285.4540017, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897290.4618785, "ts_end": 1755897290.4618785, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897295.4851995, "ts_end": 1755897295.4851995, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897300.5233743, "ts_end": 1755897300.5233743, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897305.555669, "ts_end": 1755897305.555669, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897310.5834541, "ts_end": 1755897310.5834541, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897315.6087368, "ts_end": 1755897315.6087368, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897320.6327324, "ts_end": 1755897320.6327324, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1755897325.6483893, "ts_end": 1755897325.6483893, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766402.1484487, "ts_end": 1756766402.1484487, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766407.1721177, "ts_end": 1756766407.1721177, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766412.19176, "ts_end": 1756766412.19176, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766417.2208662, "ts_end": 1756766417.2208662, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766422.2674916, "ts_end": 1756766422.2674916, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766427.299748, "ts_end": 1756766427.299748, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766432.3194332, "ts_end": 1756766432.3194332, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766437.3543267, "ts_end": 1756766437.3543267, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766442.386688, "ts_end": 1756766442.386688, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766447.436307, "ts_end": 1756766447.436307, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766452.4707043, "ts_end": 1756766452.4707043, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766457.5033233, "ts_end": 1756766457.5033233, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766462.525812, "ts_end": 1756766462.525812, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766467.559839, "ts_end": 1756766467.559839, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766472.5868945, "ts_end": 1756766472.5868945, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766477.6113174, "ts_end": 1756766477.6113174, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766482.644366, "ts_end": 1756766482.644366, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756766487.6716626, "ts_end": 1756766487.6716626, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769000.4120405, "ts_end": 1756769000.4120405, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769005.4438477, "ts_end": 1756769005.4438477, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769010.4643686, "ts_end": 1756769010.4643686, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769015.4840744, "ts_end": 1756769015.4840744, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769020.5056574, "ts_end": 1756769020.5056574, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769025.521771, "ts_end": 1756769025.521771, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769030.5456069, "ts_end": 1756769030.5456069, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769035.571857, "ts_end": 1756769035.571857, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769037.4893909, "ts_end": 1756769037.4893909, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756769105.878459, "ts_end": 1756769105.878459, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769110.890799, "ts_end": 1756769110.890799, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769115.9131973, "ts_end": 1756769115.9131973, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769120.9296627, "ts_end": 1756769120.9296627, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769125.9652865, "ts_end": 1756769125.9652865, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769130.9926472, "ts_end": 1756769130.9926472, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769136.0091872, "ts_end": 1756769136.0091872, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769138.908837, "ts_end": 1756769138.908837, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756769164.7840254, "ts_end": 1756769164.7840254, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769169.7949963, "ts_end": 1756769169.7949963, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769174.8176284, "ts_end": 1756769174.8176284, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769179.84254, "ts_end": 1756769179.84254, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769184.8700333, "ts_end": 1756769184.8700333, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769189.896762, "ts_end": 1756769189.896762, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769194.9360912, "ts_end": 1756769194.9360912, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769199.9539094, "ts_end": 1756769199.9539094, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769201.0581348, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769206.2281828, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769211.7057934, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769211.7057934, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769211.7057934, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769211.7057934, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769211.7057934, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756769201.0581348, "ts_end": 1756769211.7057934, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771019.6348832, "ts_end": 1756771019.6348832, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771024.6483467, "ts_end": 1756771024.6483467, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771029.6695695, "ts_end": 1756771029.6695695, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771034.6970186, "ts_end": 1756771034.6970186, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771039.719409, "ts_end": 1756771039.719409, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771044.756455, "ts_end": 1756771044.756455, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771049.7867587, "ts_end": 1756771049.7867587, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771054.8331225, "ts_end": 1756771054.8331225, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771059.8530867, "ts_end": 1756771059.8530867, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771064.904503, "ts_end": 1756771064.904503, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771069.9321249, "ts_end": 1756771069.9321249, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771074.9653363, "ts_end": 1756771074.9653363, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756771077.4058053, "ts_end": 1756771077.4058053, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756773409.566856, "ts_end": 1756773409.566856, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773414.5801213, "ts_end": 1756773414.5801213, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773419.6066313, "ts_end": 1756773419.6066313, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773424.6383238, "ts_end": 1756773424.6383238, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773429.6568637, "ts_end": 1756773429.6568637, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773434.670554, "ts_end": 1756773434.670554, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773439.7071686, "ts_end": 1756773439.7071686, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773444.7260752, "ts_end": 1756773444.7260752, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773449.7443306, "ts_end": 1756773449.7443306, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773454.7634075, "ts_end": 1756773454.7634075, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773459.7847426, "ts_end": 1756773459.7847426, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773464.8085656, "ts_end": 1756773464.8085656, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773477.394758, "ts_end": 1756773477.394758, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773482.4150472, "ts_end": 1756773482.4150472, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773487.4279194, "ts_end": 1756773487.4279194, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773492.459731, "ts_end": 1756773492.459731, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773497.507689, "ts_end": 1756773497.507689, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773502.5429108, "ts_end": 1756773502.5429108, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773507.5676792, "ts_end": 1756773507.5676792, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773512.5896254, "ts_end": 1756773512.5896254, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773517.609162, "ts_end": 1756773517.609162, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773522.648603, "ts_end": 1756773522.648603, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756773527.6892047, "ts_end": 1756773527.6892047, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775475.4618163, "ts_end": 1756775475.4618163, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775480.4769778, "ts_end": 1756775480.4769778, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775485.4871285, "ts_end": 1756775485.4871285, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775490.491671, "ts_end": 1756775490.491671, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775495.4958057, "ts_end": 1756775495.4958057, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775500.4993904, "ts_end": 1756775500.4993904, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775505.5048296, "ts_end": 1756775505.5048296, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775510.5083094, "ts_end": 1756775510.5083094, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775515.51186, "ts_end": 1756775515.51186, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775852.671743, "ts_end": 1756775852.671743, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775857.682737, "ts_end": 1756775857.682737, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775875.283238, "ts_end": 1756775875.283238, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775880.293284, "ts_end": 1756775880.293284, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775934.670963, "ts_end": 1756775934.670963, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775939.6897383, "ts_end": 1756775939.6897383, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775944.7172856, "ts_end": 1756775944.7172856, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775949.741141, "ts_end": 1756775949.741141, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775952.3592937, "ts_end": 1756775952.3592937, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756775952.3592937, "ts_end": 1756775958.1019337, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756775952.3592937, "ts_end": 1756775963.7046428, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756775952.3592937, "ts_end": 1756775969.422377, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756775958.1019337, "ts_end": 1756775974.6413906, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.75, "label": "MEDIO"}
+{"ts_start": 1756775963.7046428, "ts_end": 1756775979.700056, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.5, "label": "BAJO"}
+{"ts_start": 1756775963.7046428, "ts_end": 1756775979.700056, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.5, "label": "BAJO"}
+{"ts_start": 1756775969.422377, "ts_end": 1756775985.2388933, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.25, "label": "BAJO"}
+{"ts_start": 1756775974.6413906, "ts_end": 1756775991.1171892, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.5, "label": "BAJO"}
+{"ts_start": 1756775979.700056, "ts_end": 1756775996.3133652, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756775985.2388933, "ts_end": 1756776001.9401932, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.25, "label": "MEDIO"}
+{"ts_start": 1756775991.1171892, "ts_end": 1756776007.1325784, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.5, "label": "MEDIO"}
+{"ts_start": 1756775996.3133652, "ts_end": 1756776012.2655478, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.25, "label": "MEDIO"}
+{"ts_start": 1756776001.9401932, "ts_end": 1756776017.9202113, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776167.727192, "ts_end": 1756776167.727192, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776172.7495034, "ts_end": 1756776172.7495034, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776177.774062, "ts_end": 1756776177.774062, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776182.792222, "ts_end": 1756776182.792222, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776187.8003669, "ts_end": 1756776187.8003669, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776192.8081512, "ts_end": 1756776192.8081512, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776226.1088557, "ts_end": 1756776226.1088557, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776231.1226974, "ts_end": 1756776231.1226974, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776236.1432278, "ts_end": 1756776236.1432278, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776241.162772, "ts_end": 1756776241.162772, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776312.1453178, "ts_end": 1756776312.1453178, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776317.1571233, "ts_end": 1756776317.1571233, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776322.1709127, "ts_end": 1756776322.1709127, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776327.2104971, "ts_end": 1756776327.2104971, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776332.220749, "ts_end": 1756776332.220749, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776337.226408, "ts_end": 1756776337.226408, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776342.2307801, "ts_end": 1756776342.2307801, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776347.235399, "ts_end": 1756776347.235399, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776352.240724, "ts_end": 1756776352.240724, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776357.2459652, "ts_end": 1756776357.2459652, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776362.2509704, "ts_end": 1756776362.2509704, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776403.7171276, "ts_end": 1756776403.7171276, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776408.7385592, "ts_end": 1756776408.7385592, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776413.764707, "ts_end": 1756776413.764707, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776418.7904422, "ts_end": 1756776418.7904422, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776422.2943225, "ts_end": 1756776422.2943225, "n_ticks": 1, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776422.2943225, "ts_end": 1756776425.380952, "n_ticks": 2, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776422.2943225, "ts_end": 1756776430.9161892, "n_ticks": 3, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776422.2943225, "ts_end": 1756776436.6187198, "n_ticks": 4, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776422.2943225, "ts_end": 1756776441.958012, "n_ticks": 5, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776430.9161892, "ts_end": 1756776447.1414692, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776436.6187198, "ts_end": 1756776452.7405124, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776441.958012, "ts_end": 1756776458.6143823, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756776601.9191844, "ts_end": 1756776601.9191844, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776606.932617, "ts_end": 1756776606.932617, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776611.954468, "ts_end": 1756776611.954468, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776616.9856021, "ts_end": 1756776616.9856021, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776622.0293064, "ts_end": 1756776622.0293064, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776627.0605145, "ts_end": 1756776627.0605145, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776632.0906157, "ts_end": 1756776632.0906157, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776637.111714, "ts_end": 1756776637.111714, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776642.1425793, "ts_end": 1756776642.1425793, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776647.1652224, "ts_end": 1756776647.1652224, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776652.1890244, "ts_end": 1756776652.1890244, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776726.4991703, "ts_end": 1756776726.4991703, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776731.513281, "ts_end": 1756776731.513281, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776736.5340714, "ts_end": 1756776736.5340714, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776741.565043, "ts_end": 1756776741.565043, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776746.6071873, "ts_end": 1756776746.6071873, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776751.6395013, "ts_end": 1756776751.6395013, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776880.8758807, "ts_end": 1756776880.8758807, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776885.8937247, "ts_end": 1756776885.8937247, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776890.9114382, "ts_end": 1756776890.9114382, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776895.9439118, "ts_end": 1756776895.9439118, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776900.978632, "ts_end": 1756776900.978632, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776906.012696, "ts_end": 1756776906.012696, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776911.063242, "ts_end": 1756776911.063242, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776916.0943124, "ts_end": 1756776916.0943124, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776921.1203847, "ts_end": 1756776921.1203847, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776926.14602, "ts_end": 1756776926.14602, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776969.4828043, "ts_end": 1756776969.4828043, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776974.496803, "ts_end": 1756776974.496803, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776979.5154133, "ts_end": 1756776979.5154133, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776984.5307233, "ts_end": 1756776984.5307233, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776989.5627184, "ts_end": 1756776989.5627184, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776994.5802286, "ts_end": 1756776994.5802286, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756776999.6118605, "ts_end": 1756776999.6118605, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777004.65078, "ts_end": 1756777004.65078, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777009.6742768, "ts_end": 1756777009.6742768, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777014.6955035, "ts_end": 1756777014.6955035, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777019.7144475, "ts_end": 1756777019.7144475, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777022.3514235, "ts_end": 1756777022.3514235, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777022.3514235, "ts_end": 1756777027.6909657, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777022.3514235, "ts_end": 1756777032.40377, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777022.3514235, "ts_end": 1756777037.8198948, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777027.6909657, "ts_end": 1756777042.7891798, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777032.40377, "ts_end": 1756777047.8008838, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777037.8198948, "ts_end": 1756777053.1922612, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777042.7891798, "ts_end": 1756777058.3410327, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777047.8008838, "ts_end": 1756777063.267679, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777053.1922612, "ts_end": 1756777068.6566088, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777058.3410327, "ts_end": 1756777073.8082116, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777063.267679, "ts_end": 1756777078.8805726, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777068.6566088, "ts_end": 1756777084.3101702, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777073.8082116, "ts_end": 1756777089.3491201, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777078.8805726, "ts_end": 1756777094.3533015, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777084.3101702, "ts_end": 1756777099.6841848, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777089.3491201, "ts_end": 1756777104.7154534, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777094.3533015, "ts_end": 1756777110.1502154, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777094.3533015, "ts_end": 1756777110.1502154, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777099.6841848, "ts_end": 1756777115.6049945, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777104.7154534, "ts_end": 1756777120.6848469, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777110.1502154, "ts_end": 1756777125.656192, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777115.6049945, "ts_end": 1756777131.0588303, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 0.0, "label": "BAJO"}
+{"ts_start": 1756777431.519702, "ts_end": 1756777431.519702, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777466.1607547, "ts_end": 1756777466.1607547, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777471.1766064, "ts_end": 1756777471.1766064, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777476.19506, "ts_end": 1756777476.19506, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777481.2143543, "ts_end": 1756777481.2143543, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777486.244625, "ts_end": 1756777486.244625, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777491.2731044, "ts_end": 1756777491.2731044, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777496.2947874, "ts_end": 1756777496.2947874, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777501.3144062, "ts_end": 1756777501.3144062, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756777506.0234873, "ts_end": 1756777506.0234873, "n_ticks": 1, "n_valid": 1, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777506.0234873, "ts_end": 1756777511.1496086, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777506.0234873, "ts_end": 1756777511.1496086, "n_ticks": 2, "n_valid": 2, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777506.0234873, "ts_end": 1756777516.393258, "n_ticks": 3, "n_valid": 3, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777506.0234873, "ts_end": 1756777522.0598264, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777511.1496086, "ts_end": 1756777527.298078, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777516.393258, "ts_end": 1756777532.3539689, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777522.0598264, "ts_end": 1756777538.9799945, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777527.298078, "ts_end": 1756777544.2950816, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777532.3539689, "ts_end": 1756777549.4259212, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777538.9799945, "ts_end": 1756777554.8964643, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777544.2950816, "ts_end": 1756777560.2056122, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777549.4259212, "ts_end": 1756777565.2542493, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777554.8964643, "ts_end": 1756777570.6106155, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777560.2056122, "ts_end": 1756777575.6654348, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777565.2542493, "ts_end": 1756777580.6347983, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777570.6106155, "ts_end": 1756777586.0376577, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777575.6654348, "ts_end": 1756777591.1762617, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777580.6347983, "ts_end": 1756777596.1905894, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777586.0376577, "ts_end": 1756777601.7532222, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777591.1762617, "ts_end": 1756777606.7823267, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777591.1762617, "ts_end": 1756777606.7823267, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777596.1905894, "ts_end": 1756777612.0088701, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777601.7532222, "ts_end": 1756777617.3704896, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777606.7823267, "ts_end": 1756777622.4062197, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777612.0088701, "ts_end": 1756777627.4238555, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777617.3704896, "ts_end": 1756777633.0975206, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777622.4062197, "ts_end": 1756777638.3956516, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777627.4238555, "ts_end": 1756777643.7506707, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777633.0975206, "ts_end": 1756777649.291806, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777638.3956516, "ts_end": 1756777654.4884717, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777643.7506707, "ts_end": 1756777659.5320377, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777649.291806, "ts_end": 1756777664.8833938, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777654.4884717, "ts_end": 1756777670.050748, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777659.5320377, "ts_end": 1756777675.209095, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756777664.8833938, "ts_end": 1756777680.84166, "n_ticks": 4, "n_valid": 4, "method": "average", "avg_level": 1.0, "label": "MEDIO"}
+{"ts_start": 1756853757.937425, "ts_end": 1756853757.937425, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756853762.9752192, "ts_end": 1756853762.9752192, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756853768.0100393, "ts_end": 1756853768.0100393, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756853773.0517175, "ts_end": 1756853773.0517175, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}
+{"ts_start": 1756853778.0699542, "ts_end": 1756853778.0699542, "n_ticks": 0, "n_valid": 0, "method": "average", "label": "INSEGURO"}

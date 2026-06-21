@@ -1,0 +1,42 @@
+# Ignore everything in the root directory by default
+/*
+
+# Whitelist project files in the root directory
+!/.gitignore
+!/PROGRESO_BMO.md
+!/install_env.sh
+!/requirements_x86.txt
+!/mod_a.py
+
+# Whitelist project folders
+!/integradora/
+!/apps/
+!/qr_code_recognition/
+!/yahboom_ws/
+
+# Ignore specific large files/folders inside whitelisted directories
+
+# 1. Inside integradora/
+/integradora/model_ia/pruebas_mod/
+/integradora/model_ia/moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth
+/integradora/Oraciones_interpret/.pio/
+/integradora/Oraciones_interpret/.vscode/
+/integradora/**/__pycache__/
+/integradora/**/*.py[co]
+/integradora/**/*.zip
+/integradora/model_ia/detectron2/build/
+/integradora/model_ia/detectron2/dist/
+/integradora/model_ia/detectron2/detectron2.egg-info/
+
+# 2. Inside apps/
+/apps/llm/llama.cpp/
+/apps/**/__pycache__/
+
+# 3. Inside yahboom_ws/
+/yahboom_ws/build/
+/yahboom_ws/install/
+/yahboom_ws/log/
+/yahboom_ws/**/__pycache__/
+
+# 4. Inside qr_code_recognition/
+/qr_code_recognition/**/__pycache__/

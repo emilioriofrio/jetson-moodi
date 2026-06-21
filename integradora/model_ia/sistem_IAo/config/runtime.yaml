@@ -1,0 +1,66 @@
+# === Orquestación general ===
+tick_size: 10                 # cada cuántos frames hay predicción/tick
+queues_maxsize: 5             # evita colas infinitas; prioriza frescura
+
+# === Cámara (USB) ===
+camera_type: "usb"            # "usb" | "csi" | "file"
+camera_device: "/dev/video0"
+camera_index: 0               # (opcional) ignorado si se usa camera_device
+width: 960
+height: 720
+fps: 30
+prefer_mjpg: true             # usa MJPG si la webcam lo soporta
+# camera_pipeline: "v4l2src device=/dev/video0 ! image/jpeg,framerate=30/1 ! jpegdec ! videoscale ! video/x-raw,width=960,height=720 ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1 sync=0"
+
+# === Pesos de fusión iniciales (A: facial, B: corporal, C: movimiento) ===
+weights:
+  A: 0.25
+  B: 0.35
+  C: 0.40
+
+# === Umbrales globales ===
+thresholds:
+  pred_conf: 0.55
+  quality_pose: 0.35
+  face_timeout_ticks: 3      # cuántos ticks seguidos sin rostro para “olvidar” ROI
+  stale_frames: 20
+
+# === Fusión (global) ===
+fusion:
+  cooldown_up: 3             # ticks para subir nivel global
+  cooldown_down: 1           # ticks para bajar
+  required_modules: 3        # cuántos módulos deben estar activos/reportando
+  debug: false
+
+# === Reporter ===
+reporter:
+  window_secs: 20            # ventana deslizante (s)
+  step_secs: 5               # cada cuánto emite resumen (s)
+  method: "average"          # "average" | "majority"
+  thresholds:                # para method="average" con niveles 0..3
+    low: 0.75                # promedio < 0.75 -> BAJO
+    med: 1.75                # promedio < 1.75 -> MEDIO; si no -> ALTO
+  output_jsonl: "resultados/estres_resumen.jsonl"
+  print_console: true
+
+# === Módulo A (facial / DeepFace) ===
+modA_backends_order: ["mtcnn", "mediapipe"]  # orden de detectores
+modA_mtcnn_max_side: 640                     # 512–720 va bien en Orin
+modA_mtcnn_steps: [0.8, 0.9, 0.95]
+modA_mtcnn_min_face: 40
+modA_roi_expand: 1.6                         # margen alrededor del último bbox
+modA_roi_track_ticks: 5                      # ticks buscando sólo en ROI tras detectar
+modA_ema_alpha: 0.45
+modA_min_gap_for_switch: 7.0
+modA_hysteresis_margin: 3.0
+modA_valence_extra_gap: 5.0
+
+# === Módulo B (corporal / MediaPipe + LSTM) ===
+modulo_b:
+  model_path: "resultados_modb_v3/modelo_modb_v3.keras"
+  labels_map_path: "dataset_vectores_v3/labels_map_v3.txt"
+  N_FRAMES: 10
+  SMOOTH_WINDOW: 4
+  PRED_THRESH: 0.55
+  quality_pose_thr: 0.35     # si visibilidad es baja → override a “inseguro”
+  stale_frames: 20

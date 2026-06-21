@@ -1,0 +1,28 @@
+# Entorno x86_64 (Ubuntu 22.04) para ejecutar Moodi en CPU
+# Nota: detectron2 NO se incluye aquí porque se compila desde fuente.
+
+numpy
+opencv-python
+pillow
+pyyaml
+tqdm
+
+flask==3.0.3
+requests==2.32.3
+
+# Módulo A (DeepFace + MTCNN)
+deepface==0.0.93
+mtcnn
+
+# Módulo B (MediaPipe + Keras/TensorFlow)
+mediapipe
+tensorflow==2.16.1
+
+# Módulo C (VGG16 + BiLSTM + Detectron2)
+# Instalarás torch/torchvision CPU con wheels específicas en install_env.sh
+torch==2.1.2+cpu
+torchvision==0.16.2+cpu
+
+# UI (visualización)
+matplotlib
+

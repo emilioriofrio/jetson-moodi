@@ -1,0 +1,30 @@
+%YAML:1.0
+---
+image_width: 1920
+image_height: 1080
+camera_name: camera
+camera_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [583.32121,   0.     , 290.8562 ,
+           0.     , 783.65447, 223.15165,
+           0.     ,   0.     ,   1.     ]
+distortion_model: plumb_bob
+distortion_coefficients: !!opencv-matrix
+  rows: 1
+  cols: 5
+  dt: d
+  data: [0.106696, -0.116255, -0.018194, -0.011949, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1., 0., 0.,
+         0., 1., 0.,
+         0., 0., 1.]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [600.07017,   0.     , 284.95284,   0.     ,
+           0.     , 807.38252, 216.33741,   0.     ,
+           0.     ,   0.     ,   1.     ,   0.     ]

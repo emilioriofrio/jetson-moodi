@@ -1,0 +1,6 @@
+0,dedos_boca
+1,juegos_manos
+2,manos_cabeza
+3,manos_rostro
+4,neutral
+5,otros

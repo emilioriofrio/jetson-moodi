@@ -1,0 +1,12 @@
+              precision    recall  f1-score   support
+
+  dedos_boca     1.0000    1.0000    1.0000         4
+juegos_manos     0.8000    1.0000    0.8889         4
+manos_cabeza     0.8000    0.8000    0.8000         5
+manos_rostro     1.0000    0.8000    0.8889         5
+     neutral     0.8333    1.0000    0.9091         5
+       otros     1.0000    0.7500    0.8571         4
+
+    accuracy                         0.8889        27
+   macro avg     0.9056    0.8917    0.8907        27
+weighted avg     0.9025    0.8889    0.8879        27
