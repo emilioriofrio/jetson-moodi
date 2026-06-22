@@ -20,10 +20,11 @@ os.environ.setdefault("TF_XLA_FLAGS", "--tf_xla_auto_jit=0 --tf_xla_enable_xla_d
 #os.environ.setdefault("TF_XLA_FLAGS", "--tf_xla_auto_jit=0")
 os.environ.setdefault("XLA_FLAGS", "--xla_gpu_enable_triton_gemm=false")
 # --- Entorno TF/Keras para este worker ---
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 os.environ.setdefault("KERAS_BACKEND", "tensorflow")
 os.environ.setdefault("TF_USE_LEGACY_KERAS", "0")
 os.environ.setdefault("TF_TRT_DISABLE", "1")
-os.environ.setdefault("CUDA_VISIBLE_DEVICES", "0")
 
 # utilidades
 def load_cfg(path: str) -> dict:
@@ -157,10 +158,10 @@ def _import_deepface_safely():
     return DeepFace
 
 # helpers de preprocesado
-def _clahe_bgr(img_bgr):
+def _clahe_bgr(img_bgr, clip_limit=2.0):
     ycrcb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2YCrCb)
     y, cr, cb = cv2.split(ycrcb)
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=(8,8))
     y = clahe.apply(y)
     ycrcb = cv2.merge([y, cr, cb])
     return cv2.cvtColor(ycrcb, cv2.COLOR_YCrCb2BGR)
@@ -273,6 +274,8 @@ def run_worker_A(cfg_path: str, in_q: Queue, out_q: Queue, stop_event: Event):
     HYSTERESIS_MARGIN = float(cfg.get("modA_hysteresis_margin", 3.0))
     MIN_GAP_SWITCH = float(cfg.get("modA_min_gap_for_switch", 7.0))
     VALENCE_EXTRA_GAP = float(cfg.get("modA_valence_extra_gap", 5.0))
+    USE_CLAHE = bool(cfg.get("modA_use_clahe", True))
+    CLAHE_CLIP = float(cfg.get("modA_clahe_clip", 1.5))
 
     # MTCNN tuning
     MTCNN_MAX_SIDE = int(cfg.get("modA_mtcnn_max_side", 640))
@@ -434,7 +437,7 @@ def run_worker_A(cfg_path: str, in_q: Queue, out_q: Queue, stop_event: Event):
                             x1, y1 = x0 + w0, y0 + h0
                             roi = frame[y0:y1, x0:x1]
                             if roi.size > 0:
-                                roi_proc = _clahe_bgr(roi)
+                                roi_proc = _clahe_bgr(roi, CLAHE_CLIP) if USE_CLAHE else roi
                                 emociones, t_emo = _analyze_emotion_ensemble(DeepFace, roi_proc)
 
                                 face_area = w0 * h0
@@ -483,7 +486,7 @@ def run_worker_A(cfg_path: str, in_q: Queue, out_q: Queue, stop_event: Event):
                         if roi.size == 0:
                             continue
 
-                        roi_proc = _clahe_bgr(roi)
+                        roi_proc = _clahe_bgr(roi, CLAHE_CLIP) if USE_CLAHE else roi
                         emociones, t_emo = _analyze_emotion_ensemble(DeepFace, roi_proc)
 
                         face_area = w0*h0

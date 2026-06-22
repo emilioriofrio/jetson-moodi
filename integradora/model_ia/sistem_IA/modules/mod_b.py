@@ -1,5 +1,7 @@
 # Variables de entorno 
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 os.environ.setdefault("TF_USE_LEGACY_KERAS", "1")
 os.environ.setdefault("KERAS_BACKEND", "tensorflow")
 

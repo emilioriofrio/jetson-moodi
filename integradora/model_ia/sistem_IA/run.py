@@ -1,13 +1,13 @@
 # run.py
-import os, sys, time, signal
+import os
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
+import sys, time, signal
 import multiprocessing as mp
 
-# ========= KERAS/TF para TODOS los hijos =========
-# - En Jetson con TF 2.16+NV: usa el backend tf.keras "legacy shim" y
-#   evita mezclar con paquetes externos tipo tf_keras.
+# ========= BASE ENVIRONMENT CONFIG =========
 os.environ.setdefault("TF_USE_LEGACY_KERAS", "0")
 os.environ.setdefault("KERAS_BACKEND", "tensorflow")
-# Opcional: silencia TF-TRT si no tienes TensorRT 10 instalado
 os.environ.setdefault("TF_TRT_DISABLE", "1")
 
 CFG = "config/runtime.yaml"

@@ -1,86 +1,73 @@
-# === Orquestación general ===
-tick_size: 10                 # cada cuántos frames hay predicción/tick
-queues_maxsize: 5             # evita colas infinitas; prioriza frescura
-
-# === Módulos Habilitados ===
-# Para ahorrar recursos computacionales y evitar sobrecorrientes en la Jetson, se recomienda
-# desactivar el Módulo C (Detectron2 + VGG16) que es sumamente pesado.
-enabled_modules: ["A", "B"]   # Modifica a ["A", "B", "C"] si deseas reactivar el módulo C
-
-# === Cámara ===
-camera_type: "usb"            # "usb" | "csi" | "file" (controlado por scripts enable_*.sh)
-camera_device: "/dev/video0"
-camera_index: 0               # (opcional) ignorado si se usa camera_device
-width: 960
-height: 720
+camera_device: /dev/video0
+camera_index: 0
+camera_type: usb
+enabled_modules:
+- A
+- B
+- C
 fps: 30
-prefer_mjpg: true             # usa MJPG si la webcam lo soporta
-# camera_pipeline: "v4l2src device=/dev/video0 ! image/jpeg,framerate=30/1 ! jpegdec ! videoscale ! video/x-raw,width=960,height=720 ! videoconvert ! video/x-raw,format=BGR ! appsink drop=1 sync=0"
-
-# === Pesos de fusión iniciales (A: facial, B: corporal, C: movimiento) ===
-weights:
-  A: 0.45
-  B: 0.55
-  C: 0.00
-
-# === Umbrales globales ===
+fusion:
+  cooldown_down: 1
+  cooldown_up: 4
+  debug: false
+  required_modules: 2
+height: 720
+modA_backends_order:
+- mediapipe
+modA_ema_alpha: 0.30
+modA_hysteresis_margin: 1.5
+modA_min_gap_for_switch: 4.0
+modA_mtcnn_max_side: 720
+modA_mtcnn_min_face: 20
+modA_mtcnn_steps:
+- 0.6
+- 0.7
+- 0.8
+modA_roi_expand: 1.6
+modA_roi_track_ticks: 0
+modA_valence_extra_gap: 1.0
+modA_use_clahe: true
+modA_clahe_clip: 1.2
+modulo_b:
+  N_FRAMES: 10
+  PRED_THRESH: 0.5
+  SMOOTH_WINDOW: 6
+  labels_map_path: dataset_vectores_v3/labels_map_v3.txt
+  model_path: resultados_modb_v3/modelo_modb_v3.keras
+  quality_pose_thr: 0.35
+  stale_frames: 20
+modulo_c:
+  analyze_every: 1
+  bilstm_path: moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth
+  detect_every: 3
+  detectron_score_thr: 0.7
+  label_map_path: moduloC_dataset/vectores_numpy/label_map.json
+  min_person_ratio: 0.15
+  seq_len: 11
+  stale_ticks: 30
+  use_gpu: true
+  vgg_input:
+  - 224
+  - 224
+prefer_mjpg: true
+queues_maxsize: 5
+reporter:
+  method: majority
+  output_jsonl: resultados/estres_resumen.jsonl
+  print_console: true
+  step_secs: 5
+  thresholds:
+    low: 0.75
+    med: 1.75
+  window_secs: 20
 thresholds:
+  face_timeout_ticks: 3
   pred_conf: 0.55
   quality_pose: 0.35
-  face_timeout_ticks: 3      # cuántos ticks seguidos sin rostro para “olvidar” ROI
   stale_frames: 20
-
-# === Fusión (global) ===
-fusion:
-  cooldown_up: 4             # ticks para subir nivel global
-  cooldown_down: 1           # ticks para bajar
-  required_modules: 2        # número de módulos requeridos para fundir (debe ser <= len(enabled_modules))
-  debug: false
-
-# === Reporter ===
-reporter:
-  window_secs: 20            # ventana deslizante (s)
-  step_secs: 5               # cada cuánto emite resumen (s)
-  method: "majority"          # "average" | "majority"
-  thresholds:                # para method="average" con niveles 0..3
-    low: 0.75                # promedio < 0.75 -> BAJO
-    med: 1.75                # promedio < 1.75 -> MEDIO; si no -> ALTO
-  output_jsonl: "resultados/estres_resumen.jsonl"
-  print_console: true
-
-# === Módulo A (facial / DeepFace) ===
-modA_backends_order: ["mediapipe"]  # orden de detectores (mediapipe es sumamente rápido y ligero)
-modA_mtcnn_max_side: 720         # antes 640
-modA_mtcnn_steps: [0.6, 0.7, 0.8] # antes [0.8, 0.9, 0.95]
-modA_mtcnn_min_face: 20          # antes 40
-
-modA_roi_expand: 1.6                         # margen alrededor del último bbox
-modA_roi_track_ticks: 0                      # ticks buscando sólo en ROI tras detectar
-modA_ema_alpha: 0.45
-modA_min_gap_for_switch: 7.0
-modA_hysteresis_margin: 3.0
-modA_valence_extra_gap: 5.0
-
-# === Módulo B (corporal / MediaPipe + LSTM) ===
-modulo_b:
-  model_path: "resultados_modb_v3/modelo_modb_v3.keras"
-  labels_map_path: "dataset_vectores_v3/labels_map_v3.txt"
-  N_FRAMES: 10
-  SMOOTH_WINDOW: 6 #4
-  PRED_THRESH: 0.50 #0.55
-  quality_pose_thr: 0.35     # si visibilidad es baja → override a “inseguro”
-  stale_frames: 20
-
-# === Módulo C (movimiento / Detectron2 + VGG16 + LSTM) ===
-# (Ignorado si no está en enabled_modules)
-modulo_c:
-  bilstm_path: "moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth"
-  label_map_path: "moduloC_dataset/vectores_numpy/label_map.json"
-  use_gpu: true
-  detectron_score_thr: 0.7
-  analyze_every: 1
-  detect_every: 3
-  seq_len: 11
-  vgg_input: [224, 224]
-  stale_ticks: 30
-  min_person_ratio: 0.15
+tick_size: 10
+weights:
+  A: 0.35
+  B: 0.35
+  C: 0.30
+width: 960
