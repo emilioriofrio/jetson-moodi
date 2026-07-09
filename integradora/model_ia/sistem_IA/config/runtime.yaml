@@ -11,7 +11,7 @@ fusion:
   cooldown_up: 4
   debug: false
   required_modules: 2
-height: 720
+height: 480
 modA_backends_order:
 - mediapipe
 modA_ema_alpha: 0.30
@@ -37,9 +37,9 @@ modulo_b:
   quality_pose_thr: 0.35
   stale_frames: 20
 modulo_c:
-  analyze_every: 1
+  analyze_every: 2
   bilstm_path: moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth
-  detect_every: 3
+  detect_every: 5
   detectron_score_thr: 0.7
   label_map_path: moduloC_dataset/vectores_numpy/label_map.json
   min_person_ratio: 0.15
@@ -65,9 +65,9 @@ thresholds:
   pred_conf: 0.55
   quality_pose: 0.35
   stale_frames: 20
-tick_size: 10
+tick_size: 15
 weights:
   A: 0.35
   B: 0.35
   C: 0.30
-width: 960
+width: 640

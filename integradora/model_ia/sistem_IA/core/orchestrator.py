@@ -1,8 +1,11 @@
 import cv2, time, yaml, traceback, os
 from core.messages import FrameMsg
+from core.frame_utils import load_rotation, apply_rotation
 from multiprocessing import Event
 from multiprocessing import SimpleQueue as Queue
 import queue as pyq
+
+CAMERA_CFG_PATH = "/home/jetson/bmo_unified/config/camera.json"
 
 def load_cfg(path: str) -> dict:
     with open(path, "r", encoding="utf-8") as f:
@@ -154,7 +157,8 @@ def run_orchestrator(cfg_path: str, qA: Queue, qB: Queue, qC: Queue, stop_event:
         print("[ORCH] No se pudo abrir la cámara.", flush=True)
         return
 
-    print("[ORCH] Cámara abierta.", flush=True)
+    rotate = load_rotation(CAMERA_CFG_PATH)
+    print(f"[ORCH] Cámara abierta. Rotación aplicada: {rotate}", flush=True)
 
     frame_idx = 0
     try:
@@ -163,6 +167,10 @@ def run_orchestrator(cfg_path: str, qA: Queue, qB: Queue, qC: Queue, stop_event:
             if not ok:
                 time.sleep(0.01)
                 continue
+
+            # Corrección de montaje físico (90°), ANTES de repartir a los módulos
+            # y de cualquier overlay -- dimensiones dinámicas tras el swap ancho/alto.
+            frame = apply_rotation(frame, rotate)
 
             msg = FrameMsg.build(frame_idx, frame)
 

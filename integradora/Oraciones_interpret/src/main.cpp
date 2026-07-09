@@ -1,248 +1,103 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <MFRC522.h>
-#include <FS.h>
-#include <SPIFFS.h>
-#include <ArduinoJson.h>
-#include <vector>
-#include <WiFi.h>
-#include <HTTPClient.h>
 
-/* CONFIGURACIÓN */
-constexpr char  SSID[]       = "NETLIFE-FERNANDO";
-constexpr char  PASS[]       = "Mayala2002";
-constexpr char  SERVER_URL[] = "http://192.168.10.140:5000/ask";
+/*
+ * Firmware "periférico puro" para el ESP32 de Moodi/BMO.
+ *
+ * Responsabilidad ÚNICA de este firmware: leer hardware (10 botones + lector
+ * RFID RC522) y reportarlo por serie en texto plano. NO hace WiFi, NO llama a
+ * ia_bridge, NO envía Telegram y NO traduce UID->palabra: toda esa lógica
+ * (orquestación, vocabulario, LLM, Telegram) vive ahora en bmo_app.py, en la
+ * Jetson, para tener una sola fuente de verdad del estado de la frase PECS y
+ * para no bloquear la lectura de botones/RFID si la red cae (que es lo que
+ * pasaba con el WiFi.begin() bloqueante de la versión anterior).
+ *
+ * Protocolo de línea (una línea por evento, terminada en '\n'):
+ *   BTN:<gpio>:DOWN      -> botón en <gpio> presionado
+ *   BTN:<gpio>:UP        -> botón en <gpio> liberado
+ *   RFID:<b0>,<b1>,<b2>,<b3>  -> UID crudo de una tarjeta leída
+ *   BOOT:OK              -> saludo al iniciar/reconectar
+ *
+ * El mapeo GPIO -> rol lógico (D-pad, cluster de acción, etc.) vive
+ * exclusivamente en bmo_unified/config/button_map.json (Python), nunca aquí,
+ * para poder remapear sin reflashear la placa.
+ */
 
-constexpr char TELEGRAM_TOKEN[] = "8019998276:AAEmcn7N2ZRH_hp9VfEVqrW5WX4vDSg8xT4";
-constexpr char CHAT_ID[]        = "1344148877";
-
-constexpr uint32_t HTTP_TIMEOUT = 90000;   // 90s para cubrir picos
-constexpr uint8_t  SS_PIN       = 21;
-constexpr uint8_t  RST_PIN      = 22;
-constexpr uint8_t  BUTTON_PIN   = 5;
-constexpr uint16_t DEBOUNCE_MS  = 50;
-
-// RFID
+// ---------- RFID ----------
+constexpr uint8_t SS_PIN  = 21;
+constexpr uint8_t RST_PIN = 22;
 MFRC522 rfid(SS_PIN, RST_PIN);
-byte card[4] = {0};
-String sentence;
 
-// botón
-bool buttonState = HIGH, lastButton = HIGH;
-unsigned long lastDebounce = 0;
-bool readyToSend = false;
+// ---------- Botones ----------
+// GPIO según la tabla 3.2 de CONTEXTO_MOODI_UI_INTERACTIVA_08072026.md (mapa definitivo,
+// módulo ESP32-WROOM). Orden: CURSOR_UP=4, CURSOR_DOWN=16, CURSOR_LEFT=32, CURSOR_RIGHT=33,
+// ISLA_R=25, ISLA_M=26, ISLA_L=27, PANEL_R=17, PANEL_L=14, PANEL_C=13. GPIO34/35 (solo
+// entrada, sin pull-up interna) y GPIO12 (strapping de boot) quedan fuera de uso -- los 10
+// pines finales soportan INPUT_PULLUP interno, mismo cableado simple (botón a GND,
+// presionado = LOW), sin resistencias externas. Ver bmo_unified/config/button_map.json
+// para el mapeo GPIO -> rol lógico (única fuente de verdad, no aquí).
+constexpr uint8_t NUM_BUTTONS = 10;
+constexpr uint8_t BUTTON_PINS[NUM_BUTTONS] = {4, 16, 32, 33, 25, 26, 27, 17, 14, 13};
+constexpr uint16_t DEBOUNCE_MS = 50;
 
-// vocabulario
-struct RFIDWord {
-  byte uid[4];
-  String palabra;
-  String tipo;
-};
-std::vector<RFIDWord> vocab;
+bool stableState[NUM_BUTTONS];      // true = liberado (HIGH), false = presionado (LOW)
+bool lastReading[NUM_BUTTONS];
+unsigned long lastChangeMs[NUM_BUTTONS];
 
-bool sameUID(const byte a[4], const byte b[4]) {
-  for (int i = 0; i < 4; ++i) if (a[i] != b[i]) return false;
-  return true;
-}
-
-RFIDWord* findWord(const byte uid[4]) {
-  for (auto& w : vocab) if (sameUID(w.uid, uid)) return &w;
-  return nullptr;
-}
-
-void loadVocab() {
-  if (!SPIFFS.begin(true)) { Serial.println("[ERR] SPIFFS"); return; }
-  File f = SPIFFS.open("/rfid_vocab.json");
-  if (!f) { Serial.println("[ERR] vocab file"); return; }
-
-  DynamicJsonDocument doc(8192);
-  if (deserializeJson(doc, f)) { Serial.println("[ERR] JSON"); return; }
-
-  for (JsonObject o : doc.as<JsonArray>()) {
-    RFIDWord w;
-    for (int i = 0; i < 4; ++i) w.uid[i] = o["uid"][i];
-    w.palabra = o["palabra"].as<String>();
-    w.tipo    = o["tipo"].as<String>();
-    vocab.push_back(w);
+void setupButtons() {
+  for (uint8_t i = 0; i < NUM_BUTTONS; ++i) {
+    pinMode(BUTTON_PINS[i], INPUT_PULLUP);
+    stableState[i] = HIGH;
+    lastReading[i] = HIGH;
+    lastChangeMs[i] = 0;
   }
-  Serial.println("[OK] Vocabulario cargado");
 }
 
-void printUID(const byte *b) {
-  for (int i = 0; i < 4; ++i) { Serial.print(b[i]); if (i < 3) Serial.print(","); }
+void pollButtons() {
+  unsigned long now = millis();
+  for (uint8_t i = 0; i < NUM_BUTTONS; ++i) {
+    bool reading = digitalRead(BUTTON_PINS[i]);
+
+    if (reading != lastReading[i]) {
+      lastChangeMs[i] = now;
+      lastReading[i] = reading;
+    }
+
+    if ((now - lastChangeMs[i]) > DEBOUNCE_MS && reading != stableState[i]) {
+      stableState[i] = reading;
+      bool pressed = (reading == LOW);
+      Serial.print("BTN:");
+      Serial.print(BUTTON_PINS[i]);
+      Serial.println(pressed ? ":DOWN" : ":UP");
+    }
+  }
 }
 
-// WiFi
-void connectWiFi() {
-  WiFi.setSleep(false);           // evita microcortes
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(SSID, PASS);
-  Serial.print("Wi-Fi");
-  while (WiFi.status() != WL_CONNECTED) { delay(500); Serial.print('.'); }
-  Serial.println(" ¡conectado!");
-}
+// ---------- RFID ----------
+void readRFID() {
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) return;
 
-// Telegram
-void sendTelegramMessage(const String& mensaje) {
-  String url = "https://api.telegram.org/bot" + String(TELEGRAM_TOKEN) + "/sendMessage";
+  Serial.print("RFID:");
+  for (uint8_t i = 0; i < 4; ++i) {
+    Serial.print(rfid.uid.uidByte[i]);
+    if (i < 3) Serial.print(",");
+  }
+  Serial.println();
 
-  HTTPClient http;
-  WiFiClientSecure tls;
-  tls.setInsecure(); 
-
-  http.setReuse(false);
-  http.useHTTP10(true);       // cerrar al final
-  http.begin(tls, url);
-  http.setTimeout(HTTP_TIMEOUT);
-  #if ARDUINO_ESP32_MAJOR >= 3
-    http.setConnectTimeout(15000);
-  #endif
-
-  http.addHeader("Content-Type", "application/json");
-  http.addHeader("Connection", "close");
-
-  String payload = "{\"chat_id\":\"" + String(CHAT_ID) + "\",\"text\":\"" + mensaje + "\"}";
-
-  int code = http.POST(payload);
-  if (code > 0) Serial.println("[OK] Mensaje enviado a Telegram");
-  else         Serial.printf("[ERROR] Telegram HTTP %d\n", code);
-  http.end();
+  rfid.PICC_HaltA();
+  rfid.PCD_StopCrypto1();
 }
 
 void setup() {
   Serial.begin(115200);
   SPI.begin();
   rfid.PCD_Init();
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-
-  connectWiFi();
-  loadVocab();
-  Serial.println("Escanea una tarjeta...");
-}
-
-// lectura RFID
-void readRFID() {
-  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) return;
-
-  memcpy(card, rfid.uid.uidByte, 4);
-  Serial.print("UID: "); printUID(card); Serial.print(" → ");
-
-  if (RFIDWord* w = findWord(card)) {
-    Serial.println(w->palabra);
-    sentence += w->palabra + " ";
-  } else {
-    Serial.println("¿?");
-  }
-  rfid.PICC_HaltA(); rfid.PCD_StopCrypto1();
-}
-
-// botón
-void pollButton() {
-  bool reading = digitalRead(BUTTON_PIN);
-  if (reading != lastButton) lastDebounce = millis();
-
-  if ((millis() - lastDebounce) > DEBOUNCE_MS && reading != buttonState) {
-    buttonState = reading;
-    if (buttonState == LOW && sentence.length()) readyToSend = true;
-  }
-  lastButton = reading;
-}
-
-// enviar a IA
-void sendToAI() {
-  String compact = sentence;
-  compact.trim();
-  compact.replace("  ", " ");
-
-  Serial.println("\n===== FRASE BRUTA =====");
-  Serial.println(sentence);
-  Serial.println("=======================");
-  Serial.print("→ Compactada: "); Serial.println(compact);
-  Serial.println();
-
-  String prompt = "Reescribe la frase en español correcto y conciso: \"" + compact + "\"";
-  prompt.replace("\"", "\\\"");
-
-  // payload JSON
-  DynamicJsonDocument jd(1024);
-  jd["prompt"] = prompt;
-  String payload; serializeJson(jd, payload);
-
-  auto do_request = [&](String &response) -> int {
-    HTTPClient http;
-    WiFiClient client;                 // cliente explícito
-    client.setTimeout(HTTP_TIMEOUT);
-
-    http.setReuse(false);              // sin keep-alive
-    http.useHTTP10(true);              // cierre al final
-    http.begin(client, SERVER_URL);
-    http.setTimeout(HTTP_TIMEOUT);
-    #if ARDUINO_ESP32_MAJOR >= 3
-      http.setConnectTimeout(15000);
-    #endif
-    http.addHeader("Content-Type", "application/json");
-    http.addHeader("Accept", "application/json");
-    http.addHeader("Connection", "close");
-
-    unsigned long t0 = millis();
-    Serial.print("⌛ Esperando IA");
-    int code = http.POST(payload);
-
-    if (code == HTTP_CODE_OK) {
-      response = http.getString();     // bloquea hasta recibir todo o timeout
-    } else {
-      Serial.printf(" [HTTP %d]\n", code);
-    }
-    http.end();
-
-    Serial.println();
-    unsigned long total = millis() - t0;
-    Serial.printf("[TIEMPO TOTAL] %lu ms\n", total);
-    return code;
-  };
-
-  // intento 1
-  String response;
-  int code = do_request(response);
-
-  // reintento si timeout transitorio (-11) o error de transporte (-1)
-  if (code == -11 || code == -1) {
-    delay(400);
-    Serial.println("[INFO] Reintentando petición a IA...");
-    response = "";
-    code = do_request(response);
-  }
-
-  DynamicJsonDocument jr(2048);
-  if (code == HTTP_CODE_OK &&
-      deserializeJson(jr, response) == DeserializationError::Ok &&
-      jr.containsKey("response")) {
-
-    String msg = jr["response"].as<String>();
-    msg.replace("**", "");
-    msg.trim();
-    if (msg.startsWith("\"") && msg.endsWith("\"")) {
-      msg.remove(0, 1); msg.remove(msg.length() - 1);
-    }
-
-    Serial.println("Interpretación IA:");
-    Serial.println(msg);
-
-    String mensajeTelegram = "El niño comunica el siguiente mensaje 📨:\n\n" + msg;
-    sendTelegramMessage(mensajeTelegram);
-  } else {
-    Serial.println("Error JSON / Respuesta:");
-    Serial.println(response);
-  }
-
-  sentence = "";
-  readyToSend = false;
-  Serial.println("\nEscanea una tarjeta...");
+  setupButtons();
+  Serial.println("BOOT:OK");
 }
 
 void loop() {
-  if (WiFi.status() != WL_CONNECTED) connectWiFi();
+  pollButtons();
   readRFID();
-  pollButton();
-  if (readyToSend) sendToAI();
 }

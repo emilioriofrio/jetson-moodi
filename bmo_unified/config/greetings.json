@@ -1,0 +1,10 @@
+{
+  "_comentario": "Saludos variables de la pantalla Oraciones (5.6). Se elige uno al azar cada vez que se entra a la vista.",
+  "greetings": [
+    "Hola, ¿qué deseas contarme hoy?",
+    "¿Qué me quieres decir?",
+    "Cuéntame algo, te escucho",
+    "¿Qué necesitas?",
+    "Estoy aquí para ti, ¿qué pasa?"
+  ]
+}

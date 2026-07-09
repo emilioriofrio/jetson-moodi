@@ -41,3 +41,8 @@
 
 # 4. Inside qr_code_recognition/
 /qr_code_recognition/**/__pycache__/
+
+# 5. Inside bmo_unified/
+/bmo_unified/config/telegram.json
+/bmo_unified/**/__pycache__/
+/bmo_unified/logs/

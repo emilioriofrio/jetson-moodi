@@ -1,0 +1,13 @@
+{
+  "_comentario": "Mapa GPIO físico (ESP32) -> rol lógico. Editable sin tocar código ni firmware tras calibrar con --calibrate. Ver CONTEXTO_MOODI_UI_INTERACTIVA_08072026.md secciones 3.2-3.4. Los roles CURSOR_* se interpretan según la pantalla activa (Caras: cambia cara; Oraciones: mueve selección); PANEL_C=EMO_TOGGLE es fijo, el resto (PECS_SEND/DELETE/CLEAR, HOME, DYNAMIC_PLAY) son la propuesta inicial de 3.3, pendiente de confirmar por ergonomía con el modo calibración.",
+  "4": "CURSOR_UP",
+  "16": "CURSOR_DOWN",
+  "32": "CURSOR_LEFT",
+  "33": "CURSOR_RIGHT",
+  "25": "DYNAMIC_PLAY",
+  "26": "PECS_DELETE",
+  "27": "PECS_CLEAR",
+  "17": "PECS_SEND",
+  "14": "HOME",
+  "13": "EMO_TOGGLE"
+}

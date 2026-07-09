@@ -56,18 +56,22 @@ def person_mask_from_detectron(predictor, frame_rgb, thr=0.7):
     out = predictor(frame_rgb)
     inst = out["instances"]
     if len(inst) == 0:
-        return None, 0.0
+        return None, 0.0, None
     # COCO class 0 es "person"
     idxs = (inst.pred_classes == 0).nonzero().flatten()
     if len(idxs) == 0:
-        return None, 0.0
+        return None, 0.0, None
     # escoger la persona con mayor score
     scores = inst.scores[idxs]
     best = idxs[scores.argmax()]
     if float(inst.scores[best].item()) < thr:
-        return None, 0.0
+        return None, 0.0, None
     mask = inst.pred_masks[best].to("cpu").numpy().astype(np.uint8) * 255
-    return mask, float(inst.scores[best].item())
+    # bbox en píxeles, solo para overlay del panel embebido (5.7) -- no participa en la clasificación.
+    # Boxes.__getitem__ exige un int puro (a diferencia de Tensor.__getitem__ con pred_masks/scores).
+    x1, y1, x2, y2 = inst.pred_boxes[int(best)].tensor.to("cpu").numpy()[0].tolist()
+    region = {"x": int(x1), "y": int(y1), "w": int(x2 - x1), "h": int(y2 - y1)}
+    return mask, float(inst.scores[best].item()), region
 
 
 # modelo BiLSTM
@@ -147,6 +151,7 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
 
     # Reutilización de máscara
     last_mask = None
+    last_region = None
     detect_counter = 0
 
     def normalize_label(lbl: str) -> str:
@@ -185,10 +190,11 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
             # máscara de persona
             run_detect = (detect_counter % detect_every == 0)
             if run_detect:
-                mask, det_score = person_mask_from_detectron(predictor, frame_rgb, thr=thr_det)
+                mask, det_score, region = person_mask_from_detectron(predictor, frame_rgb, thr=thr_det)
                 if mask is None:
                     mask = np.zeros((H, W), dtype=np.uint8)
                 last_mask = mask
+                last_region = region
             else:
                 mask = last_mask if last_mask is not None else np.zeros((H, W), dtype=np.uint8)
             detect_counter += 1
@@ -268,7 +274,8 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
                     present=present,
                     meta={
                         "person_ratio": round(person_ratio, 3),
-                        "seq_idx": list(idx_buffer)
+                        "seq_idx": list(idx_buffer),
+                        "region": last_region,
                     }
                 )
                 try:

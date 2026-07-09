@@ -71,6 +71,23 @@ def normalize_by_shoulders(vec225):
     arr = (arr - center) / dist
     return arr.reshape(-1)
 
+def pose_bbox_px(results, w, h, min_vis=0.5):
+    """Recuadro en píxeles de los landmarks de pose visibles (para overlay del panel
+    embebido, sección 5.7). No participa en la clasificación, solo visualización."""
+    if not results.pose_landmarks:
+        return None
+    xs, ys = [], []
+    for lm in results.pose_landmarks.landmark:
+        v = getattr(lm, "visibility", 0.0) or 0.0
+        if v >= min_vis:
+            xs.append(lm.x)
+            ys.append(lm.y)
+    if not xs:
+        return None
+    x0, x1 = max(0.0, min(xs)) * w, min(1.0, max(xs)) * w
+    y0, y1 = max(0.0, min(ys)) * h, min(1.0, max(ys)) * h
+    return {"x": int(x0), "y": int(y0), "w": int(x1 - x0), "h": int(y1 - y0)}
+
 def quality_score_pose(results, thr=0.5):
     """Fracción de landmarks de pose con visibilidad >= thr."""
     if not results.pose_landmarks:
@@ -222,9 +239,11 @@ def run_worker_B(cfg_path: str, in_q: Queue, out_q: Queue, stop_event: Event):
                         pred_label = last_pred_label
                         pred_conf = last_pred_conf
 
+                h_px, w_px = frame_bgr.shape[:2]
                 meta_out = {
                     "class_names": CLASS_NAMES,
-                    "last_pred_frame": int(last_pred_frame)
+                    "last_pred_frame": int(last_pred_frame),
+                    "region": pose_bbox_px(results, w_px, h_px, min_vis=VIS_THR_POSE),
                 }
 
                 # Publicar este tick
