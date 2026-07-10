@@ -57,9 +57,9 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
     last_level = None
     up_cnt = down_cnt = 0
 
-    current_idx = -1
-    bucket = {}
-    emitted_for_idx = False
+    last_preds = {}      # module -> PredMsg
+    last_preds_ts = {}   # module -> timestamp float
+    max_age = 2.0        # segundos de validez
 
     print("[FUS] Iniciado.")
     try:
@@ -81,19 +81,23 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
 
             idx = pred.frame_idx
 
-            if idx != current_idx:
-                current_idx = idx
-                bucket = {}
-                emitted_for_idx = False
+            # Registrar la prediccion y su timestamp local
+            last_preds[pred.module] = pred
+            last_preds_ts[pred.module] = time.time()
 
-            bucket[pred.module] = pred
+            # Filtrar predicciones activas y recientes
+            now = time.time()
+            active_preds = {}
+            for m, p in list(last_preds.items()):
+                ts = last_preds_ts.get(m, 0.0)
+                if now - ts <= max_age:
+                    active_preds[m] = p
 
-            if not emitted_for_idx and len(bucket) >= required:
-                inseg = sum(1 for p in bucket.values() if _norm(p.label) == "inseguro")
+            if len(active_preds) >= required:
+                inseg = sum(1 for p in active_preds.values() if _norm(p.label) == "inseguro")
                 if inseg >= 2:
-                    print(f"[FUS][{idx}] => INSEGURO")
+                    print(f"[FUS][{idx}] => INSEGURO (múltiples inseguros)")
                     last_level = "inseguro"
-                    emitted_for_idx = True
                     # emitir al reporter
                     try:
                         out_q.put(FusionTickMsg(frame_idx=idx, ts=time.time(),
@@ -103,7 +107,7 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
                     continue
 
                 score, total_w = 0.0, 0.0
-                for m, p in bucket.items():
+                for m, p in active_preds.items():
                     lvl = map_to_scale(m, p.label)
                     if lvl is None:
                         continue
@@ -113,9 +117,8 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
                     total_w += w_eff
 
                 if total_w == 0.0:
-                    print(f"[FUS][{idx}] => INSEGURO (sin pesos)")
+                    print(f"[FUS][{idx}] => INSEGURO (sin pesos eficaces)")
                     last_level = "inseguro"
-                    emitted_for_idx = True
                     try:
                         out_q.put(FusionTickMsg(frame_idx=idx, ts=time.time(),
                                                 level=None, state="inseguro", target=None).to_dict())
@@ -160,7 +163,6 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
                         print(f"[FUS][{idx}] => {target} (reset)")
                         state = "init"
 
-                emitted_for_idx = True
                 # emitir al reporter el nivel actual (last_level)
                 try:
                     out_q.put(FusionTickMsg(frame_idx=idx, ts=time.time(),

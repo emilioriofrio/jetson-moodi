@@ -283,6 +283,16 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
                 except Exception:
                     pass
 
+                # Vaciar in_q y limpiar buffers locales para evitar acumulacion de lag
+                try:
+                    while getattr(in_q, "_reader").poll(0):
+                        in_q.get()
+                except Exception:
+                    pass
+                frames_gray.clear()
+                masks.clear()
+                idx_buffer.clear()
+
     except KeyboardInterrupt:
         pass
     except Exception:
