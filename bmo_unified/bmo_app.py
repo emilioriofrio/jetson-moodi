@@ -19,7 +19,14 @@ import signal
 import sys
 
 from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
+
+# "Ubuntu" viene preinstalada en el panel Eleclab/Jetson y tiene más carácter
+# que la sans-serif por defecto de Qt (que hacía sentir la app plana); se
+# aplica a nivel de QApplication para que la hereden todos los QLabel que solo
+# fijan font-size/color en su stylesheet, sin tener que tocar cada uno.
+APP_FONT_FAMILY = "Ubuntu"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_DIR = os.path.join(BASE_DIR, "config")
@@ -89,6 +96,7 @@ def main():
     log.info("Iniciando bmo_app.py (calibrate=%s)", args.calibrate)
 
     app = QApplication(sys.argv)
+    app.setFont(QFont(APP_FONT_FAMILY, 11))
 
     window = MainWindow(CONFIG_DIR, ANIM_DIR, calibrate=args.calibrate)
     window.showFullScreen()

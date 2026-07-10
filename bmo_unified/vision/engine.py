@@ -33,6 +33,17 @@ log = logging.getLogger("bmo.vision_engine")
 SISTEM_IA_DIR = "/home/jetson/integradora/model_ia/sistem_IA"
 CFG_REL = "config/runtime.yaml"
 
+# Cooldown mínimo entre un stop() y el siguiente start() aceptado. Se observó
+# en logs reales que un evento de botón EMO_TOGGLE espurio (ruido eléctrico o
+# conexión intermitente en ese botón físico, no un bug del firmware -- el
+# debounce del ESP32 ya es correcto) puede hacer arrancar/detener este motor
+# repetidamente en segundos; cada arranque implica spawnear TensorFlow +
+# Detectron2 + MediaPipe + la cámara, suficientemente pesado como para
+# saturar los 6 núcleos de la Orin Nano y congelar el resto de la app
+# (incluida la reproducción de video). Este cooldown evita que un rebote de
+# hardware degenere en ese ciclo de arranque/apagado en cascada.
+MIN_RESTART_INTERVAL_S = 2.0
+
 
 def _ensure_sistem_path_first():
     """Garantiza que sistem_IA quede SIEMPRE primero en sys.path.
@@ -185,12 +196,21 @@ class VisionEngine(QObject):
         self._stop_event = None
         self._pump = None
         self._running = False
+        self._last_stop_ts = 0.0
 
     def is_running(self) -> bool:
         return self._running
 
     def start(self):
         if self._running:
+            return
+
+        elapsed = time.monotonic() - self._last_stop_ts
+        if elapsed < MIN_RESTART_INTERVAL_S:
+            log.warning(
+                "Arranque de motor de visión ignorado: %.1fs desde el último apagado "
+                "(cooldown anti-rebote, ver MIN_RESTART_INTERVAL_S)", elapsed,
+            )
             return
 
         sistem_run = _import_sistem_run_no_chdir()
@@ -277,5 +297,6 @@ class VisionEngine(QObject):
         self._queues = []
         self._stop_event = None
         self._running = False
+        self._last_stop_ts = time.monotonic()
         self.stopped.emit()
         log.info("[VISION] Motor de visión detenido.")

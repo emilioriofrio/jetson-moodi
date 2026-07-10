@@ -1,13 +1,24 @@
 # ui/emo_monitor_panel.py
 """Panel de Monitor Emocional embebido (6.2): feed de video + nivel de estrés
-con color, SIN ventanas externas (nada de cv2.imshow). Además de la etiqueta
-global de fusión, dibuja el recuadro + etiqueta de la última predicción de
-cada módulo (A/B/C) que traiga región (meta.region), para no depender solo
-del color agregado."""
+con color, SIN ventanas externas (nada de cv2.imshow). Combina dos vistas de
+los módulos A/B/C (ambas alimentadas por VisionEngine.pred_ready): recuadro +
+etiqueta dibujados sobre el propio video (para ubicación espacial), y un panel
+lateral con la lectura textual de cada módulo (para lectura rápida aunque el
+recuadro no caiga bien sobre la persona).
+
+Rediseño: salir de Video por la cinta fantasma YA detiene el motor de visión
+(ver MainWindow._show_view), así que el botón "Detener reconocimiento" era
+una acción casi redundante presentada como protagonista (pastilla ancha con
+texto) -- ahora es un botón circular pequeño (✕) en la esquina, coherente con
+las insignias circulares del resto de la app (ui/ghost_ribbon.py). El resto
+del panel usa tarjetas por módulo en vez de texto plano suelto."""
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
+
+PANEL_BG = "#16232C"  # navy oscuro (misma familia que el ojo de Moodi, #2A3C4B)
+CARD_BG = "rgba(255,255,255,18)"
 
 STRESS_COLORS = {
     "BAJO": "#3CC83C",
@@ -22,19 +33,68 @@ MODULE_COLORS = {
     "C": QColor("#FFEB3B"),  # movimiento (amarillo)
 }
 
+MODULE_NAMES = {
+    "A": "A · Facial",
+    "B": "B · Gestual",
+    "C": "C · Movimiento",
+}
+
 _BADGE_STYLE = (
-    "background: {color}; color: white; font-size: 18px; font-weight: bold; "
-    "border-radius: 10px; padding: 8px 16px;"
+    "background: {color}; color: white; font-size: 20px; font-weight: 700; "
+    "border-radius: 22px; padding: 10px 26px;"
 )
+
+_STOP_BTN_STYLE = (
+    "QPushButton { background: rgba(255,255,255,25); color: white; font-size: 18px; "
+    "font-weight: 700; border-radius: 22px; border: 1px solid rgba(255,255,255,60); }"
+    "QPushButton:pressed { background: #C1573B; border: 1px solid #C1573B; }"
+)
+
+
+class _ModuleCard(QWidget):
+    def __init__(self, module: str, parent=None):
+        super().__init__(parent)
+        color = MODULE_COLORS[module]
+        self.setStyleSheet(f"background: {CARD_BG}; border-radius: 12px;")
+
+        dot = QLabel()
+        dot.setFixedSize(12, 12)
+        dot.setStyleSheet(f"background: {color.name()}; border-radius: 6px;")
+
+        name_lbl = QLabel(MODULE_NAMES[module])
+        name_lbl.setStyleSheet("color: #B8C4CC; font-size: 13px; font-weight: 600; background: transparent;")
+
+        self._value_lbl = QLabel("—")
+        self._value_lbl.setWordWrap(True)
+        self._value_lbl.setStyleSheet(
+            f"color: {color.name()}; font-size: 15px; font-weight: 700; background: transparent;"
+        )
+
+        header = QHBoxLayout()
+        header.setSpacing(8)
+        header.addWidget(dot)
+        header.addWidget(name_lbl)
+        header.addStretch(1)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(14, 12, 14, 12)
+        layout.setSpacing(6)
+        layout.addLayout(header)
+        layout.addWidget(self._value_lbl)
+
+    def set_reading(self, label_txt: str, conf: float, present: bool):
+        status = "" if present else " · sin detección"
+        self._value_lbl.setText(f"{label_txt}  {conf:.0%}{status}")
 
 
 class EmoMonitorPanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground, True)
-        self.setStyleSheet("background: rgba(15,15,20,235);")
+        self.setStyleSheet(f"background: {PANEL_BG};")
 
         self._latest_preds = {}  # module ("A"/"B"/"C") -> último PredMsg (dict)
+        self._module_cards = {}  # module -> _ModuleCard
 
         self._video_label = QLabel()
         self._video_label.setAlignment(Qt.AlignCenter)
@@ -44,17 +104,44 @@ class EmoMonitorPanel(QWidget):
         self._badge.setAlignment(Qt.AlignCenter)
         self._badge.setStyleSheet(_BADGE_STYLE.format(color=STRESS_COLORS["INSEGURO"]))
 
-        self._btn_stop = QPushButton("Detener reconocimiento")
-        self._btn_stop.setStyleSheet("min-height: 64px; font-size: 16px;")
+        self._btn_stop = QPushButton("✕")
+        self._btn_stop.setFixedSize(44, 44)
+        self._btn_stop.setToolTip("Detener reconocimiento")
+        self._btn_stop.setStyleSheet(_STOP_BTN_STYLE)
 
         top = QHBoxLayout()
         top.addWidget(self._badge)
         top.addStretch()
         top.addWidget(self._btn_stop)
 
+        side_panel = QWidget()
+        side_panel.setFixedWidth(220)
+        side_layout = QVBoxLayout(side_panel)
+        side_layout.setContentsMargins(0, 0, 0, 0)
+        side_layout.setSpacing(10)
+
+        side_title = QLabel("LECTURA POR MÓDULO")
+        side_title.setStyleSheet(
+            "color: #8B9AA3; font-size: 11px; font-weight: 700; letter-spacing: 1px; background: transparent;"
+        )
+        side_layout.addWidget(side_title)
+
+        for module in ("A", "B", "C"):
+            card = _ModuleCard(module)
+            side_layout.addWidget(card)
+            self._module_cards[module] = card
+        side_layout.addStretch(1)
+
+        body = QHBoxLayout()
+        body.setSpacing(16)
+        body.addWidget(self._video_label, stretch=1)
+        body.addWidget(side_panel)
+
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(20, 16, 20, 20)
+        layout.setSpacing(14)
         layout.addLayout(top)
-        layout.addWidget(self._video_label, stretch=1)
+        layout.addLayout(body, stretch=1)
 
     @property
     def stop_button(self) -> QPushButton:
@@ -71,8 +158,18 @@ class EmoMonitorPanel(QWidget):
 
     def on_pred(self, pred: dict):
         module = pred.get("module")
-        if module:
-            self._latest_preds[module] = pred
+        if not module:
+            return
+        self._latest_preds[module] = pred
+
+        card = self._module_cards.get(module)
+        if card is None:
+            return
+        card.set_reading(
+            str(pred.get("label", "?")).upper(),
+            float(pred.get("conf", 0.0)),
+            bool(pred.get("present", False)),
+        )
 
     def on_stats(self, stats: dict):
         label = str(stats.get("label", "INSEGURO")).upper()

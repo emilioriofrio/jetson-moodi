@@ -10,10 +10,20 @@ import random
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QVBoxLayout, QWidget
 
-_CHIP_STYLE = "background: #3a7bd5; color: white; padding: 8px 14px; border-radius: 10px; font-size: 18px;"
+# Paleta muestreada directamente de los clips de Moodi (frame.png de fondo:
+# turquesa #93CDD6, ojos #2A3C4B, mejillas #EFA082, crema #EBEBDE) para que
+# Oraciones se sienta parte de la misma cara, no una pantalla oscura aparte.
+BG_TEAL = "#93CDD6"
+TEXT_NAVY = "#20323F"
+TEXT_NAVY_SOFT = "#3B586A"
+
+_CHIP_STYLE = (
+    f"background: {TEXT_NAVY}; color: #EBEBDE; padding: 9px 16px; border-radius: 14px; "
+    "font-size: 19px; font-weight: 600;"
+)
 _CHIP_SELECTED_STYLE = (
-    "background: #3a7bd5; color: white; padding: 8px 14px; border-radius: 10px; "
-    "font-size: 18px; border: 3px solid #FF9500;"
+    f"background: {TEXT_NAVY}; color: #EBEBDE; padding: 9px 16px; border-radius: 14px; "
+    "font-size: 19px; font-weight: 600; border: 3px solid #FF9500;"
 )
 
 # 5.6: texto de instrucción literal.
@@ -27,8 +37,9 @@ class PecsPanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground, True)
-        # Fondo plano opaco (5.3/5.6: "sin video" en la vista Oraciones).
-        self.setStyleSheet("background: #1a1a26; color: white;")
+        # Fondo plano opaco (5.3/5.6: "sin video" en la vista Oraciones), del
+        # mismo tono turquesa que la cara de Moodi -- no un panel oscuro aparte.
+        self.setStyleSheet(f"background: {BG_TEAL}; color: {TEXT_NAVY};")
 
         self._selected_index = -1
         self._chip_widgets = []
@@ -36,12 +47,12 @@ class PecsPanel(QWidget):
         self._lbl_greeting = QLabel("")
         self._lbl_greeting.setAlignment(Qt.AlignCenter)
         self._lbl_greeting.setWordWrap(True)
-        self._lbl_greeting.setStyleSheet("font-size: 30px; font-weight: bold;")
+        self._lbl_greeting.setStyleSheet(f"font-size: 30px; font-weight: 700; color: {TEXT_NAVY};")
 
         self._lbl_instruction = QLabel(INSTRUCTION_TEXT)
         self._lbl_instruction.setAlignment(Qt.AlignCenter)
         self._lbl_instruction.setWordWrap(True)
-        self._lbl_instruction.setStyleSheet("font-size: 14px; color: #cfcfcf;")
+        self._lbl_instruction.setStyleSheet(f"font-size: 14px; color: {TEXT_NAVY_SOFT};")
 
         self._chips_layout = QHBoxLayout()
         self._chips_layout.setSpacing(10)
@@ -52,15 +63,21 @@ class PecsPanel(QWidget):
         self._lbl_corrected = QLabel("")
         self._lbl_corrected.setAlignment(Qt.AlignCenter)
         self._lbl_corrected.setWordWrap(True)
-        self._lbl_corrected.setStyleSheet("font-size: 18px; color: #9be39b;")
+        self._lbl_corrected.setStyleSheet("font-size: 18px; font-weight: 600; color: #1E6E52;")
 
         self._lbl_status = QLabel("")
         self._lbl_status.setAlignment(Qt.AlignCenter)
-        self._lbl_status.setStyleSheet("font-size: 14px; color: #ffd54f;")
+        self._lbl_status.setStyleSheet("font-size: 14px; font-weight: 600; color: #A85A22;")
+
+        # Espacio reservado para la carita de Moodi (ORACIONES_FACE_RECT en
+        # main_window.py: {x, y=34, w=180, h=180}), que flota encima como widget
+        # aparte -- este spacer solo evita que el saludo se dibuje debajo de ella.
+        face_spacer = QWidget()
+        face_spacer.setFixedHeight(224)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(32, 24, 32, 24)
-        layout.addStretch(1)
+        layout.addWidget(face_spacer)
         layout.addWidget(self._lbl_greeting)
         layout.addWidget(self._lbl_instruction)
         layout.addStretch(1)

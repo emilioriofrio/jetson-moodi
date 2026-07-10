@@ -7,10 +7,12 @@ subsistemas (serie, botones, PECS, visión)."""
 import json
 import logging
 import os
+import time
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QLabel, QMainWindow, QWidget
 
+from core import telegram_sender
 from core.button_router import ButtonRouter
 from core.pecs_engine import PecsEngine
 from core.serial_manager import SerialManager
@@ -24,6 +26,21 @@ from vision.engine import VisionEngine
 log = logging.getLogger("bmo.main_window")
 
 SCREEN_W, SCREEN_H = 1024, 600
+
+# Leyenda temporal con el título del clip al cambiar de cara (5.5).
+CAPTION_SHOW_MS = 2500
+
+# Oraciones (5.6): recuadro de la carita de Moodi, más chica, "preguntando" por
+# la entrada de palabras -- mismo AnimationPlayer, solo reposicionado/reescalado.
+# 16:9 (igual que los clips fuente, 1920x1080): un recuadro cuadrado obligaba a
+# recortar/escalar la cara de forma pareja en X e Y contra un origen no cuadrado,
+# lo que se percibía "aplastada"; manteniendo la proporción original no hace
+# falta recortar para llenar el recuadro.
+ORACIONES_FACE_RECT = (SCREEN_W // 2 - 160, 28, 320, 180)
+
+# Alerta automática de Telegram (nivel ALTO sostenido + cooldown, para no saturar).
+ALERT_SUSTAIN_SECS = 12
+ALERT_COOLDOWN_SECS = 300
 
 # Leyenda de botones físicos activos por pantalla (5.3): qué hace cada botón
 # en la vista actual, ya que los roles cambian según la pantalla activa.
@@ -79,7 +96,10 @@ class MainWindow(QMainWindow):
         self._ghost.setGeometry(0, SCREEN_H - 110, SCREEN_W, 110)
 
         # Leyenda de botones activos en la pantalla actual (evita que los roles
-        # físicos por pantalla se sientan "sin función definida").
+        # físicos por pantalla se sientan "sin función definida"). Visible solo
+        # en sintonía con la cinta fantasma (aparece/desaparece junto a ella,
+        # ver GhostRibbon.visibility_changed) -- permanente era puro ruido
+        # visual constante.
         self._legend = QLabel(central)
         self._legend.setGeometry(0, 0, SCREEN_W, 28)
         self._legend.setAlignment(Qt.AlignCenter)
@@ -87,6 +107,26 @@ class MainWindow(QMainWindow):
             "background: rgba(0,0,0,120); color: white; font-size: 12px;"
         )
         self._legend.setText(LEGEND_TEXT.get("HOME", ""))
+        self._legend.setVisible(False)
+
+        # Leyenda temporal con el título del clip al cambiar de cara (5.5).
+        self._caption = QLabel(central)
+        self._caption.setAlignment(Qt.AlignCenter)
+        self._caption.setGeometry(SCREEN_W // 2 - 200, 40, 400, 44)
+        self._caption.setStyleSheet(
+            "background: rgba(0,0,0,150); color: white; font-size: 20px; "
+            "font-weight: bold; border-radius: 12px;"
+        )
+        # Sin QGraphicsOpacityEffect a propósito: cualquier QGraphicsEffect en
+        # esta ventana obliga a Qt a componer toda la ventana en un buffer
+        # offscreen, lo que rompe el overlay de video nativo de AnimationPlayer
+        # (confirmado en diagnóstico: el video se congela tras el primer loop
+        # apenas hay un QGraphicsEffect activo en la misma ventana, sin
+        # importar en qué widget) -- se muestra/oculta al instante en su lugar.
+        self._caption.setVisible(False)
+        self._caption_hide_timer = QTimer(self)
+        self._caption_hide_timer.setSingleShot(True)
+        self._caption_hide_timer.timeout.connect(self._hide_caption)
 
         self._calibration = CalibrationOverlay(central)
         self._calibration.setGeometry(0, 0, SCREEN_W, SCREEN_H)
@@ -97,11 +137,16 @@ class MainWindow(QMainWindow):
         # ---- backend ----
         self._serial = SerialManager()
         self._router = ButtonRouter(os.path.join(config_dir, "button_map.json"))
+        self._telegram_config_path = os.path.join(config_dir, "telegram.json")
         self._pecs = PecsEngine(
             os.path.join(config_dir, "rfid_vocab.json"),
-            os.path.join(config_dir, "telegram.json"),
+            self._telegram_config_path,
         )
         self._vision = VisionEngine()
+
+        # Alerta automática por Telegram cuando el nivel global se sostiene en ALTO.
+        self._alto_since = None
+        self._last_alert_ts = 0.0
 
         self._wire_signals()
         self._serial.start()
@@ -129,9 +174,13 @@ class MainWindow(QMainWindow):
         self._vision.frame_ready.connect(self._monitor_panel.on_frame)
         self._vision.pred_ready.connect(self._monitor_panel.on_pred)
         self._vision.stats_ready.connect(self._monitor_panel.on_stats)
+        self._vision.stats_ready.connect(self._on_stress_stats)
+
+        self._animation.clip_changed.connect(self._show_caption)
 
         self._ghost.screen_selected.connect(self._show_view)
         self._ghost.exit_requested.connect(self.close)
+        self._ghost.visibility_changed.connect(self._legend.setVisible)
 
         self._monitor_panel.stop_button.clicked.connect(self._toggle_emotion_recognition)
         self._calibration.close_button.clicked.connect(self._exit_calibration)
@@ -150,17 +199,76 @@ class MainWindow(QMainWindow):
             self._vision.stop()
 
         self._view = view
+        
+        # Habilitar audio solo en CARAS (5.5)
+        self._animation.set_muted(view != "CARAS")
+
         self._pecs_panel.setVisible(view == "ORACIONES")
         if view == "ORACIONES":
             self._pecs_panel.new_greeting(self._greetings)
+            # 5.6: la carita de Moodi se achica y flota sobre el fondo plano,
+            # como si preguntara por la entrada de palabras. raise_() aquí deja
+            # a `_animation` por encima de TODO lo que se creó antes que ella
+            # (incluido `_monitor_panel`) hasta que algo la vuelva a superar --
+            # de lo contrario, al visitar después la pantalla Video, el fondo
+            # animado (ahora de pantalla completa otra vez) tapa el panel de
+            # monitoreo entero, incluido su botón de detener. Por eso cada rama
+            # reafirma explícitamente el orden correcto para SU pantalla en
+            # vez de asumir el orden de creación.
+            self._pecs_panel.raise_()
+            self._animation.setGeometry(*ORACIONES_FACE_RECT)
+            self._animation.raise_()
+        else:
+            self._animation.setGeometry(0, 0, SCREEN_W, SCREEN_H)
 
         if view == "VIDEO" and not self._vision.is_running():
             self._vision.start()
         self._monitor_panel.setVisible(view == "VIDEO" and self._vision.is_running())
+        if view == "VIDEO":
+            self._monitor_panel.raise_()  # cubre el fondo animado, nunca al revés
+
+        # Elevar la cinta fantasma y la leyenda al frente para que nunca queden tapadas
+        self._ghost.raise_()
+        self._legend.raise_()
 
         self._legend.setText(LEGEND_TEXT.get(view, ""))
 
         self._ghost.set_active(view, emit=False)
+
+    # ---------- leyenda temporal de título al cambiar de cara (5.5) ----------
+    def _show_caption(self, title: str):
+        if self._view != "CARAS":
+            return  # esta leyenda es solo para Caras; nunca debe aparecer en otras pantallas
+        self._caption.setText(title)
+        self._caption.setVisible(True)
+        self._caption.raise_()
+        self._caption_hide_timer.start(CAPTION_SHOW_MS)
+
+    def _hide_caption(self):
+        self._caption.setVisible(False)
+
+    # ---------- alerta automática de Telegram (nivel ALTO sostenido) ----------
+    def _on_stress_stats(self, stats: dict):
+        label = str(stats.get("label", "")).upper()
+        now = time.monotonic()
+
+        if label != "ALTO":
+            self._alto_since = None
+            return
+
+        if self._alto_since is None:
+            self._alto_since = now
+            return
+
+        sustained = (now - self._alto_since) >= ALERT_SUSTAIN_SECS
+        cooled_down = (now - self._last_alert_ts) >= ALERT_COOLDOWN_SECS
+        if sustained and cooled_down:
+            self._last_alert_ts = now
+            log.info("Nivel ALTO sostenido %.0fs -- enviando alerta por Telegram", now - self._alto_since)
+            telegram_sender.send_message_async(
+                "⚠️ Moodi detectó un nivel de estrés ALTO sostenido. Por favor revisa cómo está.",
+                config_path=self._telegram_config_path,
+            )
 
     def _go_home(self):
         self._show_view("HOME")
@@ -182,6 +290,7 @@ class MainWindow(QMainWindow):
         elif role == "EMO_TOGGLE":
             self._toggle_emotion_recognition()
         elif role == "DYNAMIC_PLAY":
+            self._animation.set_muted(False)
             self._animation.play_dynamic()
         elif role == "HOME":
             self._go_home()
