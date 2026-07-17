@@ -6,20 +6,30 @@ etiqueta dibujados sobre el propio video (para ubicación espacial), y un panel
 lateral con la lectura textual de cada módulo (para lectura rápida aunque el
 recuadro no caiga bien sobre la persona).
 
-Rediseño: salir de Video por la cinta fantasma YA detiene el motor de visión
-(ver MainWindow._show_view), así que el botón "Detener reconocimiento" era
-una acción casi redundante presentada como protagonista (pastilla ancha con
-texto) -- ahora es un botón circular pequeño (✕) en la esquina, coherente con
-las insignias circulares del resto de la app (ui/ghost_ribbon.py). El resto
-del panel usa tarjetas por módulo en vez de texto plano suelto."""
+Anti-parpadeo de etiquetas (fase UI/CONFIG/VOZ, bloque cámara): la etiqueta
+mostrada por módulo es la MAYORÍA de las últimas SMOOTH_WINDOW predicciones,
+no la última cruda -- una predicción aislada distinta ya no alterna el texto
+en pantalla frame a frame. Es suavizado SOLO de presentación: no toca la
+fusión ni los módulos (que ya tienen su propia histéresis/EMA aguas arriba).
+
+Textos vía core/i18n (t() para UI fija, i18n.label() para las etiquetas que
+emiten los módulos, con fallback a la etiqueta cruda) y tamaños vía
+ui/theme.fs(); MainWindow llama retranslate()/restyle() en caliente."""
+
+from collections import Counter, deque
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
 
+from core import i18n
+from core.i18n import t
+from ui.theme import fs
+
 PANEL_BG = "#16232C"  # navy oscuro (misma familia que el ojo de Moodi, #2A3C4B)
 CARD_BG = "rgba(255,255,255,18)"
 
+# claves = etiqueta cruda del motor (español); el texto mostrado se traduce
 STRESS_COLORS = {
     "BAJO": "#3CC83C",
     "MEDIO": "#FFC107",
@@ -33,47 +43,51 @@ MODULE_COLORS = {
     "C": QColor("#FFEB3B"),  # movimiento (amarillo)
 }
 
-MODULE_NAMES = {
-    "A": "A · Facial",
-    "B": "B · Gestual",
-    "C": "C · Movimiento",
-}
+# nº de predicciones recientes por módulo sobre las que se vota la etiqueta
+SMOOTH_WINDOW = 5
 
 _BADGE_STYLE = (
-    "background: {color}; color: white; font-size: 20px; font-weight: 700; "
+    "background: {color}; color: white; font-size: {px}px; font-weight: 700; "
     "border-radius: 22px; padding: 10px 26px;"
 )
 
 _STOP_BTN_STYLE = (
-    "QPushButton { background: rgba(255,255,255,25); color: white; font-size: 18px; "
-    "font-weight: 700; border-radius: 22px; border: 1px solid rgba(255,255,255,60); }"
-    "QPushButton:pressed { background: #C1573B; border: 1px solid #C1573B; }"
+    "QPushButton {{ background: rgba(255,255,255,25); color: white; font-size: {px}px; "
+    "font-weight: 700; border-radius: 32px; border: 1px solid rgba(255,255,255,60); }}"
+    "QPushButton:pressed {{ background: #C1573B; border: 1px solid #C1573B; }}"
 )
+
+
+def _majority_label(history: deque) -> str:
+    """Etiqueta mayoritaria de la ventana; en empate gana la más reciente."""
+    if not history:
+        return "?"
+    counts = Counter(history)
+    best = max(counts.values())
+    for lbl in reversed(history):
+        if counts[lbl] == best:
+            return lbl
+    return history[-1]
 
 
 class _ModuleCard(QWidget):
     def __init__(self, module: str, parent=None):
         super().__init__(parent)
+        self.module = module
         color = MODULE_COLORS[module]
-        self.setStyleSheet(f"background: {CARD_BG}; border-radius: 12px;")
 
-        dot = QLabel()
-        dot.setFixedSize(12, 12)
-        dot.setStyleSheet(f"background: {color.name()}; border-radius: 6px;")
+        self._dot = QLabel()
+        self._dot.setFixedSize(12, 12)
+        self._dot.setStyleSheet(f"background: {color.name()}; border-radius: 6px;")
 
-        name_lbl = QLabel(MODULE_NAMES[module])
-        name_lbl.setStyleSheet("color: #B8C4CC; font-size: 13px; font-weight: 600; background: transparent;")
-
+        self._name_lbl = QLabel()
         self._value_lbl = QLabel("—")
         self._value_lbl.setWordWrap(True)
-        self._value_lbl.setStyleSheet(
-            f"color: {color.name()}; font-size: 15px; font-weight: 700; background: transparent;"
-        )
 
         header = QHBoxLayout()
         header.setSpacing(8)
-        header.addWidget(dot)
-        header.addWidget(name_lbl)
+        header.addWidget(self._dot)
+        header.addWidget(self._name_lbl)
         header.addStretch(1)
 
         layout = QVBoxLayout(self)
@@ -82,8 +96,22 @@ class _ModuleCard(QWidget):
         layout.addLayout(header)
         layout.addWidget(self._value_lbl)
 
+        self.retranslate()
+        self.restyle()
+
+    def retranslate(self):
+        self._name_lbl.setText(t(f"monitor.module_{self.module.lower()}"))
+
+    def restyle(self):
+        color = MODULE_COLORS[self.module]
+        self.setStyleSheet(f"background: {CARD_BG}; border-radius: 12px;")
+        self._name_lbl.setStyleSheet(
+            f"color: #B8C4CC; font-size: {fs(14)}px; font-weight: 600; background: transparent;")
+        self._value_lbl.setStyleSheet(
+            f"color: {color.name()}; font-size: {fs(17)}px; font-weight: 700; background: transparent;")
+
     def set_reading(self, label_txt: str, conf: float, present: bool):
-        status = "" if present else " · sin detección"
+        status = "" if present else t("monitor.no_detection")
         self._value_lbl.setText(f"{label_txt}  {conf:.0%}{status}")
 
 
@@ -91,23 +119,22 @@ class EmoMonitorPanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground, True)
-        self.setStyleSheet(f"background: {PANEL_BG};")
 
-        self._latest_preds = {}  # module ("A"/"B"/"C") -> último PredMsg (dict)
-        self._module_cards = {}  # module -> _ModuleCard
+        self._latest_preds = {}    # module -> último PredMsg (dict, para overlays)
+        self._label_history = {}   # module -> deque de etiquetas (suavizado)
+        self._module_cards = {}
+        self._last_stats_label = "INSEGURO"
 
         self._video_label = QLabel()
         self._video_label.setAlignment(Qt.AlignCenter)
         self._video_label.setStyleSheet("background: black;")
 
-        self._badge = QLabel("INSEGURO")
+        self._badge = QLabel()
         self._badge.setAlignment(Qt.AlignCenter)
-        self._badge.setStyleSheet(_BADGE_STYLE.format(color=STRESS_COLORS["INSEGURO"]))
 
+        # Target táctil ≥64px (antes 44px): botón circular de detener.
         self._btn_stop = QPushButton("✕")
-        self._btn_stop.setFixedSize(44, 44)
-        self._btn_stop.setToolTip("Detener reconocimiento")
-        self._btn_stop.setStyleSheet(_STOP_BTN_STYLE)
+        self._btn_stop.setFixedSize(64, 64)
 
         top = QHBoxLayout()
         top.addWidget(self._badge)
@@ -120,11 +147,8 @@ class EmoMonitorPanel(QWidget):
         side_layout.setContentsMargins(0, 0, 0, 0)
         side_layout.setSpacing(10)
 
-        side_title = QLabel("LECTURA POR MÓDULO")
-        side_title.setStyleSheet(
-            "color: #8B9AA3; font-size: 11px; font-weight: 700; letter-spacing: 1px; background: transparent;"
-        )
-        side_layout.addWidget(side_title)
+        self._side_title = QLabel()
+        side_layout.addWidget(self._side_title)
 
         for module in ("A", "B", "C"):
             card = _ModuleCard(module)
@@ -142,6 +166,27 @@ class EmoMonitorPanel(QWidget):
         layout.setSpacing(14)
         layout.addLayout(top)
         layout.addLayout(body, stretch=1)
+
+        self.retranslate()
+        self.restyle()
+
+    # ---------- i18n / escala de fuente en caliente ----------
+    def retranslate(self):
+        self._side_title.setText(t("monitor.side_title"))
+        self._btn_stop.setToolTip(t("monitor.stop_tooltip"))
+        for card in self._module_cards.values():
+            card.retranslate()
+        self._apply_badge(self._last_stats_label)
+
+    def restyle(self):
+        self.setStyleSheet(f"background: {PANEL_BG};")
+        self._side_title.setStyleSheet(
+            f"color: #8B9AA3; font-size: {fs(12)}px; font-weight: 700; "
+            "letter-spacing: 1px; background: transparent;")
+        self._btn_stop.setStyleSheet(_STOP_BTN_STYLE.format(px=fs(20)))
+        for card in self._module_cards.values():
+            card.restyle()
+        self._apply_badge(self._last_stats_label)
 
     @property
     def stop_button(self) -> QPushButton:
@@ -162,26 +207,33 @@ class EmoMonitorPanel(QWidget):
             return
         self._latest_preds[module] = pred
 
+        history = self._label_history.setdefault(module, deque(maxlen=SMOOTH_WINDOW))
+        history.append(str(pred.get("label", "?")))
+
         card = self._module_cards.get(module)
         if card is None:
             return
         card.set_reading(
-            str(pred.get("label", "?")).upper(),
+            i18n.label(_majority_label(history)),
             float(pred.get("conf", 0.0)),
             bool(pred.get("present", False)),
         )
 
     def on_stats(self, stats: dict):
-        label = str(stats.get("label", "INSEGURO")).upper()
-        color = STRESS_COLORS.get(label, STRESS_COLORS["INSEGURO"])
-        self._badge.setText(label)
-        self._badge.setStyleSheet(_BADGE_STYLE.format(color=color))
+        self._apply_badge(str(stats.get("label", "INSEGURO")).upper())
+
+    def _apply_badge(self, raw_label: str):
+        self._last_stats_label = raw_label
+        color = STRESS_COLORS.get(raw_label, STRESS_COLORS["INSEGURO"])
+        self._badge.setText(i18n.label(raw_label).upper())
+        self._badge.setStyleSheet(_BADGE_STYLE.format(color=color, px=fs(22)))
 
     def _draw_module_overlays(self, pix: QPixmap):
         """Dibuja sobre 'pix' (en la resolución original del frame, antes de
         escalar al QLabel) el recuadro + etiqueta de la última predicción de
         cada módulo que traiga meta.region -- así el recuadro escala junto
-        con la imagen en vez de quedar desalineado."""
+        con la imagen en vez de quedar desalineado. La etiqueta usa la misma
+        mayoría suavizada que la tarjeta lateral (coherencia entre ambas)."""
         painter = QPainter(pix)
         painter.setRenderHint(QPainter.Antialiasing)
         font = QFont()
@@ -205,7 +257,8 @@ class EmoMonitorPanel(QWidget):
             painter.setPen(pen)
             painter.drawRect(x, y, w, h)
 
-            label = f"{module}: {pred.get('label', '?')} {float(pred.get('conf', 0.0)):.2f}"
+            shown = i18n.label(_majority_label(self._label_history.get(module, deque())))
+            label = f"{module}: {shown} {float(pred.get('conf', 0.0)):.2f}"
             text_y = y - 6 if y - 6 > 12 else y + 16
             painter.drawText(x, text_y, label)
 

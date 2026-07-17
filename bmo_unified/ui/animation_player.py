@@ -74,6 +74,11 @@ class AnimationPlayer(QWidget):
         self._clips = self._scan_clips(anim_dir)
         self._idx = 0
         self._muted = True  # Silencioso por defecto (Home)
+        # Volumen configurado (Configuraciones 3.1). NUNCA se aplica como
+        # setVolume(0)/setMuted(True) sobre un clip con audio (congela el loop
+        # en esta Jetson, ver docstring): volumen 0 == cargar la variante sin
+        # pista de audio, igual que el silencio por pantalla.
+        self._volume = 80
 
         self._video_widget = QVideoWidget(self)
         self._video_widget.setAttribute(Qt.WA_TransparentForMouseEvents)
@@ -122,7 +127,7 @@ class AnimationPlayer(QWidget):
         (Caras), o su variante sin pista de audio si está silenciado (ver
         docstring del módulo -- nunca se logra silencio con setMuted/setVolume
         sobre un clip CON audio, se congela el loop en esta Jetson)."""
-        if not self._muted:
+        if not self._muted and self._volume > 0:
             return path
         return self._ensure_muted_variant(path)
 
@@ -160,7 +165,9 @@ class AnimationPlayer(QWidget):
     def _set_media(self, path: str):
         self._player.setMedia(QMediaContent(QUrl.fromLocalFile(self._playback_path(path))))
         self._player.setMuted(False)
-        self._player.setVolume(100)
+        # Nunca 0: con volumen 0 _playback_path ya eligió la variante sin
+        # audio, y setVolume(0) sobre un clip CON audio congela el loop.
+        self._player.setVolume(max(1, self._volume))
         self._player.play()
 
     def _check_seamless_loop(self):
@@ -191,6 +198,19 @@ class AnimationPlayer(QWidget):
             return
         self._muted = muted
         if self._clips:
+            self._set_media(self._clips[self._idx])
+
+    def set_volume(self, volume: int):
+        """Volumen configurado en Configuraciones (0-100). Con audio activo
+        (Caras) recarga el clip para que el cambio aplique de inmediato y para
+        cruzar de/hacia 0 cambiando de variante con/sin pista de audio -- no se
+        toca el volumen del reproductor en vivo (riesgo de congelar el loop,
+        ver docstring del módulo)."""
+        volume = max(0, min(100, int(volume)))
+        if volume == self._volume:
+            return
+        self._volume = volume
+        if not self._muted and self._clips:
             self._set_media(self._clips[self._idx])
 
     def next_clip(self):

@@ -80,12 +80,16 @@ def _courtesy_residual_check():
 
 
 def main():
-    # Import diferido a propósito: si esto estuviera a nivel de módulo, multiprocessing
-    # (start method "spawn") lo re-ejecutaría dentro de CADA proceso hijo del motor de
-    # visión al rearrancar este script como "__mp_main__", registrando el paquete
-    # bmo_unified/core en sys.modules ANTES de que vision/engine.py pueda anteponer
-    # sistem_IA a sys.path -- y como sistem_IA también tiene un paquete "core", el hijo
-    # terminaría resolviendo "core.messages" contra el core equivocado.
+    # Imports diferidos a propósito (TODOS los de bmo_unified): si estuvieran a
+    # nivel de módulo, multiprocessing (start method "spawn") los re-ejecutaría
+    # dentro de CADA proceso hijo del motor de visión al rearrancar este script
+    # como "__mp_main__", registrando el paquete bmo_unified/core en sys.modules
+    # ANTES de que vision/engine.py pueda anteponer sistem_IA a sys.path -- y
+    # como sistem_IA también tiene un paquete "core", el hijo terminaría
+    # resolviendo "core.messages" contra el core equivocado.
+    from core import i18n
+    from core.app_settings import AppSettings
+    from ui import theme
     from ui.main_window import MainWindow
 
     parser = argparse.ArgumentParser(description="Moodi / BMO OS")
@@ -98,7 +102,18 @@ def main():
     app = QApplication(sys.argv)
     app.setFont(QFont(APP_FONT_FAMILY, 11))
 
-    window = MainWindow(CONFIG_DIR, ANIM_DIR, calibrate=args.calibrate)
+    # Preferencias persistentes ANTES de construir la primera pantalla: idioma
+    # y escala de fuente deben estar activos cuando los widgets pidan t()/fs().
+    settings = AppSettings(os.path.join(CONFIG_DIR, "settings.json"))
+    i18n.load(CONFIG_DIR)
+    i18n.set_language(settings.language)
+    theme.set_font_scale(settings.font_scale)
+    log.info(
+        "Preferencias cargadas: idioma=%s, volumen=%d, fuente=%s, apodo=%r",
+        settings.language, settings.volume, settings.font_scale, settings.nickname,
+    )
+
+    window = MainWindow(CONFIG_DIR, ANIM_DIR, settings, calibrate=args.calibrate)
     window.showFullScreen()
 
     signal.signal(signal.SIGINT, _handle_termination_signal)

@@ -37,9 +37,9 @@ modulo_b:
   quality_pose_thr: 0.35
   stale_frames: 20
 modulo_c:
-  analyze_every: 2
+  analyze_every: 3
   bilstm_path: moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth
-  detect_every: 5
+  detect_every: 8
   detectron_score_thr: 0.7
   label_map_path: moduloC_dataset/vectores_numpy/label_map.json
   min_person_ratio: 0.15

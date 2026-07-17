@@ -1,10 +1,77 @@
 {
-  "_comentario": "Saludos variables de la pantalla Oraciones (5.6). Se elige uno al azar cada vez que se entra a la vista.",
-  "greetings": [
-    "Hola, ¿qué deseas contarme hoy?",
-    "¿Qué me quieres decir?",
-    "Cuéntame algo, te escucho",
-    "¿Qué necesitas?",
-    "Estoy aquí para ti, ¿qué pasa?"
-  ]
+  "_comentario": "Saludos variables de la pantalla Oraciones (5.6), ahora bilingües y personalizables. Estructura: <idioma> -> {generic, named, <franja>, <franja>_named}. Las listas *named usan {name} (apodo de config/settings.json); si no hay apodo registrado solo se usan las listas sin nombre (core/greetings.py, nunca un {name} vacío en pantalla). Franjas: morning 6-12h, afternoon 12-19h, evening 19-6h. Las frases en inglés son naturales, no traducciones literales.",
+  "es": {
+    "generic": [
+      "Hola, ¿qué deseas contarme hoy?",
+      "¿Qué me quieres decir?",
+      "Cuéntame algo, te escucho",
+      "¿Qué necesitas?",
+      "Estoy aquí para ti, ¿qué pasa?"
+    ],
+    "named": [
+      "Hola {name}, ¿qué deseas contarme hoy?",
+      "¿Qué me quieres decir, {name}?",
+      "{name}, cuéntame algo, te escucho",
+      "¿Qué necesitas, {name}?",
+      "Aquí estoy, {name}, ¿qué pasa?"
+    ],
+    "morning": [
+      "¡Buenos días! ¿Qué me quieres contar?"
+    ],
+    "morning_named": [
+      "¡Buenos días, {name}! ¿Qué me quieres contar?",
+      "Hola {name}, ¿cómo amaneciste hoy?"
+    ],
+    "afternoon": [
+      "¡Buenas tardes! ¿Qué me cuentas?"
+    ],
+    "afternoon_named": [
+      "¡Buenas tardes, {name}! ¿Qué hiciste hoy?",
+      "Hola {name}, ¿cómo va tu tarde?"
+    ],
+    "evening": [
+      "¡Buenas noches! ¿Qué me quieres decir?"
+    ],
+    "evening_named": [
+      "¡Buenas noches, {name}! ¿Cómo estuvo tu día?",
+      "Hola {name}, cuéntame cómo te fue hoy"
+    ]
+  },
+  "en": {
+    "generic": [
+      "Hi! What would you like to tell me today?",
+      "What do you want to say?",
+      "Tell me something, I'm listening",
+      "What do you need?",
+      "I'm here for you — what's up?"
+    ],
+    "named": [
+      "Hi {name}, what would you like to tell me today?",
+      "What do you want to tell me, {name}?",
+      "{name}, tell me something — I'm listening",
+      "What do you need, {name}?",
+      "I'm here for you, {name} — what's up?"
+    ],
+    "morning": [
+      "Good morning! What would you like to tell me?"
+    ],
+    "morning_named": [
+      "Good morning, {name}! What would you like to tell me?",
+      "Hi {name}, how did you wake up today?"
+    ],
+    "afternoon": [
+      "Good afternoon! What's new?"
+    ],
+    "afternoon_named": [
+      "Good afternoon, {name}! What did you do today?",
+      "Hi {name}, how is your afternoon going?"
+    ],
+    "evening": [
+      "Good evening! What do you want to tell me?"
+    ],
+    "evening_named": [
+      "Good evening, {name}! How was your day?",
+      "Hi {name}, tell me about your day"
+    ]
+  }
 }

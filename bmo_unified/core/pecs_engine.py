@@ -14,6 +14,7 @@ import requests
 from PyQt5.QtCore import QObject, pyqtSignal
 
 from core import telegram_sender
+from core.i18n import t
 from core.rfid_vocab import load_vocab, lookup_word
 
 log = logging.getLogger("bmo.pecs_engine")
@@ -24,6 +25,7 @@ SEND_TIMEOUT_S = (10, 60)  # (connect, read) -- el ciclo completo del LLM puede 
 
 class PecsEngine(QObject):
     stack_changed = pyqtSignal(list)        # lista de palabras apiladas, en orden
+    word_added = pyqtSignal(str)             # palabra recién apilada (voz de Moodi la narra)
     card_rejected = pyqtSignal(tuple)        # UID no registrado en el vocabulario
     send_started = pyqtSignal()              # arrancó el envío (mostrar "procesando…")
     sentence_sent = pyqtSignal(str, str)     # (frase_bruta, frase_corregida)
@@ -44,6 +46,7 @@ class PecsEngine(QObject):
             return
         self._words.append(word)
         self.stack_changed.emit(list(self._words))
+        self.word_added.emit(word)
 
     def delete_last(self):
         if self._words:
@@ -78,7 +81,7 @@ class PecsEngine(QObject):
             data = resp.json() if resp.content else {}
         except Exception as e:
             log.exception("Error consultando ia_bridge")
-            self.send_failed.emit(f"No se pudo contactar al puente de IA: {e}")
+            self.send_failed.emit(f"{t('pecs.err_bridge')}: {e}")
             return
 
         if not resp.ok or "error" in data:
@@ -89,13 +92,13 @@ class PecsEngine(QObject):
 
         corrected = str(data.get("response", "")).strip()
         if not corrected:
-            self.send_failed.emit("Respuesta vacía del puente de IA")
+            self.send_failed.emit(t("pecs.err_empty"))
             return
 
         log.info("Frase corregida: %r -> %r", sentence, corrected)
         self.clear()
         self.sentence_sent.emit(sentence, corrected)
         telegram_sender.send_message_async(
-            f"El niño comunica el siguiente mensaje 📨:\n\n{corrected}",
+            t("telegram.message", sentence=corrected),
             config_path=self._telegram_config_path,
         )
