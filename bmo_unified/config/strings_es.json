@@ -1,13 +1,11 @@
 {
   "_comentario": "Textos de la UI en español. Toda cadena visible pasa por core/i18n.py t(clave); las claves 'label.*' traducen etiquetas emitidas por el motor de visión (ver i18n.label()).",
-
   "screen.home": "Home",
   "screen.caras": "Caras",
   "screen.oraciones": "Oraciones",
   "screen.video": "Video",
   "screen.config": "Configuraciones",
   "screen.salir": "Salir",
-
   "legend.home": "Toca la cinta inferior para navegar entre pantallas",
   "legend.caras": "Cursores ◀ ▶: cara anterior/siguiente (con su audio)",
   "legend.oraciones.cursors": "Cursores: mover selección",
@@ -17,9 +15,7 @@
   "legend.video": "{btn}: iniciar/detener monitoreo emocional",
   "legend.config": "Ajusta volumen, idioma, apodo, texto y botones",
   "legend.salir": "Mantén presionado el icono Salir ~3s para cerrar la app",
-
   "ribbon.holding": "Manteniendo…",
-
   "phys.cursor_up": "Cursor arriba",
   "phys.cursor_down": "Cursor abajo",
   "phys.cursor_left": "Cursor izquierda",
@@ -30,7 +26,6 @@
   "phys.panel_l": "Panel izquierdo",
   "phys.panel_c": "Panel central largo",
   "phys.panel_r": "Panel derecho",
-
   "pecs.instruction": "Forma oraciones pasando las tarjetas por mi oreja derecha. Presiona el botón a mi derecha para Enviar el mensaje.",
   "pecs.card_rejected": "Tarjeta no reconocida",
   "pecs.processing": "Procesando…",
@@ -38,17 +33,14 @@
   "pecs.error": "Error: {err}",
   "pecs.err_bridge": "No se pudo contactar al puente de IA",
   "pecs.err_empty": "Respuesta vacía del puente de IA",
-
   "telegram.message": "El niño comunica el siguiente mensaje 📨:\n\n{sentence}",
   "telegram.alert_high": "⚠️ Moodi detectó un nivel de estrés ALTO sostenido. Por favor revisa cómo está.",
-
   "monitor.side_title": "LECTURA POR MÓDULO",
   "monitor.module_a": "A · Facial",
   "monitor.module_b": "B · Gestual",
   "monitor.module_c": "C · Movimiento",
   "monitor.no_detection": " · sin detección",
   "monitor.stop_tooltip": "Detener reconocimiento",
-
   "label.bajo": "Bajo",
   "label.medio": "Medio",
   "label.alto": "Alto",
@@ -63,33 +55,27 @@
   "label.leve": "Leve",
   "label.repetitivo": "Repetitivo",
   "label.intenso": "Intenso",
-
   "calib.waiting": "Modo calibración: toca un botón en el robot…",
   "calib.exit": "Salir de calibración",
-
   "settings.title": "Configuraciones",
   "settings.section.volume": "Volumen",
   "settings.section.language": "Idioma",
   "settings.section.nickname": "Apodo",
   "settings.section.fontsize": "Tamaño de texto",
   "settings.section.buttons": "Botones",
-
   "settings.volume.hint": "Volumen de las animaciones y de la voz de Moodi",
   "settings.language.hint": "Cambia el idioma de toda la interfaz al instante",
   "settings.language.es": "Español",
   "settings.language.en": "English",
-
   "settings.nickname.hint": "Moodi usará este nombre para saludarte en Oraciones",
   "settings.nickname.empty": "(sin apodo)",
   "settings.nickname.save": "Guardar apodo",
   "settings.nickname.saved": "Apodo guardado ✓",
-
   "settings.fontsize.hint": "Tamaño de los textos que acompañan a Moodi",
   "settings.fontsize.small": "Pequeño",
   "settings.fontsize.normal": "Normal",
   "settings.fontsize.large": "Grande",
   "settings.fontsize.xlarge": "Muy grande",
-
   "settings.buttons.hint": "Toca un botón del dibujo y elige qué hace. Guarda para aplicar.",
   "settings.buttons.select_prompt": "Elige un botón del dibujo de Moodi",
   "settings.buttons.assign_to": "Función de: {btn}",
@@ -98,11 +84,9 @@
   "settings.buttons.saved": "Cambios guardados ✓ (aplican ya, sin reiniciar)",
   "settings.buttons.unsaved": "Hay cambios sin guardar",
   "settings.buttons.warning": "Aviso: ningún botón quedó asignado a: {roles}",
-
   "settings.buttons.group.cursors": "Cursores",
   "settings.buttons.group.isla": "Isla",
   "settings.buttons.group.panel": "Panel",
-
   "actionshort.CURSOR_UP": "Arriba",
   "actionshort.CURSOR_DOWN": "Abajo",
   "actionshort.CURSOR_LEFT": "Izq.",
@@ -114,7 +98,6 @@
   "actionshort.DYNAMIC_PLAY": "Dinámica",
   "actionshort.EMO_TOGGLE": "Monitor",
   "actionshort.NONE": "—",
-
   "action.CURSOR_UP": "Mover cursor arriba",
   "action.CURSOR_DOWN": "Mover cursor abajo",
   "action.CURSOR_LEFT": "Mover cursor izquierda",
@@ -125,5 +108,13 @@
   "action.HOME": "Volver a Home",
   "action.DYNAMIC_PLAY": "Reproducir dinámica",
   "action.EMO_TOGGLE": "Monitoreo emocional (on/off)",
-  "action.NONE": "Sin función"
+  "action.NONE": "Sin función",
+  "pecs.voice_on": "Voz de Moodi activada · tocar para silenciar",
+  "pecs.voice_off": "Voz de Moodi silenciada · tocar para activar",
+  "boot.starting": "Despertando a Moodi…",
+  "boot.llm": "Cargando el modelo de lenguaje…",
+  "boot.bridge": "Conectando el puente de oraciones…",
+  "boot.audio": "Ajustando el audio…",
+  "boot.app": "Preparando la carita de Moodi…",
+  "boot.ready": "¡Todo listo!"
 }

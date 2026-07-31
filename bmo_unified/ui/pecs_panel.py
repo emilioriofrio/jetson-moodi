@@ -10,11 +10,16 @@ Todos los textos pasan por core/i18n.t() y todos los tamaños de fuente por
 ui/theme.fs() (idioma y tamaño cambiables en caliente desde Configuraciones:
 MainWindow llama retranslate()/restyle())."""
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtCore import QPointF, QRectF, Qt, pyqtSignal
+from PyQt5.QtGui import QColor, QPainter, QPen, QPolygonF
+from PyQt5.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout,
+                             QWidget)
 
 from core.i18n import t
 from ui.theme import ACCENT_ORANGE, BG_TEAL, CREAM, TEXT_NAVY, TEXT_NAVY_SOFT, fs
+
+# Interruptor de voz (S11): target táctil ≥64px como el resto de la fase S10.
+VOICE_BTN_SIZE = 68
 
 
 def _chip_style(selected: bool) -> str:
@@ -25,13 +30,80 @@ def _chip_style(selected: bool) -> str:
     return (base + f" border: 3px solid {ACCENT_ORANGE};") if selected else base
 
 
+class _VoiceButton(QPushButton):
+    """Botón de altavoz DIBUJADO con QPainter.
+
+    No usa glifo de fuente a propósito: se comprobó en esta Jetson que ni
+    U+1F56A ni U+1F568 (altavoz) existen en ninguna fuente instalada -- salían
+    como cuadro vacío (tofu). Es exactamente el mismo problema que en S10 con
+    ⚙️ y 🔒, y la solución ya validada entonces es dibujar el icono."""
+
+    def __init__(self, on: bool = True, parent=None):
+        super().__init__(parent)
+        self._on = on
+        self._fg = QColor(CREAM)
+
+    def set_state(self, on: bool, fg: str):
+        self._on = bool(on)
+        self._fg = QColor(fg)
+        self.update()
+
+    def paintEvent(self, event):
+        super().paintEvent(event)   # fondo/borde los sigue poniendo el stylesheet
+        p = QPainter(self)
+        p.setRenderHint(QPainter.Antialiasing)
+        w, h = self.width(), self.height()
+        cx, cy = w / 2.0, h / 2.0
+        u = min(w, h) / 64.0        # escala relativa al tamaño del botón
+
+        # cuerpo del altavoz (rectángulo + cono), centrado y desplazado a la
+        # izquierda para dejar sitio a las ondas
+        p.setPen(Qt.NoPen)
+        p.setBrush(self._fg)
+        bx = cx - 13 * u
+        p.drawRect(QRectF(bx, cy - 5 * u, 7 * u, 10 * u))
+        cone = QPolygonF([
+            QPointF(bx + 7 * u, cy - 5 * u), QPointF(bx + 16 * u, cy - 13 * u),
+            QPointF(bx + 16 * u, cy + 13 * u), QPointF(bx + 7 * u, cy + 5 * u),
+        ])
+        p.drawPolygon(cone)
+
+        p.setBrush(Qt.NoBrush)
+        if self._on:
+            # dos ondas de sonido
+            p.setPen(QPen(self._fg, 2.6 * u, Qt.SolidLine, Qt.RoundCap))
+            for r in (8 * u, 14 * u):
+                arc = QRectF(cx + 4 * u - r, cy - r, r * 2, r * 2)
+                p.drawArc(arc, -55 * 16, 110 * 16)
+        else:
+            # tachado diagonal = silenciado
+            p.setPen(QPen(self._fg, 3.2 * u, Qt.SolidLine, Qt.RoundCap))
+            p.drawLine(QPointF(cx + 5 * u, cy - 9 * u), QPointF(cx + 17 * u, cy + 9 * u))
+            p.drawLine(QPointF(cx + 17 * u, cy - 9 * u), QPointF(cx + 5 * u, cy + 9 * u))
+        p.end()
+
+
 class PecsPanel(QWidget):
+    # Interruptor de voz de Moodi (S11). El panel no toca AppSettings
+    # directamente: emite y MainWindow persiste, igual que el resto de
+    # preferencias en caliente.
+    voice_toggled = pyqtSignal(bool)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setAttribute(Qt.WA_StyledBackground, True)
 
         self._selected_index = -1
         self._chip_widgets = []
+        self._voice_on = True
+
+        # Interruptor de voz, arriba a la derecha: la voz TTS aún es tosca
+        # (espeak-ng) y debe poder callarse sin entrar a Configuraciones ni
+        # bajar el volumen general de las animaciones.
+        self._btn_voice = _VoiceButton(True, self)
+        self._btn_voice.setFixedSize(VOICE_BTN_SIZE, VOICE_BTN_SIZE)
+        self._btn_voice.setCursor(Qt.PointingHandCursor)
+        self._btn_voice.clicked.connect(self._on_voice_clicked)
 
         self._lbl_greeting = QLabel("")
         self._lbl_greeting.setAlignment(Qt.AlignCenter)
@@ -74,11 +146,47 @@ class PecsPanel(QWidget):
         self.retranslate()
         self.restyle()
 
+    # ---------- interruptor de voz (S11) ----------
+    def set_voice_enabled(self, enabled: bool):
+        """Refleja el estado real de la preferencia (la fuente de verdad es
+        AppSettings; MainWindow llama aquí al entrar a la pantalla y cuando la
+        preferencia cambia)."""
+        self._voice_on = bool(enabled)
+        self._refresh_voice_button()
+
+    def _on_voice_clicked(self):
+        self._voice_on = not self._voice_on
+        self._refresh_voice_button()
+        self.voice_toggled.emit(self._voice_on)
+
+    def _refresh_voice_button(self):
+        on = self._voice_on
+        self._btn_voice.setToolTip(t("pecs.voice_on" if on else "pecs.voice_off"))
+        self._btn_voice.setAccessibleName(t("pecs.voice_on" if on else "pecs.voice_off"))
+        bg = TEXT_NAVY if on else "rgba(32,50,63,60)"
+        fg = CREAM if on else TEXT_NAVY
+        border = TEXT_NAVY if on else ACCENT_ORANGE
+        self._btn_voice.setStyleSheet(
+            f"QPushButton {{ background: {bg}; "
+            f"border-radius: {VOICE_BTN_SIZE // 2}px; border: 3px solid {border}; }}"
+            f"QPushButton:pressed {{ background: {ACCENT_ORANGE}; }}"
+        )
+        self._btn_voice.set_state(on, fg)
+
+    def _place_voice_button(self):
+        self._btn_voice.move(self.width() - VOICE_BTN_SIZE - 24, 20)
+        self._btn_voice.raise_()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._place_voice_button()
+
     # ---------- i18n / escala de fuente en caliente ----------
     def retranslate(self):
         self._lbl_instruction.setText(t("pecs.instruction"))
         # los estados transitorios se limpian: su texto pertenece al idioma anterior
         self._lbl_status.setText("")
+        self._refresh_voice_button()
 
     def restyle(self):
         # Paleta muestreada directamente de los clips de Moodi (ver ui/theme.py)
@@ -93,6 +201,8 @@ class PecsPanel(QWidget):
         self._lbl_status.setStyleSheet(
             f"font-size: {fs(17)}px; font-weight: 600; color: #A85A22; background: transparent;")
         self._refresh_selection()
+        self._refresh_voice_button()
+        self._place_voice_button()
 
     # ---------- saludo variable (5.6) ----------
     def new_greeting(self, greeting: str):

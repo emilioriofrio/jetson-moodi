@@ -84,10 +84,20 @@ def main():
 
     ctx = mp.get_context("spawn")
 
-    # Colas
-    qA_in    = ctx.SimpleQueue()
-    qB_in    = ctx.SimpleQueue()
-    qC_in    = ctx.SimpleQueue()
+    import yaml as _yaml
+    with open(CFG, "r", encoding="utf-8") as _f:
+        _qmax = int((_yaml.safe_load(_f) or {}).get("queues_maxsize", 5))
+
+    # Colas de frames ACOTADAS (S11): con SimpleQueue (sin maxsize) el put() del
+    # orquestador se bloqueaba en el pipe del SO hasta que el worker leyera —un
+    # frame BGR pesa ~900 KB contra los 64 KB del buffer del pipe—, encadenando
+    # la captura al módulo más lento y congelando el video segundos enteros.
+    # Con maxsize, put_nowait() falla rápido y el orquestador descarta el frame
+    # (ver core/orchestrator.put_drop_if_full). queues_maxsize ya existía en
+    # runtime.yaml pero nunca se usaba.
+    qA_in    = ctx.Queue(maxsize=_qmax)
+    qB_in    = ctx.Queue(maxsize=_qmax)
+    qC_in    = ctx.Queue(maxsize=_qmax)
     qPred    = ctx.SimpleQueue()
 
     qFusIn   = ctx.SimpleQueue()
@@ -152,6 +162,11 @@ def main():
         time.sleep(0.2)
 
         for q in (qA_in, qB_in, qC_in, qPred, qFusIn, qFused, qUI_frm, qUI_preds, qUI_stats):
+            # cancel_join_thread() antes de close(): las Queue acotadas tienen un
+            # hilo alimentador que puede impedir la salida del proceso si quedan
+            # frames sin drenar al cerrar.
+            try: q.cancel_join_thread()
+            except: pass
             try: q.close()
             except: pass
 

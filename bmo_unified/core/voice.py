@@ -70,6 +70,8 @@ class VoiceEngine:
         text = (text or "").strip()
         if not text or not self._available:
             return
+        if not self._settings.voice_enabled:
+            return  # voz apagada con el interruptor de Oraciones (S11)
         if self._settings.volume <= 0:
             return  # voz silenciada desde Configuraciones
         if interrupt:
@@ -79,6 +81,14 @@ class VoiceEngine:
             self._queue.put_nowait(text)
         except queue.Full:
             log.warning("Cola de voz llena; se descarta: %r", text)
+
+    def silence_now(self):
+        """Corta de inmediato lo que esté sonando y descarta lo pendiente.
+        Se llama al APAGAR la voz desde Oraciones (S11): si no, la frase en
+        curso seguiría narrándose después de pulsar el interruptor y daría la
+        sensación de que el botón no funcionó."""
+        self._drain()
+        self._cancel_current()
 
     def shutdown(self):
         """Cancela lo que suene y detiene el trabajador (cierre limpio 7.2)."""
@@ -110,6 +120,10 @@ class VoiceEngine:
             item = self._queue.get()
             if item is _SENTINEL:
                 return
+            # Se releen EN EL MOMENTO de hablar (no al encolar): si la voz se
+            # apagó mientras esta frase esperaba en la cola, ya no debe sonar.
+            if not self._settings.voice_enabled:
+                continue
             volume = int(self._settings.volume)
             if volume <= 0:
                 continue

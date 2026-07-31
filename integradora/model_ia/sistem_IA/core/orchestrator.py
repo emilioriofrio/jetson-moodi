@@ -109,6 +109,31 @@ def _open_camera(cfg):
     # Nada funcionó
     return None
 
+def put_drop_if_full(q, item):
+    """Entrega 'item' al worker SIN bloquear nunca al bucle de captura; si la
+    cola del worker ya está llena, se descarta ESTE frame.
+
+    Por qué (S11, causa raíz medida de los tirones de varios segundos):
+    con SimpleQueue (sin maxsize) put() escribe directo al pipe del SO, cuyo
+    buffer son 64 KB — un frame BGR 640x480 pesa ~900 KB, así que CADA put()
+    se bloqueaba hasta que el worker leyera. El bucle de captura quedaba
+    encadenado al módulo más lento: durante la ráfaga de VGG16 del Módulo C se
+    congelaba segundos enteros y la UI dejaba de recibir frames. Medido: 12
+    frames tardaban 11.05 s con SimpleQueue vs 0.01 s con cola acotada.
+
+    Se descarta el frame nuevo en vez de sacar el viejo a propósito: el worker
+    es el único que hace get() sobre su cola, así el orquestador nunca compite
+    con él por leerla. Para predicción en tiempo real, saltarse frames cuando
+    el módulo va atrasado es lo correcto — mejor una predicción reciente que
+    una cola de frames viejos.
+    """
+    try:
+        q.put_nowait(item)
+    except pyq.Full:
+        pass  # el worker va atrasado: este frame se descarta (comportamiento deseado)
+    except Exception:
+        pass
+
 # Helper: enviar SIEMPRE el frame más reciente a la UI
 def put_latest(q, item):
     """
@@ -176,18 +201,16 @@ def run_orchestrator(cfg_path: str, qA: Queue, qB: Queue, qC: Queue, stop_event:
 
             enabled = cfg.get("enabled_modules", ["A", "B", "C"])
 
-            # C y B todos los frames (si están habilitados)
+            # C y B todos los frames (si están habilitados). put_drop_if_full:
+            # nunca bloquea el bucle de captura -- ver el docstring del helper.
             if "C" in enabled:
-                try: qC.put(msg)
-                except Exception: pass
+                put_drop_if_full(qC, msg)
             if "B" in enabled:
-                try: qB.put(msg)
-                except Exception: pass
+                put_drop_if_full(qB, msg)
 
             # A solo cada tick (si está habilitado)
             if "A" in enabled and (frame_idx % tick == 0):
-                try: qA.put(msg)
-                except Exception: pass
+                put_drop_if_full(qA, msg)
 
             # UI todos los frames, pero siempre el más reciente 
             if qUI_frames is not None:

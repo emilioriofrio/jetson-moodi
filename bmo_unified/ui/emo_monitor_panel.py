@@ -20,7 +20,8 @@ from collections import Counter, deque
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFont, QPainter, QPen, QPixmap
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QSizePolicy,
+                             QVBoxLayout, QWidget)
 
 from core import i18n
 from core.i18n import t
@@ -114,6 +115,10 @@ class _ModuleCard(QWidget):
         status = "" if present else t("monitor.no_detection")
         self._value_lbl.setText(f"{label_txt}  {conf:.0%}{status}")
 
+    def reset(self):
+        """Vuelve a "sin lectura" (arranque/parada del motor de visión)."""
+        self._value_lbl.setText("—")
+
 
 class EmoMonitorPanel(QWidget):
     def __init__(self, parent=None):
@@ -128,6 +133,15 @@ class EmoMonitorPanel(QWidget):
         self._video_label = QLabel()
         self._video_label.setAlignment(Qt.AlignCenter)
         self._video_label.setStyleSheet("background: black;")
+        # QSizePolicy.Ignored + minimumSize(1,1) (S11, arregla el video
+        # "recortado"): un QLabel CON pixmap adopta el tamaño del pixmap como
+        # sizeHint Y como minimumSizeHint, así que al hacer setPixmap el layout
+        # se veía forzado a reservarle ese alto; sumado a la barra superior
+        # excedía los 600px del panel y el borde inferior del video quedaba
+        # cortado fuera de pantalla. Con Ignored el layout manda sobre el
+        # pixmap y no al revés.
+        self._video_label.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self._video_label.setMinimumSize(1, 1)
 
         self._badge = QLabel()
         self._badge.setAlignment(Qt.AlignCenter)
@@ -192,13 +206,35 @@ class EmoMonitorPanel(QWidget):
     def stop_button(self) -> QPushButton:
         return self._btn_stop
 
+    def reset_session(self):
+        """Limpia el estado acumulado de una sesión del motor de visión.
+
+        (S11, corrige bug de S10): _label_history / _latest_preds sobrevivían al
+        stop() del VisionEngine, así que al reentrar a VIDEO las primeras
+        predicciones nuevas se votaban junto con etiquetas de la sesión
+        ANTERIOR y el panel mostraba unos segundos una lectura obsoleta.
+        MainWindow lo llama al arrancar y al detener el motor."""
+        self._latest_preds.clear()
+        self._label_history.clear()
+        self._last_stats_label = "INSEGURO"
+        self._video_label.clear()
+        for module, card in self._module_cards.items():
+            card.reset()
+        self._apply_badge(self._last_stats_label)
+
     def on_frame(self, qimage):
         pix = QPixmap.fromImage(qimage)
         if pix.isNull():
             return
         self._draw_module_overlays(pix)
+        # contentsRect(): área realmente pintable del QLabel (descuenta borde y
+        # margen). Con QSizePolicy.Ignored el label ya no crece con el pixmap,
+        # así que este destino es estable y el video no se desborda.
+        target = self._video_label.contentsRect().size()
+        if target.width() < 1 or target.height() < 1:
+            return
         self._video_label.setPixmap(
-            pix.scaled(self._video_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            pix.scaled(target, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         )
 
     def on_pred(self, pred: dict):

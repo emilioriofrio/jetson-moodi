@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Moodi
+Name[es]=Moodi
+GenericName=BMO OS
+GenericName[es]=BMO OS
+Comment=Start the Moodi robot (face, sentences and emotion monitor)
+Comment[es]=Iniciar el robot Moodi (cara, oraciones y monitor emocional)
+Exec=/home/jetson/bmo_unified/lanzar_moodi.sh
+Icon=/home/jetson/bmo_unified/assets/moodi_icon.png
+Terminal=false
+Categories=Education;
+StartupNotify=true
+StartupWMClass=bmo_app.py
+Keywords=moodi;bmo;robot;

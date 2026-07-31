@@ -8,6 +8,7 @@
 !/requirements_x86.txt
 !/mod_a.py
 !/INICIO_RAPIDO_BMO.md
+!/start_bmo.sh
 
 # Whitelist project folders
 !/integradora/

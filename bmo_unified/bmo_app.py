@@ -33,6 +33,13 @@ CONFIG_DIR = os.path.join(BASE_DIR, "config")
 ANIM_DIR = os.path.expanduser("~/integradora/animaciones")
 LOG_PATH = os.path.join(BASE_DIR, "logs", "bmo_app.log")
 
+# Pantalla de carga (S11): start_bmo.sh lanza ui/splash.py antes que esta app y
+# ambos se comunican por este archivo ("PORCENTAJE|CLAVE_I18N"). Aquí se
+# reportan los últimos tramos y, sobre todo, el READY que cierra el splash --
+# que se escribe solo cuando la ventana principal YA está pintada, para que no
+# quede un parpadeo de escritorio entre que se va uno y aparece la otra.
+BOOT_STATUS_PATH = "/tmp/moodi_boot.status"
+
 sys.path.insert(0, BASE_DIR)
 
 log = logging.getLogger("bmo.app")
@@ -47,6 +54,17 @@ def _setup_logging():
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
         handlers=[logging.FileHandler(LOG_PATH, encoding="utf-8"), logging.StreamHandler()],
     )
+
+
+def _boot_progress(pct, key: str):
+    """Publica un paso del arranque para la pantalla de carga. Nunca debe
+    hacer fallar el arranque: si no se puede escribir, el splash simplemente se
+    cierra por su propio temporizador de seguridad."""
+    try:
+        with open(BOOT_STATUS_PATH, "w", encoding="utf-8") as f:
+            f.write(f"{pct}|{key}")
+    except OSError:
+        pass
 
 
 def _handle_termination_signal(signum, frame):
@@ -113,8 +131,15 @@ def main():
         settings.language, settings.volume, settings.font_scale, settings.nickname,
     )
 
+    _boot_progress(78, "boot.app")
     window = MainWindow(CONFIG_DIR, ANIM_DIR, settings, calibrate=args.calibrate)
     window.showFullScreen()
+
+    # READY solo DESPUÉS de que Qt haya pintado realmente la ventana: si se
+    # avisara antes, el splash se cerraría sobre una ventana aún en blanco.
+    app.processEvents()
+    _boot_progress(100, "READY")
+    log.info("Ventana principal visible; pantalla de carga liberada.")
 
     signal.signal(signal.SIGINT, _handle_termination_signal)
     signal.signal(signal.SIGTERM, _handle_termination_signal)

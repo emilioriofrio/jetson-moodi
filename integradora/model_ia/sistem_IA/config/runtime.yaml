@@ -11,7 +11,13 @@ fusion:
   cooldown_up: 4
   debug: false
   required_modules: 2
-height: 480
+# 640x360 (16:9) en vez de 640x480 (4:3) -- S11. Verificado con gst-launch que
+# esta camara ENTREGA 640x480 como RECORTE CENTRAL del sensor (se pierden los
+# extremos izquierdo/derecho de la escena), mientras que 640x360 es el sensor
+# completo reescalado: mismo campo de vision que 1280x720 pero con 25% MENOS
+# pixeles que 640x480 (230k vs 307k). Gana campo de vision Y baja el costo por
+# frame. Ambos son modos MJPG nativos a 30fps (no romper la regla de fps 30/25).
+height: 360
 modA_backends_order:
 - mediapipe
 modA_ema_alpha: 0.30
@@ -35,16 +41,31 @@ modulo_b:
   labels_map_path: dataset_vectores_v3/labels_map_v3.txt
   model_path: resultados_modb_v3/modelo_modb_v3.keras
   quality_pose_thr: 0.35
-  stale_frames: 20
+  # 20 -> 240 (S11). OJO: este umbral se mide en NÚMERO DE FRAMES, no en
+  # segundos. Se calibró cuando la captura entregaba ~2.5 fps (el bucle estaba
+  # encadenado al módulo más lento), donde 20 frames eran ~8 s. Al corregir el
+  # bloqueo de colas la captura subió a 30 fps reales, así que 20 frames pasaron
+  # a ser 0.67 s y B se declaraba "obsoleto" casi al instante. 240 frames a
+  # 30 fps ≈ 8 s: mismo comportamiento en TIEMPO que el que estaba validado.
+  stale_frames: 240
 modulo_c:
   analyze_every: 3
   bilstm_path: moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth
   detect_every: 8
   detectron_score_thr: 0.7
   label_map_path: moduloC_dataset/vectores_numpy/label_map.json
-  min_person_ratio: 0.15
+  # Bajado de 0.15 a 0.12 al pasar a 640x360 (S11): person_ratio es la fraccion
+  # del FRAME que ocupa la persona, asi que al ampliar el campo de vision la
+  # misma persona ocupa proporcionalmente menos. Medido con Detectron2 sobre la
+  # MISMA escena en ambos modos: 0.0141 (4:3) -> 0.0114 (16:9), factor 0.81,
+  # coherente con el 0.75 teorico de recortar 4:3 sobre un sensor 16:9.
+  min_person_ratio: 0.12
   seq_len: 11
-  stale_ticks: 30
+  # 30 -> 360 (S11), misma razón que modulo_b.stale_frames: son FRAMES, no
+  # segundos. A ~2.5 fps eran ~12 s; a 30 fps reales serían 1 s, y C se
+  # marcaría "inseguro" entre una predicción y la siguiente (C emite del orden
+  # de una cada ~30 s). 360 frames a 30 fps ≈ 12 s.
+  stale_ticks: 360
   use_gpu: true
   vgg_input:
   - 224

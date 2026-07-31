@@ -31,6 +31,10 @@ DEFAULTS = {
     "language": "es",      # "es" | "en"
     "nickname": "",        # apodo del usuario ("" = sin registrar)
     "font_scale": "normal",  # small | normal | large | xlarge (ver ui/theme.py)
+    # Voz TTS de Moodi encendida/apagada (S11). Separado del volumen a
+    # propósito: apagar la voz NO debe silenciar el audio de las animaciones,
+    # y volver a encenderla no debe obligar a recordar qué volumen había.
+    "voice_enabled": True,
 }
 
 MAX_NICKNAME_LEN = 16
@@ -63,6 +67,7 @@ class AppSettings(QObject):
     language_changed = pyqtSignal(str)
     nickname_changed = pyqtSignal(str)
     font_scale_changed = pyqtSignal(str)
+    voice_enabled_changed = pyqtSignal(bool)
 
     def __init__(self, path: str, parent=None):
         super().__init__(parent)
@@ -91,6 +96,7 @@ class AppSettings(QObject):
         if self._data.get("font_scale") not in VALID_FONT_SCALES:
             self._data["font_scale"] = DEFAULTS["font_scale"]
         self._data["nickname"] = str(self._data.get("nickname", ""))[:MAX_NICKNAME_LEN]
+        self._data["voice_enabled"] = bool(self._data.get("voice_enabled", True))
 
     def _persist(self):
         try:
@@ -122,6 +128,10 @@ class AppSettings(QObject):
     def font_scale(self) -> str:
         return self._data["font_scale"]
 
+    @property
+    def voice_enabled(self) -> bool:
+        return self._data["voice_enabled"]
+
     # ---------- setters (persisten + emiten en caliente) ----------
     def set_volume(self, value: int):
         value = self._clamp_volume(value)
@@ -145,6 +155,14 @@ class AppSettings(QObject):
         self._data["nickname"] = nickname
         self._persist()
         self.nickname_changed.emit(nickname)
+
+    def set_voice_enabled(self, enabled: bool):
+        enabled = bool(enabled)
+        if enabled == self._data["voice_enabled"]:
+            return
+        self._data["voice_enabled"] = enabled
+        self._persist()
+        self.voice_enabled_changed.emit(enabled)
 
     def set_font_scale(self, scale: str):
         if scale not in VALID_FONT_SCALES or scale == self._data["font_scale"]:

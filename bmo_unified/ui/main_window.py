@@ -142,6 +142,7 @@ class MainWindow(QMainWindow):
         self._last_alert_ts = 0.0
 
         self._restyle_all()
+        self._pecs_panel.set_voice_enabled(settings.voice_enabled)
         self._legend.setText(self._legend_text("HOME"))
 
         self._wire_signals()
@@ -178,6 +179,11 @@ class MainWindow(QMainWindow):
         self._vision.pred_ready.connect(self._monitor_panel.on_pred)
         self._vision.stats_ready.connect(self._monitor_panel.on_stats)
         self._vision.stats_ready.connect(self._on_stress_stats)
+        # El panel debe olvidar la sesión anterior en CADA arranque/parada del
+        # motor: si no, las primeras predicciones de la sesión nueva se votan
+        # junto con etiquetas viejas y se muestra una lectura obsoleta.
+        self._vision.started.connect(self._monitor_panel.reset_session)
+        self._vision.stopped.connect(self._monitor_panel.reset_session)
 
         self._animation.clip_changed.connect(self._show_caption)
 
@@ -188,10 +194,14 @@ class MainWindow(QMainWindow):
         self._monitor_panel.stop_button.clicked.connect(self._toggle_emotion_recognition)
         self._calibration.close_button.clicked.connect(self._exit_calibration)
 
+        # Interruptor de voz de Oraciones (S11).
+        self._pecs_panel.voice_toggled.connect(self._on_voice_toggled)
+
         # Preferencias en caliente (Configuraciones).
         self._settings.language_changed.connect(self._on_language_changed)
         self._settings.font_scale_changed.connect(self._on_font_scale_changed)
         self._settings.volume_changed.connect(self._animation.set_volume)
+        self._settings.voice_enabled_changed.connect(self._pecs_panel.set_voice_enabled)
 
     def _on_serial_connection_changed(self, connected: bool, port: str):
         log.info("Enlace serie %s (%s)", "conectado" if connected else "desconectado", port)
@@ -210,6 +220,13 @@ class MainWindow(QMainWindow):
         theme.set_font_scale(level)
         log.info("Escala de fuente cambiada en caliente a %r", level)
         self._restyle_all()
+
+    def _on_voice_toggled(self, enabled: bool):
+        self._settings.set_voice_enabled(enabled)
+        if not enabled:
+            # Callar YA lo que estuviera narrándose, si no el botón se siente roto.
+            self._voice.silence_now()
+        log.info("Voz de Moodi %s desde Oraciones", "activada" if enabled else "silenciada")
 
     def _on_button_map_reloaded(self, _mapping: dict):
         # la leyenda nombra botones físicos por su rol: refrescarla al remapear

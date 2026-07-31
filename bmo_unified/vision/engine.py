@@ -216,9 +216,19 @@ class VisionEngine(QObject):
         sistem_run = _import_sistem_run_no_chdir()
         ctx = mp.get_context("spawn")
 
-        qA_in = ctx.SimpleQueue()
-        qB_in = ctx.SimpleQueue()
-        qC_in = ctx.SimpleQueue()
+        cfg_full_path = os.path.join(SISTEM_IA_DIR, CFG_REL)
+        with open(cfg_full_path, "r", encoding="utf-8") as f:
+            cfg_data = yaml.safe_load(f)
+        qmax = int(cfg_data.get("queues_maxsize", 5))
+
+        # Colas de frames ACOTADAS (S11): ver core/orchestrator.put_drop_if_full.
+        # Con SimpleQueue el orquestador se bloqueaba escribiendo cada frame
+        # (~900 KB) en un pipe de 64 KB hasta que el worker lo leyera, así que
+        # la captura corría al ritmo del módulo MÁS LENTO y el video se
+        # congelaba durante las ráfagas de VGG16 del Módulo C.
+        qA_in = ctx.Queue(maxsize=qmax)
+        qB_in = ctx.Queue(maxsize=qmax)
+        qC_in = ctx.Queue(maxsize=qmax)
         qPred = ctx.SimpleQueue()
         qFusIn = ctx.SimpleQueue()
         qFused = ctx.SimpleQueue()
@@ -227,9 +237,6 @@ class VisionEngine(QObject):
         qUI_stats = ctx.SimpleQueue()
         stop_event = ctx.Event()
 
-        cfg_full_path = os.path.join(SISTEM_IA_DIR, CFG_REL)
-        with open(cfg_full_path, "r", encoding="utf-8") as f:
-            cfg_data = yaml.safe_load(f)
         enabled_modules = cfg_data.get("enabled_modules", ["A", "B", "C"])
         log.info("Iniciando motor de visión, módulos habilitados: %s", enabled_modules)
 
@@ -286,6 +293,13 @@ class VisionEngine(QObject):
         self._sistem_run.hard_shutdown(self._procs, grace=2.0)
 
         for q in self._queues:
+            # cancel_join_thread() antes de close(): las Queue acotadas tienen
+            # un hilo alimentador que puede colgar el cierre si quedaron frames
+            # sin drenar (el motor se apaga y enciende varias veces por sesión).
+            try:
+                q.cancel_join_thread()
+            except Exception:
+                pass
             try:
                 q.close()
             except Exception:

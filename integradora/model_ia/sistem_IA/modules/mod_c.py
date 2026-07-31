@@ -146,6 +146,7 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
     idx_buffer  = deque(maxlen=seq_len)
 
     last_pred_tick = -9999
+    last_warmup_tick = -9999   # avisos de "calentando" (ver bucle principal)
     last_label = "inseguro"
     last_conf  = 0.0
 
@@ -205,8 +206,11 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
 
             # ventana completa
             if len(frames_gray) < seq_len:
-                # en tick
-                if fidx % tick == 0:
+                # Aviso de "aún calentando". Se dispara por DISTANCIA en frames
+                # desde el último aviso y no por (fidx % tick == 0): ver el
+                # comentario del gate de emisión real, más abajo.
+                if (fidx - last_warmup_tick) >= tick:
+                    last_warmup_tick = fidx
                     if (fidx - last_pred_tick) > stale_ticks:
                         last_label = "inseguro"
                         last_conf = 0.0
@@ -226,8 +230,19 @@ def run_worker_C(cfg_path: str, in_q, out_q, stop_event: Event):
                         pass
                 continue
 
-            # predicción con la ventana más reciente
-            if fidx % tick == 0:
+            # Predicción con la ventana más reciente.
+            #
+            # El gate es la DISTANCIA en frames desde la última predicción, no
+            # (fidx % tick == 0) como antes (S11). Motivo: desde que el
+            # orquestador descarta frames cuando este worker va atrasado (ver
+            # core/orchestrator.put_drop_if_full), C ya NO recibe todos los
+            # frames en orden, así que exigir un índice exacto múltiplo de tick
+            # se volvió una lotería -- medido: 2 predicciones en 130s, porque
+            # casi nunca caía en la cola un frame con fidx múltiplo de 15
+            # justo teniendo la ventana llena. Con la distancia se conserva la
+            # intención original (no repetir la ráfaga de VGG16 más seguido que
+            # cada 'tick' frames) sin depender de qué frames sobrevivieron.
+            if (fidx - last_pred_tick) >= tick:
                 # 1) flujo óptico en ROI 
                 vectors = []
                 person_pixels = []

@@ -16,10 +16,11 @@ Persistencia:
   nada), también atómico, y con recarga en caliente (ButtonRouter.reload()).
 
 Remapeo (3.3 del prompt de fase):
-- Vista frontal de Moodi (MoodiDiagram, dibujada con QPainter -- placeholder
-  documentado: no existe asset gráfico de la vista frontal en el proyecto) con
-  los 10 botones; el seleccionado PULSA con un glow naranja animado, como la
-  reasignación de botones de un control de videojuego.
+- Vista frontal de Moodi (MoodiDiagram) sobre el render real del robot,
+  assets/MOODI_VIEW.png (S11; en S10 era un dibujo QPainter de figuras,
+  documentado entonces como placeholder a la espera de este asset). Los 10
+  botones responden al hover y el seleccionado PULSA con un glow naranja
+  animado, como la reasignación de botones de un control de videojuego.
 - PANEL_C/GPIO13 fijo como EMO_TOGGLE: se dibuja con candado, no editable, con
   explicación al tocarlo (restricción heredada, ver core/button_router.py).
 - Aviso (no bloqueo) si un rol crítico queda sin ningún botón asignado.
@@ -34,7 +35,7 @@ import math
 import os
 
 from PyQt5.QtCore import QRect, QRectF, Qt, QTimer, pyqtSignal
-from PyQt5.QtGui import QColor, QFont, QPainter, QPen
+from PyQt5.QtGui import QColor, QFont, QPainter, QPen, QPixmap
 from PyQt5.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -95,31 +96,75 @@ def _big_button_style(selected: bool, font_px: int) -> str:
 
 
 class MoodiDiagram(QWidget):
-    """Vista frontal de Moodi con los 10 botones físicos, estilo remapeo de
-    control de videojuego: cara real de Moodi (paleta muestreada de los clips),
-    d-pad en cruz, grupos titulados (Panel / Cursores / Isla) y la acción
-    asignada visible bajo cada botón. El seleccionado pulsa con glow naranja.
-    Todo QPainter (no existe asset gráfico frontal en el proyecto)."""
+    """Vista frontal de Moodi para el remapeo de botones, sobre el render real
+    del robot (assets/MOODI_VIEW.png) -- S11, sustituye al dibujo QPainter de
+    figuras de S10, que era un placeholder explícito a la espera de un asset.
+
+    Los 10 botones se ubican con coordenadas NORMALIZADAS (0-1) medidas sobre
+    el PNG original de 451x553 por detección de color de cada control (d-pad,
+    isla de 3 puntos, barra inferior), no estimadas a ojo: así siguen cuadrando
+    aunque la imagen se escale a cualquier tamaño de widget.
+
+    Interacción tipo hover: el botón bajo el puntero se ilumina y muestra su
+    acción; el seleccionado además pulsa con un glow naranja. En la pantalla
+    táctil no hay hover real, así que el toque también selecciona (y deja el
+    resalte), manteniendo el mismo recorrido visual.
+
+    PANEL_C/GPIO13 se dibuja con candado y no es seleccionable (restricción
+    heredada, ver core/button_router.py).
+
+    Sin QGraphicsEffect (precaución vigente de esta ventana): todo es QPainter.
+    """
 
     button_selected = pyqtSignal(str)  # gpio (str)
+
+    # Centro y tamaño de cada control en coordenadas normalizadas del PNG.
+    # Medidos sobre assets/MOODI_VIEW.png (451x553) con detección de color.
+    _POS = {
+        # d-pad (cruz coral, abajo-izquierda del cuerpo)
+        "4":  (0.360, 0.522, 0.055, 0.060),   # arriba
+        "16": (0.359, 0.606, 0.055, 0.060),   # abajo
+        "32": (0.308, 0.562, 0.070, 0.045),   # izquierda
+        "33": (0.411, 0.562, 0.070, 0.045),   # derecha
+        # isla de 3 puntos (derecha), ordenados de izquierda a derecha
+        "27": (0.568, 0.495, 0.050, 0.042),
+        "26": (0.649, 0.598, 0.050, 0.042),
+        "25": (0.691, 0.562, 0.050, 0.042),
+        # barra inferior: redondo coral / óvalo largo central / redondo turquesa
+        "14": (0.344, 0.694, 0.075, 0.062),
+        "13": (0.492, 0.694, 0.095, 0.058),   # central largo -- BLOQUEADO
+        "17": (0.647, 0.699, 0.058, 0.050),
+    }
 
     _DPAD = {"4": "up", "16": "down", "32": "left", "33": "right"}
     _DPAD_DEFAULT = {"4": "CURSOR_UP", "16": "CURSOR_DOWN",
                      "32": "CURSOR_LEFT", "33": "CURSOR_RIGHT"}
-    _ISLA = ("27", "26", "25")   # izquierda -> derecha
-    _PANEL_L, _PANEL_R = "14", "17"
+
+    _ASSET = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                          "assets", "MOODI_VIEW.png")
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._hits = {}        # gpio -> QRect táctil (≥64px de lado)
-        self._shapes = {}      # gpio -> QRectF de dibujo del botón
-        self._assignments = {}  # gpio -> rol pendiente (lo actualiza SettingsPanel)
+        self._hits = {}          # gpio -> QRect táctil (≥56px de lado)
+        self._shapes = {}        # gpio -> QRectF del control sobre la imagen
+        self._assignments = {}   # gpio -> rol pendiente (lo actualiza SettingsPanel)
         self._selected = None
+        self._hover = None
         self._phase = 0.0
+        self._img_rect = QRectF()
+
+        self._pixmap = QPixmap(self._ASSET)
+        if self._pixmap.isNull():
+            log.warning("No se pudo cargar %s; el diagrama saldrá vacío", self._ASSET)
+        self._scaled = QPixmap()
+        self._scaled_for = None
+
         self._pulse_timer = QTimer(self)
         self._pulse_timer.setInterval(PULSE_INTERVAL_MS)
         self._pulse_timer.timeout.connect(self._on_pulse_tick)
-        self.setMinimumSize(380, 400)
+
+        self.setMouseTracking(True)   # necesario para el hover
+        self.setMinimumSize(300, 380)
 
     def selected_gpio(self):
         return self._selected
@@ -144,51 +189,76 @@ class MoodiDiagram(QWidget):
 
     # ---------- geometría ----------
     def _layout(self):
+        """Encaja el PNG dentro del widget conservando su proporción y deriva
+        de ahí la caja de cada botón."""
         w, h = self.width(), self.height()
-        cx = w / 2.0
-        r = 26
+        if self._pixmap.isNull() or w <= 0 or h <= 0:
+            self._img_rect = QRectF(0, 0, w, h)
+        else:
+            iw, ih = self._pixmap.width(), self._pixmap.height()
+            scale = min(w / iw, h / ih)
+            dw, dh = iw * scale, ih * scale
+            self._img_rect = QRectF((w - dw) / 2.0, (h - dh) / 2.0, dw, dh)
+
+        ox, oy = self._img_rect.x(), self._img_rect.y()
+        iw, ih = self._img_rect.width(), self._img_rect.height()
+
         self._shapes = {}
+        for gpio, (cx, cy, sw, sh) in self._POS.items():
+            bw, bh = sw * iw, sh * ih
+            self._shapes[gpio] = QRectF(ox + cx * iw - bw / 2.0,
+                                        oy + cy * ih - bh / 2.0, bw, bh)
 
-        # fila de panel bajo la pantalla; el central largo es un rectángulo ancho
-        py = h * 0.45
-        self._shapes[self._PANEL_L] = QRectF(w * 0.22 - r, py - r, r * 2, r * 2)
-        self._shapes[self._PANEL_R] = QRectF(w * 0.78 - r, py - r, r * 2, r * 2)
-        self._shapes[LOCKED_GPIO] = QRectF(cx - 58, py - 24, 116, 48)
-
-        # d-pad en cruz (abajo-izquierda)
-        a = 44.0
-        dx, dy = w * 0.27, h * 0.80
-        self._dpad_center = (dx, dy)
-        self._dpad_arm = a
-        self._shapes["4"] = QRectF(dx - a / 2, dy - 1.5 * a, a, a)
-        self._shapes["16"] = QRectF(dx - a / 2, dy + 0.5 * a, a, a)
-        self._shapes["32"] = QRectF(dx - 1.5 * a, dy - a / 2, a, a)
-        self._shapes["33"] = QRectF(dx + 0.5 * a, dy - a / 2, a, a)
-
-        # isla: 3 botones redondos (abajo-derecha)
-        iy = h * 0.765
-        for i, gpio in enumerate(self._ISLA):
-            ix = w * 0.70 + (i - 1) * w * 0.15
-            self._shapes[gpio] = QRectF(ix - r, iy - r, r * 2, r * 2)
-
+        # Zona táctil ampliada: los controles del render son pequeños, pero el
+        # dedo necesita ≥56px. El resalte visual sigue el tamaño real del botón.
         self._hits = {}
         for gpio, rect in self._shapes.items():
             hit = rect.toRect()
-            grow_w = max(0, 64 - hit.width())
-            grow_h = max(0, 64 - hit.height())
-            self._hits[gpio] = hit.adjusted(-grow_w // 2, -grow_h // 2, grow_w // 2, grow_h // 2)
+            grow_w = max(0, 56 - hit.width())
+            grow_h = max(0, 56 - hit.height())
+            self._hits[gpio] = hit.adjusted(-grow_w // 2, -grow_h // 2,
+                                            grow_w // 2, grow_h // 2)
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
         self._layout()
 
     # ---------- interacción ----------
-    def mousePressEvent(self, event):
+    def _gpio_at(self, pos):
+        """GPIO bajo 'pos'. Se prueba primero la caja real y luego la ampliada,
+        para que dos zonas táctiles solapadas (d-pad) no se roben el toque."""
+        for gpio, rect in self._shapes.items():
+            if rect.contains(pos):
+                return gpio
+        best, best_d = None, None
         for gpio, rect in self._hits.items():
-            if rect.contains(event.pos()):
-                self.select(gpio)
-                self.button_selected.emit(gpio)
-                return
+            if rect.contains(pos):
+                c = rect.center()
+                d = (c.x() - pos.x()) ** 2 + (c.y() - pos.y()) ** 2
+                if best_d is None or d < best_d:
+                    best, best_d = gpio, d
+        return best
+
+    def mouseMoveEvent(self, event):
+        gpio = self._gpio_at(event.pos())
+        if gpio != self._hover:
+            self._hover = gpio
+            self.update()
+        super().mouseMoveEvent(event)
+
+    def leaveEvent(self, event):
+        if self._hover is not None:
+            self._hover = None
+            self.update()
+        super().leaveEvent(event)
+
+    def mousePressEvent(self, event):
+        gpio = self._gpio_at(event.pos())
+        if gpio is not None:
+            self._hover = gpio       # en táctil no hay hover: el toque lo fija
+            self.select(gpio)
+            self.button_selected.emit(gpio)
+            return
         super().mousePressEvent(event)
 
     # ---------- dibujo ----------
@@ -201,145 +271,104 @@ class MoodiDiagram(QWidget):
             self._layout()
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
-        w, h = self.width(), self.height()
+        painter.setRenderHint(QPainter.SmoothPixmapTransform)
+
+        # ---- render de Moodi ----
+        if not self._pixmap.isNull():
+            size = self._img_rect.size().toSize()
+            if self._scaled_for != size:
+                self._scaled = self._pixmap.scaled(
+                    size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                self._scaled_for = size
+            painter.drawPixmap(self._img_rect.topLeft(), self._scaled)
+
         navy = QColor(TEXT_NAVY)
 
-        # ---- cuerpo ----
-        body = QRectF(w * 0.05, h * 0.02, w * 0.90, h * 0.96)
-        painter.setBrush(QColor(BG_TEAL))
-        painter.setPen(QPen(navy, 3))
-        painter.drawRoundedRect(body, 28, 28)
-
-        # ---- pantalla-cara (paleta real: ojos navy, mejillas coral, boca rosa) ----
-        screen = QRectF(w * 0.17, h * 0.05, w * 0.66, h * 0.31)
-        painter.setBrush(QColor("#A6D8E0"))
-        painter.setPen(QPen(navy, 2.5))
-        painter.drawRoundedRect(screen, 16, 16)
-        scx, scy = screen.center().x(), screen.center().y()
-        eye_r = screen.height() * 0.14
-        painter.setPen(Qt.NoPen)
-        for ex in (scx - screen.width() * 0.20, scx + screen.width() * 0.20):
-            painter.setBrush(QColor("#2A3C4B"))
-            painter.drawEllipse(QRectF(ex - eye_r, scy - screen.height() * 0.16 - eye_r,
-                                       eye_r * 2, eye_r * 2))
-            painter.setBrush(QColor(CREAM))  # brillo del ojo
-            painter.drawEllipse(QRectF(ex + eye_r * 0.15, scy - screen.height() * 0.16 - eye_r * 0.6,
-                                       eye_r * 0.55, eye_r * 0.55))
-        painter.setBrush(QColor(CORAL))  # mejillas
-        for ex in (scx - screen.width() * 0.33, scx + screen.width() * 0.33):
-            painter.drawEllipse(QRectF(ex - 11, scy + screen.height() * 0.02, 22, 13))
-        painter.setPen(QPen(QColor("#ED8881"), 6, Qt.SolidLine, Qt.RoundCap))  # sonrisa
-        painter.setBrush(Qt.NoBrush)
-        smile = QRectF(scx - screen.width() * 0.14, scy + screen.height() * 0.02,
-                       screen.width() * 0.28, screen.height() * 0.34)
-        painter.drawArc(smile, 200 * 16, 140 * 16)
-
-        # ---- títulos de grupo (ritmo vertical calculado contra las filas de
-        # botones y sus rótulos: no deben tocarse; ver _layout) ----
-        painter.setPen(navy)
-        painter.setFont(QFont("Ubuntu", fs(12), QFont.Bold))
-        painter.drawText(QRect(0, int(h * 0.575), w // 2, 20), Qt.AlignHCenter,
-                         t("settings.buttons.group.cursors"))
-        painter.drawText(QRect(w // 2, int(h * 0.575), w // 2, 20), Qt.AlignHCenter,
-                         t("settings.buttons.group.isla"))
-
-        # ---- base del d-pad (cruz navy) ----
-        dx, dy = self._dpad_center
-        a = self._dpad_arm
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(QColor("#2A3C4B"))
-        painter.drawRoundedRect(QRectF(dx - a / 2, dy - 1.5 * a, a, 3 * a), 12, 12)
-        painter.drawRoundedRect(QRectF(dx - 1.5 * a, dy - a / 2, 3 * a, a), 12, 12)
-
-        # ---- botones ----
-        label_font = QFont("Ubuntu", fs(11), QFont.Bold)
+        # ---- controles ----
         for gpio, rect in self._shapes.items():
             locked = gpio == LOCKED_GPIO
             selected = gpio == self._selected
-            is_dpad = gpio in self._DPAD
-            is_round = not locked and not is_dpad
+            hovered = gpio == self._hover and not selected
 
             if selected:
+                # pulso naranja: 2 ciclos por segundo
                 k = 0.5 + 0.5 * math.sin(self._phase * 2 * math.pi * 2.0)
-                grow = 5 + 6 * k
+                grow = 4 + 5 * k
                 glow = QColor(ACCENT_ORANGE)
-                glow.setAlpha(int(80 + 130 * k))
+                glow.setAlpha(int(90 + 140 * k))
                 painter.setBrush(Qt.NoBrush)
-                painter.setPen(QPen(glow, 5))
-                g = rect.adjusted(-grow, -grow, grow, grow)
-                if is_round:
-                    painter.drawEllipse(g)
-                else:
-                    painter.drawRoundedRect(g, 16, 16)
+                painter.setPen(QPen(glow, 4))
+                painter.drawRoundedRect(rect.adjusted(-grow, -grow, grow, grow), 14, 14)
+                fill = QColor(ACCENT_ORANGE)
+                fill.setAlpha(70)
+                painter.setBrush(fill)
+                painter.setPen(QPen(QColor(ACCENT_ORANGE), 3))
+                painter.drawRoundedRect(rect, 10, 10)
+            elif hovered:
+                # resalte de hover: más sutil que la selección, sin animación
+                fill = QColor(CREAM)
+                fill.setAlpha(90)
+                painter.setBrush(fill)
+                painter.setPen(QPen(QColor(CREAM), 3))
+                painter.drawRoundedRect(rect.adjusted(-3, -3, 3, 3), 12, 12)
 
-            if is_dpad:
-                # brazo del d-pad: resaltado si está seleccionado; glifo =
-                # flecha si conserva su cursor, o el nombre corto de la acción
-                # remapeada (estilo control de videojuego)
-                if selected:
-                    painter.setBrush(QColor(ACCENT_ORANGE))
-                    painter.setPen(Qt.NoPen)
-                    painter.drawRoundedRect(rect, 10, 10)
-                role = self._assignments.get(gpio)
-                if role in (None, self._DPAD_DEFAULT[gpio]):
-                    self._draw_arrow(painter, rect, self._DPAD[gpio],
-                                     QColor(CREAM) if not selected else QColor("#FFFFFF"))
-                else:
-                    painter.setPen(QColor("#FFFFFF"))
-                    painter.setFont(QFont("Ubuntu", fs(9), QFont.Bold))
-                    painter.drawText(rect.toRect(), Qt.AlignCenter, t(f"actionshort.{role}"))
-                continue
-
-            fill = QColor("#9AA7AE") if locked else QColor(CREAM)
-            border = QColor(ACCENT_ORANGE) if selected else navy
-            painter.setBrush(fill)
-            painter.setPen(QPen(border, 3 if selected else 2))
             if locked:
-                painter.drawRoundedRect(rect, 18, 18)
                 self._draw_padlock(painter, rect, navy)
-            else:
-                painter.drawEllipse(rect)
 
-            # acción asignada, rotulada bajo el botón
-            painter.setPen(navy)
-            painter.setFont(label_font)
-            below = QRect(int(rect.center().x() - 38), int(rect.bottom() + 3), 76, 18)
-            painter.drawText(below, Qt.AlignHCenter, self._short_action(gpio))
+        # ---- rótulo de la acción: solo del botón activo (hover o selección) ----
+        # Rotular los 10 a la vez saturaba el dibujo y los textos se pisaban
+        # entre sí (problema visible en la versión de S10).
+        # El hover MANDA sobre la selección: la etiqueta es el afordance de
+        # "¿qué hace este botón?", así que debe seguir al dedo/puntero. Al
+        # revés, al explorar otros botones seguía nombrando al ya seleccionado.
+        focus = self._hover or self._selected
+        if focus is not None:
+            self._draw_action_tag(painter, focus)
 
         painter.end()
 
-    @staticmethod
-    def _draw_arrow(painter: QPainter, rect: QRectF, direction: str, color: QColor):
-        from PyQt5.QtGui import QPolygonF
-        from PyQt5.QtCore import QPointF
-        c = rect.center()
-        s = rect.width() * 0.22
-        pts = {
-            "up": [QPointF(c.x(), c.y() - s), QPointF(c.x() - s, c.y() + s * 0.7),
-                   QPointF(c.x() + s, c.y() + s * 0.7)],
-            "down": [QPointF(c.x(), c.y() + s), QPointF(c.x() - s, c.y() - s * 0.7),
-                     QPointF(c.x() + s, c.y() - s * 0.7)],
-            "left": [QPointF(c.x() - s, c.y()), QPointF(c.x() + s * 0.7, c.y() - s),
-                     QPointF(c.x() + s * 0.7, c.y() + s)],
-            "right": [QPointF(c.x() + s, c.y()), QPointF(c.x() - s * 0.7, c.y() - s),
-                      QPointF(c.x() - s * 0.7, c.y() + s)],
-        }[direction]
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(color)
-        painter.drawPolygon(QPolygonF(pts))
+    def _draw_action_tag(self, painter: QPainter, gpio: str):
+        """Etiqueta flotante con el nombre físico del botón y su acción."""
+        rect = self._shapes.get(gpio)
+        if rect is None:
+            return
+        phys = t(f"phys.{GPIO_PHYS.get(gpio, '')}") if gpio in GPIO_PHYS else ""
+        action = self._short_action(gpio)
+        text = f"{phys} · {action}" if phys else action
+
+        painter.setFont(QFont("Ubuntu", fs(11), QFont.Bold))
+        metrics = painter.fontMetrics()
+        tw = metrics.horizontalAdvance(text) + 22
+        th = metrics.height() + 12
+
+        # encima del botón; si no cabe arriba, debajo
+        x = rect.center().x() - tw / 2.0
+        y = rect.top() - th - 8
+        if y < 2:
+            y = rect.bottom() + 8
+        x = max(2.0, min(x, self.width() - tw - 2.0))
+
+        tag = QRectF(x, y, tw, th)
+        painter.setBrush(QColor(TEXT_NAVY))
+        painter.setPen(QPen(QColor(ACCENT_ORANGE), 2))
+        painter.drawRoundedRect(tag, 10, 10)
+        painter.setPen(QColor(CREAM))
+        painter.drawText(tag, Qt.AlignCenter, text)
 
     @staticmethod
     def _draw_padlock(painter: QPainter, rect: QRectF, color: QColor):
         """Candado vectorial (el emoji 🔒 renderizaba mal sobre QPainter)."""
         c = rect.center()
-        bw, bh = 22.0, 15.0
-        body = QRectF(c.x() - bw / 2, c.y() - 2, bw, bh)
-        painter.setBrush(color)
+        bw, bh = 16.0, 11.0
+        painter.setBrush(QColor(255, 255, 255, 210))
         painter.setPen(Qt.NoPen)
-        painter.drawRoundedRect(body, 4, 4)
+        painter.drawEllipse(rect.center(), 15, 15)
+        body = QRectF(c.x() - bw / 2, c.y() - 1, bw, bh)
+        painter.setBrush(color)
+        painter.drawRoundedRect(body, 3, 3)
         painter.setBrush(Qt.NoBrush)
-        painter.setPen(QPen(color, 3.5))
-        shackle = QRectF(c.x() - 7, c.y() - 13, 14, 16)
+        painter.setPen(QPen(color, 2.5))
+        shackle = QRectF(c.x() - 5, c.y() - 9, 10, 12)
         painter.drawArc(shackle, 0, 180 * 16)
 
 
