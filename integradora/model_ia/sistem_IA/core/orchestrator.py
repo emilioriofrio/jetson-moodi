@@ -176,6 +176,14 @@ def put_latest(q, item):
 def run_orchestrator(cfg_path: str, qA: Queue, qB: Queue, qC: Queue, stop_event: Event, qUI_frames: Queue=None):
     cfg = load_cfg(cfg_path)
     tick = int(cfg.get("tick_size", 10))
+    # Paso de submuestreo del Módulo C (S12, pendiente 5 de S11). Antes se le
+    # mandaban TODOS los frames y él descartaba los que no cumplían
+    # fidx % analyze_every == 0; con el descarte por cola llena eso dejaba al
+    # BiLSTM secuencias irregulares en el tiempo, y fue entrenado con secuencias
+    # de frames regularmente espaciados. Mandándole solo los que va a usar, la
+    # cola de C deja de llenarse con frames que iba a tirar y la secuencia que
+    # recibe es uniforme por construcción. 0 = comportamiento anterior.
+    stride_c = int((cfg.get("modulo_c") or {}).get("frame_stride", 0) or 0)
 
     cap = _open_camera(cfg)
     if not cap or not cap.isOpened():
@@ -203,7 +211,7 @@ def run_orchestrator(cfg_path: str, qA: Queue, qB: Queue, qC: Queue, stop_event:
 
             # C y B todos los frames (si están habilitados). put_drop_if_full:
             # nunca bloquea el bucle de captura -- ver el docstring del helper.
-            if "C" in enabled:
+            if "C" in enabled and (stride_c <= 0 or frame_idx % stride_c == 0):
                 put_drop_if_full(qC, msg)
             if "B" in enabled:
                 put_drop_if_full(qB, msg)

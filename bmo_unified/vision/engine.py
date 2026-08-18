@@ -226,9 +226,15 @@ class VisionEngine(QObject):
         # (~900 KB) en un pipe de 64 KB hasta que el worker lo leyera, así que
         # la captura corría al ritmo del módulo MÁS LENTO y el video se
         # congelaba durante las ráfagas de VGG16 del Módulo C.
+        # El Módulo C tiene su propia cola, más honda (S12): es el único worker
+        # que necesita una SECUENCIA de frames regularmente espaciados y no el
+        # último frame, así que descartarle frames mientras corre su detección
+        # le rompe la ventana. Ver run.py y modules/mod_c.py.
+        qmax_c = int((cfg_data.get("modulo_c") or {}).get("queue_maxsize", 0) or qmax)
+
         qA_in = ctx.Queue(maxsize=qmax)
         qB_in = ctx.Queue(maxsize=qmax)
-        qC_in = ctx.Queue(maxsize=qmax)
+        qC_in = ctx.Queue(maxsize=qmax_c)
         qPred = ctx.SimpleQueue()
         qFusIn = ctx.SimpleQueue()
         qFused = ctx.SimpleQueue()

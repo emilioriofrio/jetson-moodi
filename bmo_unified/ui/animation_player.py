@@ -12,6 +12,17 @@ GStreamer/X11 no tolera bien dos QVideoWidget nativos compitiendo por el
 mismo plano de hardware. Un solo reproductor es más robusto aunque el cambio
 de clip tenga un corte breve.
 
+S12 -- congelamiento del video, medido: el loop "sin corte" descrito abajo es
+estable en los clips SIN pista de audio (28 min, 206 vueltas, cero incidentes)
+pero atasca el pipeline en los clips CON audio (2 congelamientos en 5.5 min).
+La forma es siempre la misma: al dar la vuelta, la posición se queda clavada en
+0 y el reproductor sigue reportando PlayingState. Es la misma familia de
+problemas que el silenciado por setMuted() (ver más abajo): este backend no
+tolera que se toque el pipeline mientras hay una pista de audio viva. Por eso
+los clips con audio dan la vuelta esperando al final real, y además hay un
+vigilante (_check_watchdog) que recarga el clip si la posición deja de avanzar
+-- exactamente lo que el usuario conseguía a mano cambiando de pantalla.
+
 Loop sin corte visible: en vez de esperar a EndOfMedia real y recién ahí
 reposicionar+reproducir (lo que primero atraviesa el manejo interno de fin de
 stream de GStreamer -- flush, posible frame negro/congelado momentáneo -- y
@@ -40,9 +51,10 @@ import glob
 import logging
 import os
 import subprocess
+import time
 
 from PyQt5.QtCore import Qt, QTimer, QUrl, pyqtSignal
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from PyQt5.QtMultimedia import QAudio, QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import QWidget
 
@@ -54,9 +66,44 @@ EXTS = (".mp4", ".mkv", ".mov", ".avi")
 LOOP_LEAD_MS = 120  # margen antes del final real en el que se reinicia a 0
 LOOP_POLL_MS = 40   # frecuencia de sondeo de posición (fino, para no pasarse del margen)
 
+# Vigilante de congelamiento (S12) -- ver _check_watchdog().
+WATCHDOG_POLL_MS = 1000      # cada cuánto se comprueba que el video siga vivo
+STALL_TIMEOUT_MS = 4000      # sin avance de posición estando "reproduciendo" = congelado
+RELOAD_GRACE_MS = 6000       # margen tras una recarga antes de volver a intervenir
+
+# Recarga preventiva (S12): además de reaccionar al congelamiento, el pipeline
+# se renueva cada tanto por su cuenta. Ver _check_watchdog(). Poner en 0 para
+# desactivarla.
+PREVENTIVE_RELOAD_MS = 20 * 60 * 1000  # 20 minutos
+PREVENTIVE_MAX_POS_MS = 1500           # solo justo después de dar la vuelta
+
+# Loop de los clips CON pista de audio (S12). Ver _check_seamless_loop().
+# Con el salto anticipado a 0 (el loop "sin corte" de S11) los clips con audio
+# se congelan cada pocos minutos: medido en banco, 2 congelamientos en 5.5 min
+# contra 0 en 28 min del mismo clip sin pista de audio. Por eso los clips con
+# audio dan la vuelta esperando al final real (EndOfMedia) en vez de saltar
+# antes; los silenciosos conservan el salto anticipado, que es el que no se
+# nota y sí es estable.
+SEAMLESS_LOOP_WITH_AUDIO = False
+
 # Subcarpeta de caché para las variantes sin pista de audio (ver docstring del
 # módulo) -- se generan una sola vez por clip, junto a los originales.
 _MUTED_SUBDIR = "_sin_audio"
+
+# Variantes con el audio normalizado y comprimido (S12) -- ver
+# _ensure_normalized_variant().
+_NORM_SUBDIR = "_audio_normalizado"
+LOUDNESS_TARGET_LUFS = -18.0   # sonoridad integrada objetivo (EBU R128): la MISMA que ya tenían
+TRUE_PEAK_MAX_DBTP = -6.0      # techo de pico real: 4.5 dB por debajo del pico original
+LOUDNESS_RANGE_LU = 5.0        # rango dinámico objetivo
+# Compresor previo: baja los picos hacia la media para que loudnorm pueda
+# mantener la sonoridad con un techo mucho más bajo (ver _ensure_normalized_variant).
+_COMPRESOR = "acompressor=threshold=-24dB:ratio=6:attack=5:release=150"
+
+
+def _now_ms() -> int:
+    """Reloj monótono en ms (no se ve afectado por cambios de hora del sistema)."""
+    return int(time.monotonic() * 1000)
 
 
 def _clip_title(path: str) -> str:
@@ -106,6 +153,18 @@ class AnimationPlayer(QWidget):
         self._loop_timer.timeout.connect(self._check_seamless_loop)
         self._loop_timer.start()
 
+        # Vigilante de congelamiento (S12): estado para _check_watchdog().
+        self._last_pos = -1
+        self._last_advance_ms = _now_ms()
+        self._last_reload_ms = 0
+        self._recuperaciones = 0
+        self._player.error.connect(self._on_player_error)
+
+        self._watchdog = QTimer(self)
+        self._watchdog.setInterval(WATCHDOG_POLL_MS)
+        self._watchdog.timeout.connect(self._check_watchdog)
+        self._watchdog.start()
+
         if self._clips:
             self._load_clip(0)
         else:
@@ -123,12 +182,13 @@ class AnimationPlayer(QWidget):
         return sorted(f for f in files if os.path.isfile(f))
 
     def _playback_path(self, path: str) -> str:
-        """Ruta a reproducir para 'path': el original si hay audio habilitado
-        (Caras), o su variante sin pista de audio si está silenciado (ver
-        docstring del módulo -- nunca se logra silencio con setMuted/setVolume
-        sobre un clip CON audio, se congela el loop en esta Jetson)."""
+        """Ruta a reproducir para 'path': la variante de audio normalizado si
+        hay audio habilitado (Caras), o su variante sin pista de audio si está
+        silenciado (ver docstring del módulo -- nunca se logra silencio con
+        setMuted/setVolume sobre un clip CON audio, se congela el loop en esta
+        Jetson)."""
         if not self._muted and self._volume > 0:
-            return path
+            return self._ensure_normalized_variant(path)
         return self._ensure_muted_variant(path)
 
     @staticmethod
@@ -154,6 +214,63 @@ class AnimationPlayer(QWidget):
             )
             return path
 
+    @staticmethod
+    def _ensure_normalized_variant(path: str) -> str:
+        """Variante del clip con el audio normalizado y COMPRIMIDO (S12).
+
+        Por qué: el audio se oye saturado en el altavoz del panel ElecLab y ya
+        no queda margen por volumen -- el sink de PulseAudio está al 65% desde
+        S10 y el usuario confirmó (S12) que subir el volumen de la pantalla al
+        máximo, la vía que S11 dejó por comprobar, NO lo arregla. Medido con
+        loudnorm/volumedetect, la saturación no viene del nivel medio sino de la
+        EXCURSIÓN: los clips promedian -17.9 a -22.8 LUFS pero pican hasta
+        -1.5 dBTP, ~22 dB de factor de cresta que ese altavoz pequeño no
+        reproduce sin distorsionar.
+
+        Corrección (la estándar para altavoces chicos): comprimir los picos
+        contra la media y renormalizar a la MISMA sonoridad integrada con un
+        techo de pico mucho más bajo. Medido sobre 'Sonreir': -17.9 LUFS /
+        -1.5 dBTP -> -17.3 LUFS / -5.9 dBTP; se oye igual de fuerte (0.6 LU más,
+        de hecho) golpeando el altavoz 4.4 dB menos. De paso empareja los cuatro
+        clips, que antes se llevaban 4.9 LU entre el más fuerte y el más flojo.
+
+        No sube el volumen: reduce el pico a igualdad de sonoridad. Es
+        mitigación, no cura -- la solución real sigue siendo hardware (altavoz
+        externo o amplificador), descartada por ahora por espacio.
+
+        Solo se re-codifica el AUDIO (-c:v copy): el video queda bit a bit
+        idéntico, así que esto no puede afectar a la reproducción ni al loop.
+        Se cachea igual que la variante sin audio: se genera una vez por clip.
+        """
+        directory = os.path.dirname(path)
+        cache_dir = os.path.join(directory, _NORM_SUBDIR)
+        out_path = os.path.join(cache_dir, os.path.basename(path))
+        if os.path.exists(out_path):
+            return out_path
+        try:
+            os.makedirs(cache_dir, exist_ok=True)
+            # OJO: nada de alimiter aquí. Su opción 'level' viene activada por
+            # defecto y RE-NIVELA la salida hasta el techo, deshaciendo lo que
+            # acaba de hacer loudnorm: con él la variante quedaba en -13.9 LUFS
+            # y -0.4 dBTP, es decir MÁS saturada que el original (medido).
+            filtro = (
+                f"{_COMPRESOR},"
+                f"loudnorm=I={LOUDNESS_TARGET_LUFS}:TP={TRUE_PEAK_MAX_DBTP}"
+                f":LRA={LOUDNESS_RANGE_LU}"
+            )
+            subprocess.run(
+                ["ffmpeg", "-y", "-i", path, "-af", filtro,
+                 "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", out_path],
+                check=True, capture_output=True,
+            )
+            log.info("Variante de audio normalizado generada: %s", out_path)
+            return out_path
+        except Exception:
+            log.exception(
+                "No se pudo normalizar el audio de %s; se reproduce el original "
+                "(puede sonar saturado en el altavoz del panel)", path)
+            return path
+
     def _load_clip(self, idx: int):
         if not self._clips:
             return
@@ -167,24 +284,175 @@ class AnimationPlayer(QWidget):
         self._player.setMuted(False)
         # Nunca 0: con volumen 0 _playback_path ya eligió la variante sin
         # audio, y setVolume(0) sobre un clip CON audio congela el loop.
-        self._player.setVolume(max(1, self._volume))
+        self._player.setVolume(max(1, self._volumen_lineal()))
         self._player.play()
+        # Cargar un medio nuevo reinicia la cuenta del vigilante (S12): la
+        # posición vuelve a 0 y tarda un momento en avanzar.
+        self._last_reload_ms = _now_ms()
+        self._last_advance_ms = self._last_reload_ms
+        self._last_pos = -1
+
+    def _volumen_lineal(self) -> int:
+        """Convierte el volumen de Configuraciones (0-100, escala PERCEPTUAL)
+        al valor lineal que espera QMediaPlayer.setVolume (S12).
+
+        QMediaPlayer.setVolume es amplitud lineal, no sonoridad percibida: la
+        mitad del recorrido del slider (50) son solo -6 dB, así que casi toda
+        la diferencia audible se concentraba en el extremo bajo y el tramo
+        70-100 sonaba prácticamente igual de fuerte. Con el panel saturando,
+        eso deja al usuario sin control fino justo donde lo necesita: bajar de
+        100 a 80 apenas quitaba 1.9 dB. Con la conversión de Qt (medido: 80 ->
+        -9.1 dB, 92 -> -5.2 dB, 50 -> -16.4 dB) el slider se vuelve utilizable
+        de punta a punta."""
+        lineal = QAudio.convertVolume(
+            self._volume / 100.0,
+            QAudio.LogarithmicVolumeScale,
+            QAudio.LinearVolumeScale,
+        )
+        return int(round(lineal * 100))
 
     def _check_seamless_loop(self):
         """Reinicia a 0 justo antes del final real, sin esperar a EndOfMedia
-        (ver docstring del módulo) -- el mecanismo normal de loop."""
+        (ver docstring del módulo) -- el mecanismo normal de loop.
+
+        Excepción medida en S12: en los clips CON pista de audio este salto
+        anticipado atasca el pipeline cada pocos minutos (la posición se queda
+        clavada en 0 aunque el reproductor siga en PlayingState). Ahí se deja
+        que el clip llegue al final de verdad y se reinicia desde
+        _on_media_status_changed. Es exactamente la misma familia de problemas
+        que ya obligó a no usar setMuted()/setVolume() sobre clips con audio en
+        esta Jetson: lo que no tolera el backend es tocar el pipeline mientras
+        hay una pista de audio viva."""
+        if self._tiene_audio() and not SEAMLESS_LOOP_WITH_AUDIO:
+            return
         dur = self._player.duration()
         if dur <= 0:
             return
         if self._player.position() >= dur - LOOP_LEAD_MS:
             self._player.setPosition(0)
 
+    def _tiene_audio(self) -> bool:
+        """Si lo que se está reproduciendo es la variante CON pista de audio."""
+        return not self._muted and self._volume > 0
+
     def _on_media_status_changed(self, status):
-        # Red de seguridad: solo debería dispararse si _check_seamless_loop no
-        # llegó a tiempo (p. ej. duración aún desconocida al cargar un clip).
+        # En los clips CON audio éste es el mecanismo de loop PRINCIPAL desde
+        # S12 (ver _check_seamless_loop). En los silenciosos sigue siendo solo
+        # una red de seguridad, por si el salto anticipado no llegó a tiempo
+        # (p. ej. duración aún desconocida al cargar un clip).
         if status == QMediaPlayer.EndOfMedia:
             self._player.setPosition(0)
             self._player.play()
+        elif status == QMediaPlayer.StalledMedia:
+            # No se recupera aquí: solo se deja rastro. La recuperación la
+            # decide _check_watchdog(), que es quien sabe cuánto lleva parado.
+            log.warning("El reproductor reporta StalledMedia (clip %s)",
+                        os.path.basename(self._clips[self._idx]) if self._clips else "?")
+
+    def _on_player_error(self, *_args):
+        log.error("Error del reproductor (%s): %s",
+                  self._player.error(), self._player.errorString())
+
+    # ---------- vigilante de congelamiento (S12) ----------
+    def _check_watchdog(self):
+        """Detecta que el video se quedó congelado y lo revive solo.
+
+        Síntoma reportado por el usuario (S12): tras un rato largo en la misma
+        pantalla, la cara de Moodi se queda pegada en un frame y solo vuelve a
+        moverse al cambiar de pantalla y regresar. Ese "cambiar y volver" es,
+        en el código, MainWindow._show_view() -> set_muted() -> _set_media(),
+        o sea una RECARGA del medio: el pipeline de GStreamer se reconstruye y
+        el video arranca de nuevo. El reproductor, mientras tanto, sigue
+        reportando PlayingState -- por eso el congelamiento es silencioso y no
+        hay ningún error que atrapar.
+
+        Así que el criterio no puede ser el estado del reproductor sino el
+        AVANCE REAL de la posición: si lleva STALL_TIMEOUT_MS sin moverse
+        cuando debería estar reproduciendo, está congelado y se aplica la misma
+        recarga que hace el cambio de pantalla, automáticamente y sin que el
+        usuario tenga que hacer nada.
+
+        Se registra cada intervención (nivel WARNING) a propósito: es la única
+        forma de saber, en el robot real, cada cuánto ocurre de verdad.
+        """
+        if not self._clips:
+            return
+
+        ahora = _now_ms()
+
+        # Tras una recarga hay que darle tiempo a abrir el archivo y arrancar;
+        # si no, el propio arranque (posición aún en 0) se leería como congelado.
+        if ahora - self._last_reload_ms < RELOAD_GRACE_MS:
+            self._last_advance_ms = ahora
+            return
+
+        status = self._player.mediaStatus()
+        if status in (QMediaPlayer.LoadingMedia, QMediaPlayer.NoMedia,
+                      QMediaPlayer.UnknownMediaStatus):
+            self._last_advance_ms = ahora
+            return
+
+        pos = self._player.position()
+        if pos != self._last_pos:
+            self._last_pos = pos
+            self._last_advance_ms = ahora
+            self._check_recarga_preventiva(ahora, pos)
+            return
+
+        parado_ms = ahora - self._last_advance_ms
+        if parado_ms < STALL_TIMEOUT_MS:
+            return
+
+        self._recuperaciones += 1
+        log.warning(
+            "Video congelado: %.1fs sin avanzar (pos=%d estado=%s status=%s clip=%s). "
+            "Recargando el clip -- recuperación nº%d de esta sesión.",
+            parado_ms / 1000.0, pos, self._player.state(), status,
+            os.path.basename(self._clips[self._idx]), self._recuperaciones,
+        )
+        self._recargar_clip_actual()
+
+    def _check_recarga_preventiva(self, ahora: int, pos: int):
+        """Renueva el pipeline cada PREVENTIVE_RELOAD_MS aunque no se haya
+        detectado nada raro.
+
+        Por qué existe además del vigilante reactivo: hay un segundo modo de
+        fallo posible que el vigilante NO puede ver. Si lo que se queda pegado
+        es la superficie de video (el plano de overlay de X11/GStreamer) y no
+        el pipeline, la posición sigue avanzando con normalidad y para el
+        reproductor todo está bien, pero la pantalla no se actualiza. Encaja
+        con el detalle de que al usuario le baste "cambiar de pantalla y
+        volver": entrar a Oraciones no solo puede recargar el medio, también
+        cambia la geometría del widget de video (setGeometry al recuadro
+        chico), que es justo lo que fuerza a redibujar ese plano.
+
+        Como no se puede detectar desde dentro del proceso (grabar la ventana
+        de un overlay nativo devuelve el color de clave, no el video), la
+        defensa es renovar el pipeline periódicamente. Se hace SOLO justo
+        después de que el clip dio la vuelta (posición < PREVENTIVE_MAX_POS_MS):
+        el clip ya reinicia solo cada ~8 s, así que reiniciarlo ahí se ve igual
+        que una vuelta normal.
+        """
+        if PREVENTIVE_RELOAD_MS <= 0 or self._last_reload_ms <= 0:
+            return
+        if ahora - self._last_reload_ms < PREVENTIVE_RELOAD_MS:
+            return
+        if pos > PREVENTIVE_MAX_POS_MS:
+            return
+        log.info("Recarga preventiva del clip tras %.0f min de reproducción continua",
+                 (ahora - self._last_reload_ms) / 60000.0)
+        self._recargar_clip_actual()
+
+    def _recargar_clip_actual(self):
+        """Recarga el clip en curso: lo mismo que consigue el usuario al cambiar
+        de pantalla y volver, pero sin que tenga que hacerlo él."""
+        self._last_reload_ms = _now_ms()
+        self._last_advance_ms = self._last_reload_ms
+        self._last_pos = -1
+        # setMedia(QMediaContent()) primero: fuerza a soltar el pipeline
+        # anterior en vez de reutilizar el que se quedó colgado.
+        self._player.setMedia(QMediaContent())
+        self._set_media(self._clips[self._idx])
 
     def set_muted(self, muted: bool):
         """Activa o desactiva el audio: recarga el clip actual con o sin su

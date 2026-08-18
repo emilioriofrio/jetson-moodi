@@ -46,8 +46,21 @@ SCREEN_W, SCREEN_H = 1024, 600
 POLL_MS = 100     # lectura del archivo de estado
 ANIM_MS = 33      # ~30 fps de animación
 
-N_PIECES = 22     # piezas de rompecabezas cayendo
-LOGO_SCALE = 2.4  # el LOGO original es 149x51: se agranda con suavizado
+# Piezas de rompecabezas cayendo. 22 -> 34 y repartidas por CARRILES (S12): con
+# la posición horizontal totalmente al azar se formaban grupos y quedaban franjas
+# de pantalla vacías -- el usuario lo describió como que la lluvia "se ve un poco
+# recortada". Cada pieza vive en su propio carril vertical y conserva el carril al
+# reaparecer arriba, así la caída cubre TODO el ancho sin dejar de verse orgánica
+# (dentro del carril la posición, el tamaño, el giro y la velocidad siguen siendo
+# aleatorios).
+N_PIECES = 34
+# Ancho con el que se dibuja el LOGO, en píxeles de pantalla. Antes era un
+# factor de escala fijo (2.4x) atado al tamaño del PNG que había entonces
+# (149x51), así que sustituirlo por una imagen de más resolución lo habría
+# dibujado gigante en vez de nítido. Con un ancho objetivo, el mismo código
+# aprovecha automáticamente cualquier LOGO.png de mayor definición (S12: el
+# usuario va a proveer uno) sin tocar nada más.
+LOGO_TARGET_W = 360.0
 
 # Recortes de las piezas COMPLETAS dentro de assets/lluvia_rompecabezas.png
 # (x, y, ancho, alto). Se calcularon una sola vez por componentes conexas sobre
@@ -65,20 +78,27 @@ PIECE_RECTS = [
 class _Piece:
     """Una pieza de rompecabezas cayendo, con su propia velocidad y giro."""
 
-    __slots__ = ("x", "y", "vy", "rot", "vrot", "scale", "alpha", "tile", "_n")
+    __slots__ = ("x", "y", "vy", "rot", "vrot", "scale", "alpha", "tile", "_n",
+                 "_lane", "_lanes")
 
-    def __init__(self, rnd, n_tiles, start_above=False):
+    def __init__(self, rnd, n_tiles, lane=0, lanes=1, start_above=False):
         self.tile = 0
         self._n = n_tiles
+        self._lane = lane      # carril vertical propio (ver N_PIECES)
+        self._lanes = max(1, lanes)
         self.reset(rnd, start_above)
 
     def reset(self, rnd, start_above=True):
         self.tile = rnd.randrange(self._n) if self._n else 0
-        self.x = rnd.uniform(-40, SCREEN_W + 40)
+        # Dentro del carril, con desborde a los lados para que las piezas
+        # entren y salgan por los bordes en vez de "empezar" dentro de la
+        # pantalla.
+        ancho_carril = (SCREEN_W + 80) / self._lanes
+        self.x = -40 + (self._lane + rnd.uniform(0.1, 0.9)) * ancho_carril
         self.y = rnd.uniform(-260, -20) if start_above else rnd.uniform(-260, SCREEN_H)
         # Profundidad: las piezas grandes caen más rápido y más opacas
         # (paralaje simple, da sensación de volumen sin costo real).
-        self.scale = rnd.uniform(0.28, 0.72)
+        self.scale = rnd.uniform(0.30, 0.85)
         self.vy = 22 + self.scale * 58
         self.rot = rnd.uniform(0, 360)
         self.vrot = rnd.uniform(-26, 26)
@@ -104,8 +124,9 @@ class SplashWindow(QWidget):
         sheet = QPixmap(os.path.join(assets, "lluvia_rompecabezas.png"))
         self._piece_tiles = self._cut_pieces(sheet)
         n_tiles = max(1, len(self._piece_tiles))
-        self._pieces = [_Piece(self._rnd, n_tiles, start_above=False)
-                        for _ in range(N_PIECES)]
+        self._pieces = [_Piece(self._rnd, n_tiles, lane=i, lanes=N_PIECES,
+                               start_above=False)
+                        for i in range(N_PIECES)]
 
         self._anim = QTimer(self)
         self._anim.timeout.connect(self._tick)
@@ -221,8 +242,9 @@ class SplashWindow(QWidget):
     def _paint_logo(self, painter):
         if self._logo.isNull():
             return
-        lw = self._logo.width() * LOGO_SCALE
-        lh = self._logo.height() * LOGO_SCALE
+        escala = LOGO_TARGET_W / max(1, self._logo.width())
+        lw = self._logo.width() * escala
+        lh = self._logo.height() * escala
         # respiración suave (±2%), da vida sin distraer
         breath = 1.0 + 0.02 * (0.5 - 0.5 * math.cos(self._t * 1.6))
         lw *= breath

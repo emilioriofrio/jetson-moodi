@@ -50,8 +50,31 @@ modulo_b:
   stale_frames: 240
 modulo_c:
   analyze_every: 3
+  # Instrumentación de cadencia (S12): el Módulo C imprime en qué se le va el
+  # tiempo entre predicción y predicción (esperar frames / Detectron2 / flujo
+  # óptico / VGG16 / BiLSTM). Dejar en false salvo al medir.
+  debug_timing: false
+  # --- claves de S12, MEDIDAS EN EL ROBOT (ver PROGRESO_BMO_S12.md §6) ---
+  # Con esto, más la GPU que el módulo nunca llegó a usar (ver run.py:
+  # entry_worker_c), C pasó de una predicción cada 48 s a una cada 1.8 s,
+  # sin tocar los 30 fps que llegan a la UI.
+  # frame_stride: el orquestador manda 1 de cada 3 frames, en vez de mandarlos
+  #   todos para que C tirase 2 de cada 3: la secuencia le llega uniformemente
+  #   espaciada, que es como se entrenó el BiLSTM.
+  # detectron_min_size: detectar a 360 (la resolución real) en vez de ampliar a
+  #   800 como hace Detectron2 por defecto.
+  # Poner ambas a 0 restaura el comportamiento de S11.
+  frame_stride: 3
+  detectron_min_size: 360
+  # Tolerancia de hueco para considerar que la ventana sigue uniformemente
+  # espaciada (solo aplica con frame_stride > 0).
+  max_gap_factor: 2.5
+  # Cola propia y honda para C (S12): tiene que sobrevivir a su propia
+  # detección de persona sin perder frames de la ventana. 32 frames a
+  # 10 fps (stride 3 sobre 30 fps) son ~3 s de margen.
+  queue_maxsize: 32
   bilstm_path: moduloC_dataset/vectores_numpy/resultados_entrenamiento/bilstm_mejor_modelo.pth
-  detect_every: 8
+  detect_every: 11
   detectron_score_thr: 0.7
   label_map_path: moduloC_dataset/vectores_numpy/label_map.json
   # Bajado de 0.15 a 0.12 al pasar a 640x360 (S11): person_ratio es la fraccion

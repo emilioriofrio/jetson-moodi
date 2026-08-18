@@ -176,7 +176,13 @@ class EmoMonitorPanel(QWidget):
         body.addWidget(side_panel)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(20, 16, 20, 20)
+        # Margen superior 16 -> 48 (S12): la leyenda de botones de MainWindow es
+        # una franja de ancho completo de ~39 px (fs(18)+16 con la fuente más
+        # grande) que se dibuja ENCIMA de este panel, y solapaba la mitad
+        # superior del botón ✕. Ya no intercepta toques (es transparente al
+        # ratón desde S12), pero además conviene que el botón no quede debajo
+        # de un texto: se ve mejor y el objetivo táctil queda entero.
+        layout.setContentsMargins(20, 48, 20, 20)
         layout.setSpacing(14)
         layout.addLayout(top)
         layout.addLayout(body, stretch=1)

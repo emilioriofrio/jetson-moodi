@@ -32,6 +32,7 @@ por muestreo:
 import json
 import logging
 import re
+import unicodedata
 
 import requests
 from flask import Flask, jsonify, request
@@ -46,11 +47,67 @@ LLAMA_URL = "http://127.0.0.1:1234/v1/chat/completions"
 # que start_bmo.sh carga y despistaba al depurar.
 MODEL_NAME = "Qwen2.5-1.5B-Instruct"
 
+VOCAB_PATH = "/home/jetson/bmo_unified/config/rfid_vocab.json"
+
+# Etiquetas legibles de los tipos de tarjeta, para describir el vocabulario en
+# el prompt sin inventar categorías nuevas.
+_TIPOS = {
+    "SUBJECT": "personas",
+    "VERB": "acciones",
+    "OBJECT": "objetos",
+    "PLACE": "lugares",
+    "EMOTION": "estados",
+    "CONNECTOR": "conectores",
+}
+
+
+def cargar_vocabulario(path: str = VOCAB_PATH) -> str:
+    """Lista de las tarjetas REALES agrupadas por tipo, para el prompt (S12).
+
+    Por qué: el usuario reporta que la corrección "mejoró en cohesión pero por
+    momentos no contextualiza como debería". Los ejemplos de S11 cubrían las
+    tarjetas frecuentes (YO, QUIERO, AGUA, BAÑO...), pero el vocabulario tiene
+    34 tarjetas y con las poco frecuentes -- HOSPITAL, SIESTA, ESTOY LISTO,
+    PUEDO AYUDARTE, DORMITORIO, SALÓN, Llavero -- el modelo no tenía ninguna
+    referencia de qué son ni de qué papel juegan en la frase. Un modelo de 1.5B
+    no lo deduce solo: hay que decírselo.
+
+    Se lee del MISMO archivo que usa la app (config/rfid_vocab.json), no de una
+    copia: si el usuario graba una tarjeta nueva, el prompt la conoce sin tocar
+    este archivo.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            tarjetas = json.load(f)
+    except Exception:
+        log.exception("No se pudo leer %s; el prompt irá sin lista de vocabulario", path)
+        return ""
+
+    por_tipo = {}
+    for t in tarjetas:
+        palabra = str(t.get("palabra", "")).strip()
+        tipo = str(t.get("tipo", "")).strip().upper()
+        if not palabra or tipo == "UNKNOWN":
+            continue
+        por_tipo.setdefault(_TIPOS.get(tipo, "otras"), []).append(palabra)
+
+    return "\n".join(f"- {etiqueta}: {', '.join(palabras)}"
+                     for etiqueta, palabras in por_tipo.items() if palabras)
+
+
+_VOCAB_TXT = cargar_vocabulario()
+
 SYSTEM_PROMPT = (
     "Eres el asistente de comunicación de Moodi, un robot que acompaña a un niño "
     "que habla mediante tarjetas con pictogramas.\n"
     "Recibes las palabras de las tarjetas en el orden en que el niño las colocó y "
     "devuelves UNA sola oración en español natural.\n"
+    + (f"\nTarjetas disponibles:\n{_VOCAB_TXT}\n"
+       "Algunas tarjetas llevan varias palabras (NO QUIERO, NECESITO AYUDA, "
+       "NO NECESITO AYUDA, PUEDO AYUDARTE, ESTOY LISTO, ESTOY BIEN, ESTOY MAL, "
+       "QUIERO MÁS): son UNA sola tarjeta y hay que respetarlas enteras.\n"
+       if _VOCAB_TXT else "")
+    +
     "\n"
     "Reglas obligatorias:\n"
     "1. Usa ÚNICAMENTE la información de las tarjetas. No inventes personas, "
@@ -76,6 +133,15 @@ FEW_SHOT = [
     ("PAPÁ HABLAR", "Papá, quiero hablar contigo."),
     ("YO ESTOY MAL", "Estoy mal."),
     ("HERMANA JUGAR PARQUE", "Quiero jugar en el parque con mi hermana."),
+    # S12: ejemplos con las tarjetas poco frecuentes, que son donde el usuario
+    # detectó frases sin contexto. Cubren un lugar poco usado (HOSPITAL), un
+    # estado que es una tarjeta entera (ESTOY LISTO), una tarjeta que habla del
+    # OTRO y no del niño (PUEDO AYUDARTE) y un objeto suelto sin verbo.
+    ("YO IR HOSPITAL", "Quiero ir al hospital."),
+    ("YO ESTOY LISTO COLEGIO", "Estoy listo para ir al colegio."),
+    ("MAMÁ PUEDO AYUDARTE", "Mamá, puedo ayudarte."),
+    ("Mario DORMIR DORMITORIO", "Mario quiere dormir en el dormitorio."),
+    ("AGUA", "Quiero agua."),
 ]
 
 REQUEST_TIMEOUT = (10, 90)
@@ -114,6 +180,64 @@ def first_sentence(text: str) -> str:
     if m:
         return m.group(1).strip()
     return text[:140].strip()
+
+
+def _plegar(texto: str) -> str:
+    """Minúsculas y sin acentos, para comparar palabras sin falsos negativos."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", texto.lower())
+        if unicodedata.category(c) != "Mn"
+    )
+
+
+# Alfabetos que NO deberían aparecer nunca en una frase en español. Su presencia
+# es la firma de una salida corrupta del modelo (ver respuesta_plausible).
+_ALFABETOS_IMPOSIBLES = re.compile(r"[Ѐ-ӿͰ-Ͽ一-鿿؀-ۿ]")
+
+# Longitud mínima para considerar una palabra "de contenido": YO, NO, IR o MÁS
+# aparecen en casi cualquier frase y no sirven para comprobar nada.
+_MIN_LEN_CONTENIDO = 4
+
+
+def respuesta_plausible(prompt: str, sent: str) -> bool:
+    """¿La frase devuelta por el modelo tiene algo que ver con las tarjetas?
+
+    Por qué existe (S12): en una corrida del banco de pruebas, el modelo devolvió
+    basura en los 24 casos -- "YO QUIERO COMIDA" -> "No, I want to eat.",
+    "PAPÁ QUIERO MÁS AGUA" -> "Papayá!", "NO QUIERO IR HOSPITAL" -> "No quiero
+    morrger ni mamaro... no me atинuando" (con caracteres cirílicos). El mismo
+    servidor, el mismo modelo y el mismo código dieron respuestas correctas
+    minutos después y el fallo no se ha podido reproducir a voluntad, así que la
+    causa sigue abierta.
+
+    Pero la causa importa menos que la consecuencia: esto es un dispositivo de
+    comunicación de un niño, y una frase inventada se lee en voz alta y se envía
+    por Telegram como si fuera suya. Eso es peor que no responder. Así que el
+    puente ya no se fía de lo que le devuelve el modelo y comprueba dos cosas
+    baratas y objetivas:
+
+    1. Que no aparezcan alfabetos imposibles en español (cirílico, griego, CJK,
+       árabe): es la firma inconfundible de una salida corrupta.
+    2. Que la frase conserve al menos UNA palabra de contenido de las tarjetas
+       (comparando sin acentos y por raíz de 4 letras, para que "COMIDA" valga
+       para "comer" y "QUIERO" para "quiero"). Una respuesta que no comparte
+       ninguna palabra con lo que el niño puso no es una corrección: es otra
+       frase.
+
+    Si el prompt solo tiene palabras cortas (YO IR), no hay nada que comprobar y
+    se acepta: mejor dejar pasar una frase dudosa que rechazar una correcta.
+    """
+    if not sent:
+        return False
+    if _ALFABETOS_IMPOSIBLES.search(sent):
+        return False
+
+    palabras = [p for p in re.split(r"\s+", _plegar(prompt)) if len(p) >= _MIN_LEN_CONTENIDO]
+    if not palabras:
+        return True
+
+    respuesta = _plegar(sent)
+    return any(p[:4] in respuesta for p in palabras)
 
 
 def fallback_sentence(prompt: str) -> str:
@@ -171,6 +295,21 @@ def ask_ai():
     try:
         raw = call_llama(build_messages(prompt))
         sent = first_sentence(strip_reasoning(raw))
+
+        # Salida corrupta o sin relación con las tarjetas (S12): un reintento
+        # con la caché de prompt desactivada y muestreo aún más determinista.
+        # Se desactiva la caché a propósito: si lo que falla es el estado
+        # reutilizado del servidor, repetir con él puesto daría lo mismo otra vez.
+        if sent and not respuesta_plausible(prompt, sent):
+            log.warning("Respuesta inverosímil para %r: %r. Reintentando sin caché.",
+                        prompt, sent)
+            raw = call_llama(build_messages(prompt), temperature=0.1,
+                             extra={"cache_prompt": False})
+            sent = first_sentence(strip_reasoning(raw))
+            if sent and not respuesta_plausible(prompt, sent):
+                log.error("Segunda respuesta también inverosímil (%r): se usa el "
+                          "respaldo determinista para no inventarle frases al niño", sent)
+                return jsonify({"response": fallback_sentence(prompt), "degraded": True})
 
         # Reintento en JSON si el modelo devolvió algo vacío o inservible.
         if not sent:

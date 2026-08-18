@@ -1,6 +1,7 @@
 {
-  "volume": 80,
+  "volume": 100,
   "language": "en",
   "nickname": "Emilio",
-  "font_scale": "xlarge"
+  "font_scale": "xlarge",
+  "voice_enabled": true
 }

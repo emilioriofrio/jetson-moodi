@@ -31,6 +31,33 @@ def entry_worker_b(cfg_path, in_q, out_q, stop_event):
     run_worker_B(cfg_path, in_q, out_q, stop_event)
 
 def entry_worker_c(cfg_path, in_q, out_q, stop_event):
+    # Devolverle la GPU al Módulo C si su config la pide (S12).
+    #
+    # La línea 3 de este archivo pone CUDA_VISIBLE_DEVICES=-1 para todo el
+    # proceso, y con multiprocessing en modo "spawn" cada hijo hereda ese
+    # entorno: el resultado es que el Módulo C llevaba corriendo Detectron2 +
+    # VGG16 + BiLSTM **en CPU** pese a tener use_gpu: true en runtime.yaml (y
+    # pese a que CLAUDE.md lo describe como el módulo que usa GPU). Se descubrió
+    # imprimiendo el dispositivo real desde dentro del worker:
+    #   [C] Iniciado ... en cpu (use_gpu=True, cuda_disponible=False)
+    # Eso explicaba sus tiempos: 16 s por detección y 16 s por ráfaga de VGG16.
+    #
+    # A y B siguen en CPU: cada uno pone su propio CUDA_VISIBLE_DEVICES=-1
+    # dentro de su módulo, que es donde está documentado el motivo (TF y Torch
+    # peleándose por la GPU compartida de la Jetson). Aquí solo se restaura el
+    # reparto híbrido que la configuración ya declaraba.
+    #
+    # Debe ocurrir ANTES de importar mod_c, porque torch fija la visibilidad de
+    # dispositivos al importarse. Con use_gpu: false se comporta como antes.
+    import yaml as _yaml
+    try:
+        with open(cfg_path, "r", encoding="utf-8") as _f:
+            _usa_gpu = bool(((_yaml.safe_load(_f) or {}).get("modulo_c") or {}).get("use_gpu", False))
+    except Exception:
+        _usa_gpu = False
+    if _usa_gpu:
+        os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+
     from modules.mod_c import run_worker_C
     run_worker_C(cfg_path, in_q, out_q, stop_event)
 
@@ -86,7 +113,16 @@ def main():
 
     import yaml as _yaml
     with open(CFG, "r", encoding="utf-8") as _f:
-        _qmax = int((_yaml.safe_load(_f) or {}).get("queues_maxsize", 5))
+        _cfg_data = _yaml.safe_load(_f) or {}
+    _qmax = int(_cfg_data.get("queues_maxsize", 5))
+    # Cola propia (y más honda) para el Módulo C -- S12. C es el único worker que
+    # necesita una SECUENCIA de frames regularmente espaciados, no el último
+    # frame: mientras corre su detección de persona (segundos) la cola se llena y
+    # el orquestador descarta, y al reanudar C se encuentra un salto que rompe la
+    # ventana. Con la cola honda, esos frames se quedan esperando en vez de
+    # perderse y la ventana se llena uniforme. Solo aplica con frame_stride > 0,
+    # donde el orquestador ya manda una fracción de los frames.
+    _qmax_c = int((_cfg_data.get("modulo_c") or {}).get("queue_maxsize", 0) or _qmax)
 
     # Colas de frames ACOTADAS (S11): con SimpleQueue (sin maxsize) el put() del
     # orquestador se bloqueaba en el pipe del SO hasta que el worker leyera —un
@@ -97,7 +133,7 @@ def main():
     # runtime.yaml pero nunca se usaba.
     qA_in    = ctx.Queue(maxsize=_qmax)
     qB_in    = ctx.Queue(maxsize=_qmax)
-    qC_in    = ctx.Queue(maxsize=_qmax)
+    qC_in    = ctx.Queue(maxsize=_qmax_c)
     qPred    = ctx.SimpleQueue()
 
     qFusIn   = ctx.SimpleQueue()

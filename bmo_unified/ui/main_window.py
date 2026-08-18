@@ -23,6 +23,7 @@ from core.button_router import ButtonRouter, GPIO_PHYS
 from core.i18n import t
 from core.pecs_engine import PecsEngine
 from core.serial_manager import SerialManager
+from core.touch_monitor import TouchMonitor
 from core.voice import VoiceEngine
 from ui import theme
 from ui.animation_player import AnimationPlayer
@@ -97,6 +98,9 @@ class MainWindow(QMainWindow):
         )
         self._vision = VisionEngine()
         self._voice = VoiceEngine(settings)
+        # Vigilante del táctil (S12): el panel desaparece del bus USB cada
+        # tanto; esto lo deja registrado con hora y lo remapea al reaparecer.
+        self._touch = TouchMonitor()
 
         # Configuraciones: pantalla completa de fondo plano, como Oraciones.
         self._settings_panel = SettingsPanel(
@@ -116,6 +120,12 @@ class MainWindow(QMainWindow):
         self._legend = QLabel(central)
         self._legend.setAlignment(Qt.AlignCenter)
         self._legend.setVisible(False)
+        # La leyenda es puramente informativa y ocupa una franja de ancho
+        # completo en la parte superior: sin esto se COME los toques de lo que
+        # haya debajo (los eventos de un QLabel suben a su padre, no pasan al
+        # widget de al lado). Es lo que dejaba inaccesible la parte de arriba
+        # del botón ✕ del monitor emocional, reportado en S12.
+        self._legend.setAttribute(Qt.WA_TransparentForMouseEvents, True)
 
         # Leyenda temporal con el título del clip al cambiar de cara (5.5).
         self._caption = QLabel(central)
@@ -127,6 +137,7 @@ class MainWindow(QMainWindow):
         # apenas hay un QGraphicsEffect activo en la misma ventana, sin
         # importar en qué widget) -- se muestra/oculta al instante en su lugar.
         self._caption.setVisible(False)
+        self._caption.setAttribute(Qt.WA_TransparentForMouseEvents, True)  # igual que _legend (S12)
         self._caption_hide_timer = QTimer(self)
         self._caption_hide_timer.setSingleShot(True)
         self._caption_hide_timer.timeout.connect(self._hide_caption)
