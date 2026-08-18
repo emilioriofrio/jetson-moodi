@@ -2,6 +2,8 @@
 /*
 
 # Whitelist project files in the root directory
+# (PROGRESO_BMO.md e INICIO_RAPIDO_BMO.md se movieron a Contexto/ y ya no
+# existen aquí; las entradas se quedan por si alguna vez vuelven a la raíz)
 !/.gitignore
 !/PROGRESO_BMO.md
 !/install_env.sh
@@ -11,6 +13,14 @@
 !/start_bmo.sh
 
 # Whitelist project folders
+# Contexto/ son los documentos de diseño y los reportes de progreso semanales.
+# El código apunta a secciones concretas de ellos desde sus propios docstrings
+# (REQUERIMIENTOS_APP_MOODI.md, CONTEXTO_MOODI_UI_INTERACTIVA_*.md,
+# PROGRESO_BMO_S*.md), así que fuera del repo esas referencias quedaban rotas
+# para cualquiera que clonara. Comprobado antes de versionarlos que no citan
+# credenciales: el token de Telegram y el chat_id solo se mencionan como
+# política ("NO versionar"), nunca con su valor.
+!/Contexto/
 !/integradora/
 !/apps/
 !/qr_code_recognition/
