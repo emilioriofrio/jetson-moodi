@@ -177,6 +177,11 @@ fuente_run = open("/home/jetson/integradora/model_ia/sistem_IA/run.py").read()
 check("entry_worker_c devuelve la GPU cuando use_gpu es true",
       "CUDA_VISIBLE_DEVICES" in fuente_run.split("def entry_worker_c")[1].split("def ")[0])
 check("use_gpu del Modulo C activado", ccfg["use_gpu"] is True)
+# min_person_ratio medido con persona real (S12): la escena vacia llega a 0.132
+# y una persona sentada no baja de 0.367, asi que el umbral tiene que caer en
+# ese hueco. 0.12 (el valor de S11) quedaba DENTRO del ruido de la escena vacia.
+check("min_person_ratio dentro del hueco medido",
+      0.15 <= float(ccfg["min_person_ratio"]) <= 0.30)
 
 sys.path.insert(0, "/home/jetson/integradora/model_ia/sistem_IA/modules")
 fuente_c = open("/home/jetson/integradora/model_ia/sistem_IA/modules/mod_c.py").read()
