@@ -12,15 +12,11 @@
 !/INICIO_RAPIDO_BMO.md
 !/start_bmo.sh
 
+# Contexto/ NO SE VERSIONA NUNCA (decisión del usuario, agosto 2026): son sus
+# documentos de diseño y reportes de progreso, y se quedan solo en la Jetson.
+# No añadir aquí un "!/Contexto/" -- se hizo una vez y hubo que revertirlo.
+
 # Whitelist project folders
-# Contexto/ son los documentos de diseño y los reportes de progreso semanales.
-# El código apunta a secciones concretas de ellos desde sus propios docstrings
-# (REQUERIMIENTOS_APP_MOODI.md, CONTEXTO_MOODI_UI_INTERACTIVA_*.md,
-# PROGRESO_BMO_S*.md), así que fuera del repo esas referencias quedaban rotas
-# para cualquiera que clonara. Comprobado antes de versionarlos que no citan
-# credenciales: el token de Telegram y el chat_id solo se mencionan como
-# política ("NO versionar"), nunca con su valor.
-!/Contexto/
 !/integradora/
 !/apps/
 !/qr_code_recognition/
