@@ -33,8 +33,15 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
         "manos_rostro": 3,
         "leve": 0, "repetitivo": 2, "agitacion": 3, "agitación": 3
     }
+    # S13: "leve" pasa de 0 a 1. Estaba mapeado igual que "calma" (0), o sea
+    # que un tramo intermedio real del vocabulario del Módulo C (calma <
+    # leve < repetitivo < agitación) no aportaba NADA distinto de calma
+    # absoluta a la fusión -- encontrado revisando capturas reales donde C
+    # reportaba "Mild"/leve con 99% de confianza y aun así contribuía 0 al
+    # puntaje global, una de las causas de que el nivel global se quedara
+    # bajo con otro módulo ya en alto.
     map_C_default = {
-        "calma": 0, "leve": 0, "repetitivo": 2, "agitación": 3, "agitacion": 3, "intenso": 3
+        "calma": 0, "leve": 1, "repetitivo": 2, "agitación": 3, "agitacion": 3, "intenso": 3
     }
 
     map_A = { _norm(k): v for k, v in (maps_cfg.get("A", map_A_default)).items() }
@@ -136,8 +143,24 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
                     state = "init"
                 else:
                     if isinstance(last_level, int):
+                        # S13 -- fix de "sale bajo con dos modulos en alto":
+                        # antes, CUALQUIER lectura que no fuera estrictamente
+                        # mayor que last_level ponia up_cnt en CERO de golpe
+                        # (incluso una lectura igual, o una sola lectura mas
+                        # baja intercalada de un modulo asincronico). Con
+                        # cooldown_up en varias unidades, eso significaba que
+                        # subir de nivel necesitaba N lecturas SEGUIDAS sin
+                        # ni una sola excepcion -- casi imposible cuando A/B/C
+                        # reportan a ritmos distintos y cada mensaje de
+                        # CUALQUIER modulo dispara una reevaluacion. Ahora los
+                        # contadores decaen de a uno en vez de resetearse: una
+                        # lectura en contra resta progreso en vez de borrarlo
+                        # entero, así que dos módulos sostenidos en ALTO sí
+                        # logran acumular su cooldown aunque el tercero
+                        # fluctúe entremedio.
                         if target > last_level:
-                            up_cnt += 1; down_cnt = 0
+                            up_cnt += 1
+                            down_cnt = max(0, down_cnt - 1)
                             if up_cnt >= cool_up:
                                 last_level = target; up_cnt = 0
                                 print(f"[FUS][{idx}] => {target} (sube)")
@@ -146,7 +169,8 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
                                 print(f"[FUS][{idx}] => {last_level} (espera subir {up_cnt}/{cool_up})")
                                 state = "espera"
                         elif target < last_level:
-                            down_cnt += 1; up_cnt = 0
+                            down_cnt += 1
+                            up_cnt = max(0, up_cnt - 1)
                             if down_cnt >= cool_down:
                                 last_level = target; down_cnt = 0
                                 print(f"[FUS][{idx}] => {target} (baja)")
@@ -155,7 +179,9 @@ def run_fusion(cfg_path: str, pred_q: Queue, out_q: Queue, stop_event: Event):
                                 print(f"[FUS][{idx}] => {last_level} (espera bajar {down_cnt}/{cool_down})")
                                 state = "espera"
                         else:
-                            up_cnt = down_cnt = 0
+                            # target == last_level: ya está donde debe, no es
+                            # evidencia EN CONTRA de la tendencia que se venía
+                            # acumulando -- no se tocan los contadores.
                             print(f"[FUS][{idx}] => {last_level} (estable)")
                             state = "estable"
                     else:

@@ -8,7 +8,12 @@ enabled_modules:
 fps: 30
 fusion:
   cooldown_down: 1
-  cooldown_up: 4
+  # 4->2 (S13): junto con el fix de contadores "con fuga" en core/fusion.py
+  # (antes se reseteaban a 0 con cualquier lectura que no fuera estrictamente
+  # mayor), esperar 4 lecturas en subida seguía siendo lento en la práctica
+  # frente a lo que mostraban las capturas reales del robot. 2 sigue
+  # evitando que UN solo frame ruidoso dispare una subida.
+  cooldown_up: 2
   debug: false
   required_modules: 2
 # 640x360 (16:9) en vez de 640x480 (4:3) -- S11. Verificado con gst-launch que
@@ -112,11 +117,20 @@ reporter:
   method: majority
   output_jsonl: resultados/estres_resumen.jsonl
   print_console: true
-  step_secs: 5
+  # step_secs 5->2, window_secs 20->8 (S13): capturas reales del robot
+  # mostraban el nivel global en pantalla varios SEGUNDOS por detrás de lo
+  # que el video mostraba en ese instante (una expresión extrema con
+  # A=Alto 96% seguía leyendo BAJO; el badge llegó a ALTO recién cuando la
+  # persona ya estaba calmada de nuevo). Con ventana de 20s + paso de 5s el
+  # panel podía tardar mucho en reflejar un cambio real. 8s/2s sigue
+  # promediando ruido de frame a frame pero reacciona varias veces más
+  # rápido. Si vuelve a sentirse parpadeante (cambia de nivel por un
+  # instante suelto), subir window_secs antes que step_secs.
+  step_secs: 2
   thresholds:
     low: 0.75
     med: 1.75
-  window_secs: 20
+  window_secs: 8
 thresholds:
   face_timeout_ticks: 3
   pred_conf: 0.55
