@@ -49,20 +49,27 @@ from PyQt5.QtWidgets import (
 )
 
 from core.app_settings import MAX_NICKNAME_LEN, VALID_FONT_SCALES, atomic_write_json
+from core.background_music import list_tracks
 from core.button_router import GPIO_PHYS, LOCKED_GPIO, LOCKED_ROLE
 from core.i18n import t
+from ui.overlays import MarqueeButton
 from ui.theme import ACCENT_ORANGE, BG_TEAL, CORAL, CREAM, TEXT_NAVY, TEXT_NAVY_SOFT, fs
 
 log = logging.getLogger("bmo.settings_panel")
 
-SECTIONS = ("volume", "language", "nickname", "fontsize", "buttons")
+# "music" (S13): selector de canción de fondo + su propio volumen -- ver
+# _build_music_page(). Va después de "volume" porque es audio relacionado.
+SECTIONS = ("volume", "music", "language", "nickname", "fontsize", "buttons")
+
+MUSIC_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "assets", "musica_fondo")
 
 # Acciones asignables a un botón físico (roles que MainWindow._handle_action ya
 # entiende). "NONE" = botón sin función (se omite del JSON).
 ACTIONS = (
     "CURSOR_UP", "CURSOR_DOWN", "CURSOR_LEFT", "CURSOR_RIGHT",
     "PECS_SEND", "PECS_DELETE", "PECS_CLEAR",
-    "HOME", "DYNAMIC_PLAY", "EMO_TOGGLE", "NONE",
+    "HOME", "AUDIO_TOGGLE", "SEAMLESS_TOGGLE", "DYNAMIC_PLAY", "EMO_TOGGLE", "NONE",
 )
 
 # Roles que no deberían quedar sin ningún botón: sin ellos el niño pierde el
@@ -76,6 +83,17 @@ KEYBOARD_ROWS = (
 )
 
 PULSE_INTERVAL_MS = 40
+
+
+def _marquee_button_style(selected: bool) -> str:
+    """Mismo look que _big_button_style pero SIN el selector 'QPushButton'
+    (MarqueeButton es un QWidget con WA_StyledBackground, no un QPushButton;
+    ver ui/overlays.py) y sin estado :pressed."""
+    if selected:
+        return (f"border-radius: 14px; padding: 8px 14px; "
+                f"background: {TEXT_NAVY}; border: 3px solid {ACCENT_ORANGE};")
+    return (f"border-radius: 14px; padding: 8px 14px; "
+            f"background: rgba(255,255,255,90); border: 2px solid rgba(32,50,63,60);")
 
 
 def _big_button_style(selected: bool, font_px: int) -> str:
@@ -417,6 +435,7 @@ class SettingsPanel(QWidget):
         self._stack = QStackedWidget()
         self._pages = {
             "volume": self._build_volume_page(),
+            "music": self._build_music_page(),
             "language": self._build_language_page(),
             "nickname": self._build_nickname_page(),
             "fontsize": self._build_fontsize_page(),
@@ -488,6 +507,86 @@ class SettingsPanel(QWidget):
         value = max(0, min(100, self._volume_slider.value() + delta))
         self._volume_slider.setValue(value)
         self._settings.set_volume(value)
+
+    # -------- Música de fondo (S13) --------
+    def _build_music_page(self) -> QWidget:
+        page = QWidget()
+        self._music_hint = QLabel()
+        self._music_hint.setWordWrap(True)
+
+        self._music_volume_value = QLabel("55")
+        self._music_volume_value.setAlignment(Qt.AlignCenter)
+
+        self._btn_music_vol_down = QPushButton("−")
+        self._btn_music_vol_up = QPushButton("+")
+        for btn in (self._btn_music_vol_down, self._btn_music_vol_up):
+            btn.setFixedSize(76, 76)
+        self._btn_music_vol_down.clicked.connect(lambda: self._bump_music_volume(-10))
+        self._btn_music_vol_up.clicked.connect(lambda: self._bump_music_volume(+10))
+
+        self._music_volume_slider = QSlider(Qt.Horizontal)
+        self._music_volume_slider.setRange(0, 100)
+        self._music_volume_slider.setMinimumHeight(64)
+        self._music_persist_timer = QTimer(self)
+        self._music_persist_timer.setSingleShot(True)
+        self._music_persist_timer.setInterval(400)
+        self._music_persist_timer.timeout.connect(
+            lambda: self._settings.set_music_volume(self._music_volume_slider.value()))
+        self._music_volume_slider.valueChanged.connect(self._on_music_volume_slider_changed)
+
+        vol_row = QHBoxLayout()
+        vol_row.setSpacing(16)
+        vol_row.addWidget(self._btn_music_vol_down)
+        vol_row.addWidget(self._music_volume_slider, stretch=1)
+        vol_row.addWidget(self._btn_music_vol_up)
+
+        # Selector de pista: "Ninguna" (apagada) + una fila por archivo real en
+        # assets/musica_fondo/ -- si el usuario agrega más pistas ahí, aparecen
+        # solas la próxima vez que se entra a Configuraciones, sin tocar código.
+        self._track_hint = QLabel()
+        self._track_hint.setWordWrap(True)
+        self._track_buttons = {}   # "" (ninguna) o nombre de archivo -> botón
+        track_col = QVBoxLayout()
+        track_col.setSpacing(10)
+        for track in ("",) + tuple(list_tracks(MUSIC_DIR)):
+            btn = MarqueeButton()
+            btn.setMinimumHeight(64)
+            btn.clicked.connect(lambda tr=track: self._on_track_selected(tr))
+            self._track_buttons[track] = btn
+            track_col.addWidget(btn)
+
+        layout = QVBoxLayout(page)
+        layout.setSpacing(16)
+        layout.addWidget(self._music_hint)
+        layout.addWidget(self._music_volume_value)
+        layout.addLayout(vol_row)
+        layout.addSpacing(10)
+        layout.addWidget(self._track_hint)
+        layout.addLayout(track_col)
+        layout.addStretch(1)
+        return page
+
+    def _on_music_volume_slider_changed(self, value: int):
+        self._music_volume_value.setText(str(value))
+        self._music_persist_timer.start()
+
+    def _bump_music_volume(self, delta: int):
+        value = max(0, min(100, self._music_volume_slider.value() + delta))
+        self._music_volume_slider.setValue(value)
+        self._settings.set_music_volume(value)
+
+    def _on_track_selected(self, track: str):
+        self._settings.set_music_track(track)
+        self._refresh_music_highlight()
+
+    @staticmethod
+    def _track_label(track: str) -> str:
+        if not track:
+            return t("settings.music.none")
+        stem = os.path.splitext(track)[0]
+        key = f"settings.music.track.{stem}"
+        label = t(key)
+        return label if label != key else stem.replace("_", " ").capitalize()
 
     # -------- Idioma --------
     def _build_language_page(self) -> QWidget:
@@ -770,10 +869,22 @@ class SettingsPanel(QWidget):
         self._volume_slider.setValue(self._settings.volume)
         self._volume_slider.blockSignals(False)
         self._volume_value.setText(str(self._settings.volume))
+        self._music_volume_slider.blockSignals(True)
+        self._music_volume_slider.setValue(self._settings.music_volume)
+        self._music_volume_slider.blockSignals(False)
+        self._music_volume_value.setText(str(self._settings.music_volume))
         self._nickname_buffer = self._settings.nickname
         self._refresh_nickname_value()
         self._refresh_language_highlight()
         self._refresh_fontsize_highlight()
+        self._refresh_music_highlight()
+
+    def move_section(self, delta: int):
+        """API pública para MainWindow (S13): cursores arriba/abajo mientras
+        se está en Configuraciones cambian de sección, igual que tocar la
+        columna de navegación."""
+        idx = (SECTIONS.index(self._section) + delta) % len(SECTIONS)
+        self._show_section(SECTIONS[idx])
 
     def _show_section(self, section: str):
         self._section = section
@@ -799,6 +910,10 @@ class SettingsPanel(QWidget):
         for section, btn in self._nav_buttons.items():
             btn.setText(t(f"settings.section.{section}"))
         self._volume_hint.setText(t("settings.volume.hint"))
+        self._music_hint.setText(t("settings.music.hint"))
+        self._track_hint.setText(t("settings.music.track_hint"))
+        for track, btn in self._track_buttons.items():
+            btn.setText(self._track_label(track))
         self._language_hint.setText(t("settings.language.hint"))
         for lang, btn in self._lang_buttons.items():
             btn.setText(t(f"settings.language.{lang}"))
@@ -824,8 +939,8 @@ class SettingsPanel(QWidget):
             f"font-size: {fs(30)}px; font-weight: 800; color: {TEXT_NAVY}; background: transparent;")
 
         hint_style = f"font-size: {fs(17)}px; color: {TEXT_NAVY_SOFT}; background: transparent;"
-        for lbl in (self._volume_hint, self._language_hint, self._nickname_hint,
-                    self._fontsize_hint, self._buttons_hint):
+        for lbl in (self._volume_hint, self._music_hint, self._track_hint, self._language_hint,
+                    self._nickname_hint, self._fontsize_hint, self._buttons_hint):
             lbl.setStyleSheet(hint_style)
 
         self._volume_value.setStyleSheet(
@@ -835,12 +950,27 @@ class SettingsPanel(QWidget):
                 f"QPushButton {{ font-size: {fs(34)}px; font-weight: 700; border-radius: 38px; "
                 f"background: {TEXT_NAVY}; color: {CREAM}; }}"
                 f"QPushButton:pressed {{ background: {ACCENT_ORANGE}; }}")
-        self._volume_slider.setStyleSheet(
+        slider_style = (
             "QSlider::groove:horizontal { height: 18px; border-radius: 9px; "
             "background: rgba(32,50,63,70); }"
             f"QSlider::sub-page:horizontal {{ background: {TEXT_NAVY}; border-radius: 9px; }}"
             "QSlider::handle:horizontal { width: 48px; height: 48px; margin: -16px 0; "
             f"border-radius: 24px; background: {ACCENT_ORANGE}; }}")
+        self._volume_slider.setStyleSheet(slider_style)
+
+        self._music_volume_value.setStyleSheet(
+            f"font-size: {fs(36)}px; font-weight: 800; color: {TEXT_NAVY}; background: transparent;")
+        for btn in (self._btn_music_vol_down, self._btn_music_vol_up):
+            btn.setStyleSheet(
+                f"QPushButton {{ font-size: {fs(30)}px; font-weight: 700; border-radius: 34px; "
+                f"background: {TEXT_NAVY}; color: {CREAM}; }}"
+                f"QPushButton:pressed {{ background: {ACCENT_ORANGE}; }}")
+        self._music_volume_slider.setStyleSheet(slider_style)
+        track_font = QFont()
+        track_font.setPixelSize(fs(18))
+        track_font.setWeight(QFont.DemiBold)
+        for btn in self._track_buttons.values():
+            btn.set_style(_marquee_button_style(False), track_font, QColor(TEXT_NAVY))
 
         self._nickname_value.setStyleSheet(
             f"font-size: {fs(30)}px; font-weight: 700; color: {TEXT_NAVY}; "
@@ -868,10 +998,22 @@ class SettingsPanel(QWidget):
         self._refresh_language_highlight()
         self._refresh_fontsize_highlight()
         self._refresh_action_highlight()
+        self._refresh_music_highlight()
 
     def _refresh_nav_highlight(self):
         for section, btn in self._nav_buttons.items():
             btn.setStyleSheet(_big_button_style(section == self._section, fs(20)))
+
+    def _refresh_music_highlight(self):
+        for track, btn in self._track_buttons.items():
+            selected = track == self._settings.music_track
+            btn.setStyleSheet(_marquee_button_style(selected))
+            # S13: la opción seleccionada tiene fondo navy oscuro (ver
+            # _marquee_button_style) -- sin esto el texto quedaba en su color
+            # por defecto (TEXT_NAVY, oscuro) sobre ese mismo fondo oscuro,
+            # invisible. CREAM (crema) es el mismo color que usan los demás
+            # botones "grandes" de esta pantalla para su estado seleccionado.
+            btn.set_text_color(QColor(CREAM) if selected else QColor(TEXT_NAVY))
 
     def _refresh_language_highlight(self):
         for lang, btn in self._lang_buttons.items():

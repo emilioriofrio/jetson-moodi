@@ -112,7 +112,22 @@ class _ModuleCard(QWidget):
             f"color: {color.name()}; font-size: {fs(17)}px; font-weight: 700; background: transparent;")
 
     def set_reading(self, label_txt: str, conf: float, present: bool):
-        status = "" if present else t("monitor.no_detection")
+        if present:
+            status = ""
+        elif self.module == "C":
+            # S13: para el Módulo C, "present" es la cobertura de persona en
+            # cuadro (person_ratio) por debajo del umbral calibrado (ver
+            # min_person_ratio en runtime.yaml) -- NO significa que no haya
+            # detectado a nadie. Detectron2 puede haber encontrado a la
+            # persona igual (por eso el recuadro se dibuja) mientras la
+            # ventana promedia poca área ocupada; la clasificación sigue
+            # siendo real, solo pesa menos en la fusión. Mostrar "sin
+            # detección" ahí, superpuesto a una predicción con alta
+            # confianza, se veía contradictorio y confuso (reportado por el
+            # usuario tras probar el robot).
+            status = t("monitor.low_presence")
+        else:
+            status = t("monitor.no_detection")
         self._value_lbl.setText(f"{label_txt}  {conf:.0%}{status}")
 
     def reset(self):

@@ -34,17 +34,47 @@ mucho más liviana que la transición de fin de stream, y en la práctica no se
 percibe corte. EndOfMedia se conserva solo como red de seguridad (por si la
 duración aún no se conoce cuando se carga un clip nuevo).
 
-Silencio (Home/Oraciones/Video) vs. audio (Caras): NUNCA se logra llamando
-QMediaPlayer.setMuted(True)/setVolume(0) sobre un clip que sí tiene pista de
-audio -- se confirmó con un diagnóstico aislado (9+ pasos de descarte; ver
-memoria de proyecto) que silenciar así, en esta Jetson, deja el pipeline de
-GStreamer congelado justo en el primer reinicio de loop (EndOfMedia ->
-setPosition(0)+play()): el video se queda pegado en el último frame para
-siempre, aunque el reproductor siga reportando PlayingState. Un clip SIN
-pista de audio (stream de video puro) hace el mismo loop sin problema. Por
-eso "silenciar" aquí realmente significa "cargar una variante del mismo clip
-sin pista de audio" (generada una vez con ffmpeg -an -c:v copy y cacheada en
-disco), no controlar el volumen del reproductor en caliente.
+Silencio vs. audio: NUNCA se logra llamando QMediaPlayer.setMuted(True)/
+setVolume(0) sobre un clip que sí tiene pista de audio -- se confirmó con un
+diagnóstico aislado (9+ pasos de descarte; ver memoria de proyecto) que
+silenciar así, en esta Jetson, deja el pipeline de GStreamer congelado justo
+en el primer reinicio de loop (EndOfMedia -> setPosition(0)+play()): el video
+se queda pegado en el último frame para siempre, aunque el reproductor siga
+reportando PlayingState. Un clip SIN pista de audio (stream de video puro)
+hace el mismo loop sin problema. Por eso "silenciar" aquí realmente significa
+"cargar una variante del mismo clip sin pista de audio" (generada una vez con
+ffmpeg -an -c:v copy y cacheada en disco), no controlar el volumen del
+reproductor en caliente.
+
+S13 -- se probó (y se revirtió) hacer que el sonido dejara de depender de la
+pantalla activa. El problema: el loop "sin corte" de arriba está desactivado
+a propósito para clips CON audio (es la causa exacta del congelamiento medido
+en S12), así que en cualquier pantalla con audio activo el loop pasa a
+depender de EndOfMedia real -- visible, con corte. Mientras el audio solo
+sonaba en Caras eso ya pasaba ahí (visible pero acotado a un recuadro chico);
+al activar sonido en TODAS las pantallas, el corte se volvió visible en el
+fondo animado a pantalla completa de Home/Oraciones/Video también, y el
+usuario lo notó y pidió priorizar el video sin cortes. Por eso `_muted` volvió
+a arrancar en `True`: MainWindow solo lo pone en `False` cuando la pantalla
+activa es Caras (`_show_view`/`_effective_audio_muted`), igual que antes de
+S13. El interruptor físico AUDIO_TOGGLE se conserva como silenciar/activar
+manual DENTRO de Caras (y como gatillo de la música de fondo en el resto de
+pantallas, ver core/background_music.py), no como "sonido en todas partes".
+
+S13 (ronda siguiente) -- con el audio ya de vuelta acotado a Caras, el usuario
+notó que ESA pantalla en concreto tampoco quedaba seamless (el corte de
+EndOfMedia de arriba) y pidió recuperarlo ahí, aceptando el riesgo de
+congelamiento ya medido. Con los clips de Caras durando ~8.2-8.8s cada uno,
+"un corte por vuelta" es un corte cada ~8s -- mucho más frecuente que la tasa
+de congelamiento medida en S12 (~1 cada 165s). La cuenta sale a favor de
+reactivar el salto anticipado también para audio (`SEAMLESS_LOOP_WITH_AUDIO`
+más abajo, ahora `True`), apoyado en un vigilante más rápido
+(`STALL_TIMEOUT_MS` 4000->1800ms) para que el ~5% de vueltas que sí se
+congelan se noten lo menos posible. Sigue siendo el mismo riesgo de fondo
+que en S12, solo que ahora el usuario lo aceptó explícitamente después de
+que se le explicara -- si en el robot real la tasa de congelamiento es peor
+de lo medido, `SEAMLESS_LOOP_WITH_AUDIO = False` es la única línea a tocar
+para volver a la vuelta "segura" (con corte pero sin riesgo de congelar).
 """
 
 import glob
@@ -68,7 +98,13 @@ LOOP_POLL_MS = 40   # frecuencia de sondeo de posición (fino, para no pasarse d
 
 # Vigilante de congelamiento (S12) -- ver _check_watchdog().
 WATCHDOG_POLL_MS = 1000      # cada cuánto se comprueba que el video siga vivo
-STALL_TIMEOUT_MS = 4000      # sin avance de posición estando "reproduciendo" = congelado
+# 4000 -> 1800 (S13): al reactivar el salto anticipado para clips CON audio
+# (ver SEAMLESS_LOOP_WITH_AUDIO más abajo), el vigilante es la red de
+# seguridad que hace tolerable ese riesgo -- cuanto antes detecte un
+# congelamiento, menos se nota. 1800ms sigue siendo generoso frente al
+# avance normal de posición (cada frame, ~33ms a 30fps), así que no debería
+# generar falsos positivos.
+STALL_TIMEOUT_MS = 1800
 RELOAD_GRACE_MS = 6000       # margen tras una recarga antes de volver a intervenir
 
 # Recarga preventiva (S12): además de reaccionar al congelamiento, el pipeline
@@ -77,14 +113,30 @@ RELOAD_GRACE_MS = 6000       # margen tras una recarga antes de volver a interve
 PREVENTIVE_RELOAD_MS = 20 * 60 * 1000  # 20 minutos
 PREVENTIVE_MAX_POS_MS = 1500           # solo justo después de dar la vuelta
 
-# Loop de los clips CON pista de audio (S12). Ver _check_seamless_loop().
-# Con el salto anticipado a 0 (el loop "sin corte" de S11) los clips con audio
-# se congelan cada pocos minutos: medido en banco, 2 congelamientos en 5.5 min
-# contra 0 en 28 min del mismo clip sin pista de audio. Por eso los clips con
-# audio dan la vuelta esperando al final real (EndOfMedia) en vez de saltar
-# antes; los silenciosos conservan el salto anticipado, que es el que no se
-# nota y sí es estable.
-SEAMLESS_LOOP_WITH_AUDIO = False
+# Loop de los clips CON pista de audio (S13, reactivado -- ver más abajo por
+# qué). Ver _check_seamless_loop().
+#
+# Con el salto anticipado a 0 (el loop "sin corte" de S11) los clips con
+# audio se congelan cada pocos minutos: medido en banco (S12), 2
+# congelamientos en 5.5 min contra 0 en 28 min del mismo clip sin pista de
+# audio. Por eso en S12 los clips con audio pasaron a dar la vuelta esperando
+# el final real (EndOfMedia) -- estable, pero con un corte duro visible en
+# CADA vuelta (ver docstring del módulo).
+#
+# S13: el usuario pidió recuperar el loop sin corte en Caras a pesar del
+# riesgo medido. Los clips de Caras duran ~8.2-8.8s cada uno (medido con
+# ffprobe), así que "un corte en cada vuelta" es un corte cada ~8s -- MUY
+# seguido. Con la tasa de congelamiento medida en S12 (2 en 5.5 min = 330s,
+# ~1 cada 165s, o sea ~1 de cada 19-20 vueltas), la cuenta sale a favor de
+# reactivar el salto anticipado: ~95% de las vueltas quedan perfectamente
+# seamless y solo ~5% se congela brevemente -- contra el 100% de vueltas con
+# corte duro de la alternativa "segura". Esto SOLO es tolerable porque
+# STALL_TIMEOUT_MS bajó de 4000 a 1800ms a la vez (ver arriba): cuando sí se
+# congela, se nota mucho menos tiempo. Si en el robot real la tasa de
+# congelamiento resulta mayor a la medida en banco, o el recorte a 1800ms
+# genera falsos positivos (recargas de más), volver False acá -- es la
+# única línea que hay que tocar para revertir a la vuelta "segura".
+SEAMLESS_LOOP_WITH_AUDIO = True
 
 # Subcarpeta de caché para las variantes sin pista de audio (ver docstring del
 # módulo) -- se generan una sola vez por clip, junto a los originales.
@@ -120,7 +172,16 @@ class AnimationPlayer(QWidget):
         super().__init__(parent)
         self._clips = self._scan_clips(anim_dir)
         self._idx = 0
-        self._muted = True  # Silencioso por defecto (Home)
+        # S13 (revertido en la 5ª ronda): se probó sonido por defecto en
+        # CUALQUIER pantalla, pero eso hace que casi todas las pantallas usen
+        # la variante CON pista de audio -- y el loop "sin corte" (ver
+        # _check_seamless_loop) está DESACTIVADO a propósito para esa
+        # variante, porque se congela cada pocos minutos en esta Jetson (ver
+        # docstring del módulo). El usuario priorizó el video sin cortes por
+        # sobre el sonido fuera de Caras, así que vuelve el diseño original:
+        # silencioso por defecto, y MainWindow solo habilita audio en Caras
+        # (ver _show_view/_effective_audio_muted en ui/main_window.py).
+        self._muted = True
         # Volumen configurado (Configuraciones 3.1). NUNCA se aplica como
         # setVolume(0)/setMuted(True) sobre un clip con audio (congela el loop
         # en esta Jetson, ver docstring): volumen 0 == cargar la variante sin

@@ -174,7 +174,12 @@ class PecsPanel(QWidget):
         self._btn_voice.set_state(on, fg)
 
     def _place_voice_button(self):
-        self._btn_voice.move(self.width() - VOICE_BTN_SIZE - 24, 20)
+        # Arriba a la IZQUIERDA (S13, 8ª ronda; antes a la derecha): la
+        # esquina derecha de esta pantalla la ocupan ahora los botones
+        # táctiles de silenciar/video-sin-cortes (ui/main_window.py), que
+        # solo se muestran en Oraciones -- quedaban "montados" uno sobre
+        # otro con este botón si los dos vivían del mismo lado.
+        self._btn_voice.move(24, 20)
         self._btn_voice.raise_()
 
     def resizeEvent(self, event):

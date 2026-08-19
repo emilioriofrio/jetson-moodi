@@ -35,6 +35,14 @@ DEFAULTS = {
     # propósito: apagar la voz NO debe silenciar el audio de las animaciones,
     # y volver a encenderla no debe obligar a recordar qué volumen había.
     "voice_enabled": True,
+    # Música de fondo (S13): suena en vez de la voz/audio de Moodi cuando ese
+    # audio está silenciado (interruptor AUDIO_TOGGLE, o automáticamente en
+    # Configuraciones/Video). Volumen separado a propósito -- el usuario pidió
+    # dos barras independientes, una para la voz de Moodi y otra para la
+    # música. "" en music_track significa "sin música" (apagada por defecto:
+    # hay que elegir una canción en Configuraciones para que suene).
+    "music_volume": 55,
+    "music_track": "",
 }
 
 MAX_NICKNAME_LEN = 16
@@ -68,6 +76,8 @@ class AppSettings(QObject):
     nickname_changed = pyqtSignal(str)
     font_scale_changed = pyqtSignal(str)
     voice_enabled_changed = pyqtSignal(bool)
+    music_volume_changed = pyqtSignal(int)
+    music_track_changed = pyqtSignal(str)
 
     def __init__(self, path: str, parent=None):
         super().__init__(parent)
@@ -97,6 +107,8 @@ class AppSettings(QObject):
             self._data["font_scale"] = DEFAULTS["font_scale"]
         self._data["nickname"] = str(self._data.get("nickname", ""))[:MAX_NICKNAME_LEN]
         self._data["voice_enabled"] = bool(self._data.get("voice_enabled", True))
+        self._data["music_volume"] = self._clamp_volume(self._data.get("music_volume", DEFAULTS["music_volume"]))
+        self._data["music_track"] = str(self._data.get("music_track", ""))
 
     def _persist(self):
         try:
@@ -131,6 +143,14 @@ class AppSettings(QObject):
     @property
     def voice_enabled(self) -> bool:
         return self._data["voice_enabled"]
+
+    @property
+    def music_volume(self) -> int:
+        return self._data["music_volume"]
+
+    @property
+    def music_track(self) -> str:
+        return self._data["music_track"]
 
     # ---------- setters (persisten + emiten en caliente) ----------
     def set_volume(self, value: int):
@@ -170,3 +190,19 @@ class AppSettings(QObject):
         self._data["font_scale"] = scale
         self._persist()
         self.font_scale_changed.emit(scale)
+
+    def set_music_volume(self, value: int):
+        value = self._clamp_volume(value)
+        if value == self._data["music_volume"]:
+            return
+        self._data["music_volume"] = value
+        self._persist()
+        self.music_volume_changed.emit(value)
+
+    def set_music_track(self, filename: str):
+        filename = str(filename or "")
+        if filename == self._data["music_track"]:
+            return
+        self._data["music_track"] = filename
+        self._persist()
+        self.music_track_changed.emit(filename)

@@ -12,9 +12,31 @@ vía OpenCV/V4L2 sobre /dev/video0 (ver core/orchestrator.py, sin modificar).
 No se ejecuta con sudo.
 """
 
+import os
+
+# S13 -- forzar el backend de audio del reproductor de video a PulseAudio.
+# Diagnosticado: el video se reproduce y se ve bien en todas las pantallas
+# pero el audio de los clips de Caras no se oía en ningún caso. Se descartó
+# el hardware/enrutamiento del sistema (comprobado con pactl/amixer/aplay: el
+# perfil "output:hdmi-stereo" activo apunta al puerto correcto -- pactl lista
+# su producto como "ElecLab LCD" y está "available" -- y una reproducción
+# cruda con gst-launch por pulsesink funciona sin errores). El backend
+# GStreamer de QtMultimedia, en cambio, arma su propio "playbin" y puede
+# resolver el sink de audio por su cuenta (autoaudiosink) sin pasar
+# necesariamente por PulseAudio -- si cae en abrir el dispositivo ALSA
+# directo, choca con que PulseAudio ya lo tiene abierto en exclusiva
+# (confirmado con `fuser /dev/snd/*`: pulseaudio es el único dueño), lo que
+# puede fallar en silencio (el video sigue viéndose bien, sólo el audio no
+# suena, sin ningún error que QMediaPlayer.error() llegue a reportar). Fijar
+# esta variable de entorno ANTES de que Qt inicialice el backend de
+# GStreamer obliga a esa rama de audio del playbin a salir por pulsesink
+# igual que la prueba cruda que sí sonó. Debe ir antes de cualquier import
+# que dispare la carga de QtMultimedia (por eso está aquí arriba, no dentro
+# de main()).
+os.environ.setdefault("QT_GSTREAMER_PLAYBIN_AUDIOSINK", "pulsesink")
+
 import argparse
 import logging
-import os
 import signal
 import sys
 

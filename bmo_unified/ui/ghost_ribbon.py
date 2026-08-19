@@ -379,6 +379,12 @@ class GhostRibbon(QWidget):
         if emit:
             self.screen_selected.emit(key)
 
+    # ---------- API pública ----------
+    def step(self, delta: int):
+        """Avanza/retrocede una pantalla (S13: cursores físicos izquierda/derecha
+        en cualquier pantalla). Misma animación que las flechas ‹ › o el swipe."""
+        self._step(delta)
+
     # ---------- deslizamiento infinito ----------
     def _step(self, delta: int):
         if self._animating:

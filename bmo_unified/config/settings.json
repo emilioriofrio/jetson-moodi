@@ -2,6 +2,8 @@
   "volume": 100,
   "language": "en",
   "nickname": "Emilio",
-  "font_scale": "xlarge",
-  "voice_enabled": true
+  "font_scale": "large",
+  "voice_enabled": false,
+  "music_volume": 100,
+  "music_track": "melodia_alegre_1.wav"
 }
