@@ -198,6 +198,38 @@ _ALFABETOS_IMPOSIBLES = re.compile(r"[Ѐ-ӿͰ-Ͽ一-鿿؀-ۿ]")
 # aparecen en casi cualquier frase y no sirven para comprobar nada.
 _MIN_LEN_CONTENIDO = 4
 
+# S13 -- encontrado en el robot real: el niño armó "ESTOY MAL" y el modelo
+# devolvió "Estoy bien, bueno." La regla 2 del prompt de sistema ("si hay
+# negación, la oración DEBE seguir siendo negativa") y el ejemplo few-shot
+# ("YO ESTOY MAL" -> "Estoy mal.") solo le PIDEN al modelo que no invierta el
+# sentido -- nada lo VERIFICABA. respuesta_plausible() solo comprobaba
+# alfabetos imposibles y que compartiera alguna palabra de contenido con las
+# tarjetas, y "estoy" (compartido por "bien" y "mal") bastaba para que esa
+# comprobación diera por buena una respuesta con el significado exactamente
+# opuesto. Es el peor tipo de error posible en un dispositivo pensado para
+# que el cuidador sepa cómo está el niño, así que ahora se verifica en código,
+# no solo se le pide al modelo.
+_NEGACIONES = {"no", "nunca", "jamas", "tampoco", "nada"}
+
+# Pares de palabras que jamás deberían aparecer una en vez de la otra: si el
+# prompt tiene una palabra de un lado y la respuesta trae una del lado
+# contrario, es una inversión de sentido, no una corrección. Empieza con el
+# par que causó el incidente (ESTOY MAL / ESTOY BIEN, las dos tarjetas de
+# emoción del vocabulario); se puede ampliar si aparecen más casos así.
+_PARES_OPUESTOS = [
+    ({"mal", "malo", "mala", "peor"},
+     {"bien", "bueno", "buena", "buenisimo", "genial", "excelente", "mejor"}),
+]
+
+
+def _palabras(texto_plegado: str) -> set:
+    # \w+ y no split(r"\s+"): la respuesta del modelo trae puntuación pegada
+    # a la palabra ("bien," "bueno.") y una comparación por separado con
+    # split() nunca hacía match contra las palabras "limpias" de
+    # _PARES_OPUESTOS/_NEGACIONES -- se detectó probando el caso real de
+    # esta corrección antes de darla por buena.
+    return set(re.findall(r"[a-z]+", texto_plegado))
+
 
 def respuesta_plausible(prompt: str, sent: str) -> bool:
     """¿La frase devuelta por el modelo tiene algo que ver con las tarjetas?
@@ -223,21 +255,42 @@ def respuesta_plausible(prompt: str, sent: str) -> bool:
        para "comer" y "QUIERO" para "quiero"). Una respuesta que no comparte
        ninguna palabra con lo que el niño puso no es una corrección: es otra
        frase.
+    3. (S13) Que la NEGACIÓN se conserve: si el prompt trae "no"/"nunca"/etc.,
+       la respuesta también debe traer alguna.
+    4. (S13) Que no aparezca la palabra CONTRARIA a una que sí puso el niño
+       (ver _PARES_OPUESTOS) -- esto es lo que dejaba pasar "ESTOY MAL" ->
+       "Estoy bien, bueno.": ambas comparten "estoy", así que el chequeo 2
+       por sí solo la daba por buena.
 
-    Si el prompt solo tiene palabras cortas (YO IR), no hay nada que comprobar y
-    se acepta: mejor dejar pasar una frase dudosa que rechazar una correcta.
+    Si el prompt solo tiene palabras cortas (YO IR), el chequeo 2 no tiene nada
+    que comprobar y se acepta: mejor dejar pasar una frase dudosa que rechazar
+    una correcta. Los chequeos 3 y 4 sí aplican siempre que correspondan,
+    independientemente de eso -- son de sentido, no de contenido.
     """
     if not sent:
         return False
     if _ALFABETOS_IMPOSIBLES.search(sent):
         return False
 
-    palabras = [p for p in re.split(r"\s+", _plegar(prompt)) if len(p) >= _MIN_LEN_CONTENIDO]
+    prompt_plegado = _plegar(prompt)
+    respuesta_plegada = _plegar(sent)
+    prompt_palabras = _palabras(prompt_plegado)
+    respuesta_palabras = _palabras(respuesta_plegada)
+
+    if (prompt_palabras & _NEGACIONES) and not (respuesta_palabras & _NEGACIONES):
+        return False
+
+    for lado_a, lado_b in _PARES_OPUESTOS:
+        if (prompt_palabras & lado_a) and (respuesta_palabras & lado_b):
+            return False
+        if (prompt_palabras & lado_b) and (respuesta_palabras & lado_a):
+            return False
+
+    palabras = [p for p in re.split(r"\s+", prompt_plegado) if len(p) >= _MIN_LEN_CONTENIDO]
     if not palabras:
         return True
 
-    respuesta = _plegar(sent)
-    return any(p[:4] in respuesta for p in palabras)
+    return any(p[:4] in respuesta_plegada for p in palabras)
 
 
 def fallback_sentence(prompt: str) -> str:
